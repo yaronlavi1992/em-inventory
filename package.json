@@ -2,7 +2,6 @@
   "name": "inventory",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://yawikflame.github.io/em-inventory",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -22,7 +21,7 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "prestart": "yarn",
+    "prestart": "npm i",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -45,9 +44,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "engines": {
-    "node": "14.x"
   },
   "proxy": "https://em-inventory-backend.herokuapp.com"
 }
