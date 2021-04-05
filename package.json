@@ -45,5 +45,8 @@
       "last 1 safari version"
     ]
   },
+  "engines": {
+    "node": "14.16.0"
+  },
   "proxy": "https://em-inventory-backend.herokuapp.com"
 }
