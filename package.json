@@ -45,7 +45,7 @@
     ]
   },
   "engines": {
-    "node": "14.16.0"
+    "node": "14.x"
   },
   "proxy": "https://em-inventory-backend.herokuapp.com"
 }
