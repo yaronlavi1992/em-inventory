@@ -31,12 +31,12 @@ class GridContainer extends Component {
               </Grid.Column>
 
               {this.props.isSpecialItems && (
-                <React.Fragment>
+                <>
                   <Grid.Column></Grid.Column>
                   <Grid.Column textAlign='right'>
                     ${item.packageFee}
                   </Grid.Column>
-                </React.Fragment>
+                </>
               )}
 
               <Grid.Column textAlign='right'>

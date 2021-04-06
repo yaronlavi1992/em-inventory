@@ -35,7 +35,7 @@ class SpecialCareItems extends Component {
           </div>
         </div>
       </div>
-      // <React.Fragment>
+      // <>
       //   <div className='ui secondary menu'>
       //     <Link to='/items' className='item'>
       //       <Image
@@ -62,7 +62,7 @@ class SpecialCareItems extends Component {
       //   <Grid padded='horizontally' centered>
       //     <Link to='/confirmation'>Skip this, I'll box these myself ?</Link>
       //   </Grid>
-      // </React.Fragment>
+      // </>
     );
   }
 }

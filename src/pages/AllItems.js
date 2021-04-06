@@ -22,7 +22,7 @@ class AllItems extends Component {
       actual items being transported on the day of
       the move.`;
     return (
-      <React.Fragment>
+      <>
         <ModalExampleModal
           image={modalImage}
           header={modalHeader}
@@ -105,7 +105,7 @@ class AllItems extends Component {
             />
           </Grid.Row>
         </Grid>
-      </React.Fragment>
+      </>
     );
   }
 }

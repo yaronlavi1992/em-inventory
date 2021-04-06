@@ -11,7 +11,7 @@ export class Intro extends Component {
 
   render() {
     return (
-      <React.Fragment>
+      <>
         <Header style={{ color: 'white' }}>
           Welcome, {this.props.isSignedIn && this.props.currentUser.first_name}!
         </Header>
@@ -30,7 +30,7 @@ export class Intro extends Component {
           {/* <Link to={`/${this.props.match.params.id}/prompt`}> */}
           <Button className='ui colorBrightGreen button'>Get Started</Button>
         </Link>
-      </React.Fragment>
+      </>
     );
   }
 }

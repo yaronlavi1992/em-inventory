@@ -55,20 +55,9 @@ export const signIn = (userId) => async (dispatch) => {
       'Content-Type': 'application/json',
     },
   };
-  const loginResult = await axios.post(
-    // 'https://cors-anywhere.herokuapp.com/' +
-    '/login',
-    body,
-    options
-  );
-  // console.log(loginResult);
+  const loginResult = await axios.post('/login', body, options);
   console.log(loginResult.data);
-
   dispatch({ type: SIGN_IN, payload: loginResult.data, token: userId });
-  // return {
-  //   type: SIGN_IN,
-  //   payload: userId,
-  // };
 };
 
 export const signOut = () => {
