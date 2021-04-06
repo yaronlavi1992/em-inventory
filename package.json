@@ -47,7 +47,7 @@
   "engines": {
     "node": "14.x"
   },
-  "proxy": "https://em-inventory-backend.herokuapp.com",
+  "proxy": "http://104.130.158.29:18080",
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "index.js",
   "devDependencies": {},
@@ -60,5 +60,5 @@
   "bugs": {
     "url": "https://github.com/yawikflame/em-inventory/issues"
   },
-  "homepage": "https://github.com/yawikflame/em-inventory#readme"
+  "homepage": "https://github.com/yawikflame/em-inventory"
 }
