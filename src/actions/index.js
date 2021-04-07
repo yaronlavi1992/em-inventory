@@ -20,10 +20,6 @@ export const fetchItems = () => async (dispatch) => {
   itemsResult.data = itemsResult.data.map((item) => ({ ...item, quantity: 0 }));
   dispatch({ type: FETCH_ITEMS, payload: itemsResult.data });
   // dispatch({ type: FETCH_ITEMS, payload: itemsResult.data.slice(0, 11) });
-  // return {
-  //   type: FETCH_ITEMS,
-  //   payload: items,
-  // };
 };
 
 export const filterItems = (items, input) => {

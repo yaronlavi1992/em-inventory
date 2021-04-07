@@ -36,6 +36,7 @@ class SearchBar extends Component {
 const mapStateToProps = (state) => {
   return {
     items: state.items,
+    filteredItems: state.filteredItems,
     itemsSearchInput: state.itemsSearchInput,
   };
 };

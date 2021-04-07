@@ -155,17 +155,17 @@ class ListContainer extends Component {
     return (
       <>
         <List celled divided verticalAlign='middle'>
+          {/* render common items */}
           {!this.props.isMyItems && (
-            <List.Item key='common-items'>
-              <Header>COMMON ITEMS</Header>
-            </List.Item>
-          )}
-          {this.renderList(
-            // render common items
-            this.props.items.filter((item) => {
-              return item.common_item === '1';
-            })
-          )}
+              <List.Item key='common-items'>
+                <Header>COMMON ITEMS</Header>
+              </List.Item>
+            ) &&
+            this.renderList(
+              this.props.items.filter((item) => {
+                return item.common_item === '1';
+              })
+            )}
           {this.renderCategories()}
           {!this.props.isMyItems && (
             <List.Item key={Math.random() * 1000}>

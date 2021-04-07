@@ -1,7 +1,6 @@
 import {
   ADD_ITEM_QUANTITY,
   FETCH_ITEMS,
-  FILTER_ITEMS,
   REDUCE_ITEM_QUANTITY,
 } from '../actions/types';
 
@@ -43,13 +42,6 @@ const itemsReducer = (state = [], action) => {
   switch (action.type) {
     case FETCH_ITEMS:
       return action.payload;
-
-    case FILTER_ITEMS:
-      // return INITIAL_STATE.filter(
-      return action.payload.filter(
-        (item) => item.parent_name.indexOf(action.input) !== -1
-        // (item) => item.name.indexOf(action.input) !== -1
-      );
 
     case ADD_ITEM_QUANTITY:
       state.find((item) => {

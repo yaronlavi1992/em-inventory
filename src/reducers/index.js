@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
-import { reducer as formReducer } from 'redux-form';
 import authReducer from './authReducer';
+import filteredItemsReducer from './filteredItemsReducer';
 import itemsReducer from './itemsReducer';
 import itemsSearchInputReducer from './itemsSearchInputReducer';
 
 export default combineReducers({
   auth: authReducer,
   items: itemsReducer,
+  filteredItems: filteredItemsReducer,
   itemsSearchInput: itemsSearchInputReducer,
-  form: formReducer,
 });
