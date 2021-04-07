@@ -1,8 +1,4 @@
-import {
-  ADD_ITEM_QUANTITY,
-  FETCH_ITEMS,
-  REDUCE_ITEM_QUANTITY,
-} from '../actions/types';
+import * as types from '../actions/types';
 
 // const INITIAL_STATE = [
 //   { id: 'u1', name: 'lamp', quantity: 0, icon: 'lightbulb', packageFee: 10 },
@@ -40,17 +36,17 @@ import {
 // const itemsReducer = (state = INITIAL_STATE, action) => {
 const itemsReducer = (state = [], action) => {
   switch (action.type) {
-    case FETCH_ITEMS:
+    case types.FETCH_ITEMS:
       return action.payload;
 
-    case ADD_ITEM_QUANTITY:
+    case types.ADD_ITEM_QUANTITY:
       state.find((item) => {
         return item.parent_name === action.payload;
         // return item.id === action.payload;
       }).quantity++;
       return [...state];
 
-    case REDUCE_ITEM_QUANTITY:
+    case types.REDUCE_ITEM_QUANTITY:
       state.find((item) => {
         return item.parent_name === action.payload && item.quantity > 0;
         // return item.id === action.payload && item.quantity > 0;

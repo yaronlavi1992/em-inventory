@@ -10,7 +10,6 @@ import Confirmation from '../pages/Confirmation';
 import { connect } from 'react-redux';
 import BoxCalculator from '../pages/BoxCalculator';
 import BoxCalculatorLoader from '../pages/BoxCalculatorLoader';
-// import { InitialPrompt } from '../pages/InitialPrompt';
 
 class App extends Component {
   render() {
@@ -20,7 +19,6 @@ class App extends Component {
           <MainHeader />
           <Switch>
             <Route path='/:id' exact component={Intro} />
-            {/* <Route path='/:id/prompt' exact component={InitialPrompt} /> */}
             <Route
               path={`/${
                 this.props.userToken ? this.props.userToken : ''

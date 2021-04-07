@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button, Header } from 'semantic-ui-react';
-import { signIn, signOut, fetchItems } from '../actions';
+import { signIn, fetchItems } from '../actions';
 
 export class Intro extends Component {
   componentDidMount = async () => {
@@ -27,7 +27,6 @@ export class Intro extends Component {
           Browse our databse of common household items to build your Inventory
           and get an accurate quote
         </p>
-        {/* <Link to={`/${this.props.match.params.id}/prompt`}> */}
         <Button
           as={Link}
           to={`/${this.props.match.params.id}/items`}
@@ -47,4 +46,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { signIn, signOut, fetchItems })(Intro);
+export default connect(mapStateToProps, { signIn, fetchItems })(Intro);

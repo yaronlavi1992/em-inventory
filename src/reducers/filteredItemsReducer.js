@@ -1,8 +1,8 @@
-import { FILTER_ITEMS } from '../actions/types';
+import * as types from '../actions/types';
 
 const filteredItemsReducer = (state = [], action) => {
   switch (action.type) {
-    case FILTER_ITEMS:
+    case types.FILTER_ITEMS:
       // return INITIAL_STATE.filter(
       return action.payload.filter(
         (item) =>

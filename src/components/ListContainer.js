@@ -157,7 +157,7 @@ class ListContainer extends Component {
         <List celled divided verticalAlign='middle'>
           {/* render common items */}
           {!this.props.isMyItems && (
-              <List.Item key='common-items'>
+              <List.Item key='common-item-item'>
                 <Header>COMMON ITEMS</Header>
               </List.Item>
             ) &&
@@ -168,7 +168,7 @@ class ListContainer extends Component {
             )}
           {this.renderCategories()}
           {!this.props.isMyItems && (
-            <List.Item key={Math.random() * 1000}>
+            <List.Item key='boxes-item'>
               <Grid
                 container
                 doubling
