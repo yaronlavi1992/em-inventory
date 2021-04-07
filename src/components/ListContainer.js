@@ -8,6 +8,7 @@ import {
   Grid,
   List,
   Accordion,
+  Image,
 } from 'semantic-ui-react';
 import { addItemQuantity, reduceItemQuantity } from '../actions';
 
@@ -34,7 +35,8 @@ class ListContainer extends Component {
     const { activeIndex } = this.state;
     return this.props.items.map((item, index) => {
       return (
-        <List.Item key={item.id}>
+        <List.Item key={item.parent_name}>
+          {/* <List.Item key={item.id}> */}
           <Accordion>
             <Accordion.Title
               active={activeIndex === index}
@@ -47,40 +49,64 @@ class ListContainer extends Component {
                 divided='vertically'
                 verticalAlign='middle'
                 centered
-                style={{ padding: '0px', margin: '0px' }}
+                style={{ padding: '0px' }}
               >
                 <Grid.Row columns={this.props.isSpecialItems ? 4 : 2}>
                   <Grid.Column>
-                    <Icon name={item.icon} />
-                    {item.name}
+                    <div
+                      style={{ display: 'inline-flex', alignItems: 'center' }}
+                    >
+                      {/* <Icon name={item.icon} /> */}
+                      <Image
+                        style={{
+                          width: '20px',
+                          height: '20px',
+                          marginRight: '10px',
+                        }}
+                        src={`${process.env.PUBLIC_URL}/assets/${item.icon}`}
+                      />
+                      {item.parent_name}
+                      {/* {item.name} */}
+                    </div>
                   </Grid.Column>
 
                   {this.props.isSpecialItems && (
                     <>
                       <Grid.Column></Grid.Column>
                       <Grid.Column textAlign='right'>
-                        ${item.packageFee}
+                        {/* ${item.packageFee} */}
                       </Grid.Column>
                     </>
                   )}
 
                   <Grid.Column textAlign='right'>
                     {item.quantity === 0 ? (
-                      <Button onClick={() => this.addQuantityHandler(item.id)}>
+                      <Button
+                        onClick={() =>
+                          this.addQuantityHandler(item.parent_name)
+                        }
+                      >
+                        {/* <Button onClick={() => this.addQuantityHandler(item.id)}> */}
                         ADD
                       </Button>
                     ) : (
                       <ButtonGroup>
                         <Button
                           icon
-                          onClick={() => this.reduceQuantityHandler(item.id)}
+                          onClick={() =>
+                            this.reduceQuantityHandler(item.parent_name)
+                          }
+                          // onClick={() => this.reduceQuantityHandler(item.id)}
                         >
                           <Icon name='minus' />
                         </Button>
                         <Button disabled>{item.quantity}</Button>
                         <Button
                           icon
-                          onClick={() => this.addQuantityHandler(item.id)}
+                          onClick={() =>
+                            this.addQuantityHandler(item.parent_name)
+                          }
+                          // onClick={() => this.addQuantityHandler(item.id)}
                         >
                           <Icon name='plus' />
                         </Button>
@@ -104,7 +130,7 @@ class ListContainer extends Component {
     return (
       <List celled divided verticalAlign='middle'>
         {this.renderList()}
-        <List.Item>
+        <List.Item key={Math.random() * 1000}>
           <Grid
             container
             doubling

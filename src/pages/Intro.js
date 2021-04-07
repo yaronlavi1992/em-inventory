@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button, Header } from 'semantic-ui-react';
-import { signIn, signOut } from '../actions';
+import { signIn, signOut, fetchItems } from '../actions';
 
 export class Intro extends Component {
   componentDidMount = async () => {
     await this.props.signIn(this.props.match.params.id);
+    await this.props.fetchItems();
   };
 
   render() {
@@ -42,4 +43,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { signIn, signOut })(Intro);
+export default connect(mapStateToProps, { signIn, signOut, fetchItems })(Intro);

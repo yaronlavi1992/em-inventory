@@ -15,7 +15,8 @@ class GridContainer extends Component {
   renderList() {
     return this.props.items.map((item) => {
       return (
-        <Grid.Row key={item.id}>
+        <Grid.Row key={item.parent_name}>
+          {/* <Grid.Row key={item.id}> */}
           <Grid
             container
             doubling
@@ -34,28 +35,35 @@ class GridContainer extends Component {
                 <>
                   <Grid.Column></Grid.Column>
                   <Grid.Column textAlign='right'>
-                    ${item.packageFee}
+                    {/* ${item.packageFee} */}
                   </Grid.Column>
                 </>
               )}
 
               <Grid.Column textAlign='right'>
                 {item.quantity === 0 ? (
-                  <Button onClick={() => this.addQuantityHandler(item.id)}>
+                  <Button
+                    onClick={() => this.addQuantityHandler(item.parent_name)}
+                  >
+                    {/* <Button onClick={() => this.addQuantityHandler(item.id)}> */}
                     ADD
                   </Button>
                 ) : (
                   <ButtonGroup>
                     <Button
                       icon
-                      onClick={() => this.reduceQuantityHandler(item.id)}
+                      onClick={() =>
+                        this.reduceQuantityHandler(item.parent_name)
+                      }
+                      // onClick={() => this.reduceQuantityHandler(item.id)}
                     >
                       <Icon name='minus' />
                     </Button>
                     <Button disabled>{item.quantity}</Button>
                     <Button
                       icon
-                      onClick={() => this.addQuantityHandler(item.id)}
+                      onClick={() => this.addQuantityHandler(item.parent_name)}
+                      // onClick={() => this.addQuantityHandler(item.id)}
                     >
                       <Icon name='plus' />
                     </Button>

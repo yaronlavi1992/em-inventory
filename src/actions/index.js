@@ -9,11 +9,22 @@ import {
   SIGN_OUT,
 } from './types';
 
-export const fetchItems = (items) => {
-  return {
-    type: FETCH_ITEMS,
-    payload: items,
+export const fetchItems = () => async (dispatch) => {
+  const options = {
+    headers: {
+      Accept: 'application/json',
+    },
   };
+  const itemsResult = await axios.get('/getInventoryListing', options);
+  console.log(itemsResult.data);
+  itemsResult.data = itemsResult.data.map((item) => ({ ...item, quantity: 0 }));
+  dispatch({ type: FETCH_ITEMS, payload: itemsResult.data.slice(0, 11) });
+  // const uniqueCategories = [...new Set(itemsResult.data.map((item) => item.parent_name))]; // get unique categories
+  // console.log(unique);
+  // return {
+  //   type: FETCH_ITEMS,
+  //   payload: items,
+  // };
 };
 
 export const filterItems = (items, input) => {
