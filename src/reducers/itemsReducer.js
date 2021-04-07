@@ -42,12 +42,10 @@ import {
 const itemsReducer = (state = [], action) => {
   switch (action.type) {
     case FETCH_ITEMS:
-      console.log(action.payload);
       return action.payload;
 
     case FILTER_ITEMS:
       // return INITIAL_STATE.filter(
-      console.log(action.payload);
       return action.payload.filter(
         (item) => item.parent_name.indexOf(action.input) !== -1
         // (item) => item.name.indexOf(action.input) !== -1

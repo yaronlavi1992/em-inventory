@@ -27,10 +27,14 @@ export class Intro extends Component {
           Browse our databse of common household items to build your Inventory
           and get an accurate quote
         </p>
-        <Link to={`/${this.props.match.params.id}/items`}>
-          {/* <Link to={`/${this.props.match.params.id}/prompt`}> */}
-          <Button className='ui colorBrightGreen button'>Get Started</Button>
-        </Link>
+        {/* <Link to={`/${this.props.match.params.id}/prompt`}> */}
+        <Button
+          as={Link}
+          to={`/${this.props.match.params.id}/items`}
+          className='ui colorBrightGreen button'
+        >
+          Get Started
+        </Button>
       </>
     );
   }

@@ -9,6 +9,7 @@ import {
   List,
   Accordion,
   Image,
+  Header,
 } from 'semantic-ui-react';
 import { addItemQuantity, reduceItemQuantity } from '../actions';
 
@@ -31,9 +32,33 @@ class ListContainer extends Component {
     this.props.reduceItemQuantity(itemId);
   }
 
-  renderList() {
+  renderCategories() {
+    const uniqueCategories = [
+      ...new Set(this.props.items.map((item) => item.type_name)),
+    ]; // get unique categories
+
+    return uniqueCategories.map((category) => {
+      return (
+        <>
+          {!this.props.isMyItems && (
+            <List.Item key={category}>
+              <Header>{category}</Header>
+            </List.Item>
+          )}
+          {this.renderList(
+            // render each category header followed by its items
+            this.props.items.filter((item) => {
+              return item.type_name === category;
+            })
+          )}
+        </>
+      );
+    });
+  }
+
+  renderList(items) {
     const { activeIndex } = this.state;
-    return this.props.items.map((item, index) => {
+    return items.map((item, index) => {
       return (
         <List.Item key={item.parent_name}>
           {/* <List.Item key={item.id}> */}
@@ -128,37 +153,65 @@ class ListContainer extends Component {
 
   render() {
     return (
-      <List celled divided verticalAlign='middle'>
-        {this.renderList()}
-        <List.Item key={Math.random() * 1000}>
-          <Grid
-            container
-            doubling
-            divided='vertically'
-            verticalAlign='middle'
-            centered
-            style={{ padding: '0px', margin: '0px' }}
-          >
-            <Grid.Row columns={2}>
-              <Grid.Column>BOXES</Grid.Column>
+      <>
+        <List celled divided verticalAlign='middle'>
+          {!this.props.isMyItems && (
+            <List.Item key='common-items'>
+              <Header>COMMON ITEMS</Header>
+            </List.Item>
+          )}
+          {this.renderList(
+            // render common items
+            this.props.items.filter((item) => {
+              return item.common_item === '1';
+            })
+          )}
+          {this.renderCategories()}
+          {!this.props.isMyItems && (
+            <List.Item key={Math.random() * 1000}>
+              <Grid
+                container
+                doubling
+                divided='vertically'
+                verticalAlign='middle'
+                centered
+                style={{ padding: '0px', margin: '0px' }}
+              >
+                <Grid.Row columns={2}>
+                  <Grid.Column>BOXES</Grid.Column>
 
-              <Grid.Column textAlign='right'>
-                <Link
-                  to={`/${this.props.userToken}/box-calculator`}
-                  style={{ fontSize: '3vw' }}
-                >
-                  BOX CALCULATOR
-                </Link>
-              </Grid.Column>
-              <p style={{ fontSize: '2.6vw' }}>
-                Don't worry about getting the number of boxes just right. Your
-                final shipment weight will be calculated on the day of your
-                move.
-              </p>
-            </Grid.Row>
-          </Grid>
-        </List.Item>
-      </List>
+                  <Grid.Column textAlign='right'>
+                    <Link
+                      to={`/${this.props.userToken}/box-calculator`}
+                      style={{ fontSize: '3vw' }}
+                    >
+                      BOX CALCULATOR
+                    </Link>
+                  </Grid.Column>
+                  <p style={{ fontSize: '2.6vw' }}>
+                    Don't worry about getting the number of boxes just right.
+                    Your final shipment weight will be calculated on the day of
+                    your move.
+                  </p>
+                </Grid.Row>
+              </Grid>
+            </List.Item>
+          )}
+        </List>
+        <Grid>
+          <Grid.Row stretched centered>
+            <Button
+              style={{ margin: '12px' }}
+              as={Link}
+              to={`/${this.props.userToken}/items/special`}
+              className='ui colorBrightGreen button'
+              fluid
+            >
+              Confirm Inventory
+            </Button>
+          </Grid.Row>
+        </Grid>
+      </>
     );
   }
 }

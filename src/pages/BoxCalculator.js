@@ -4,7 +4,7 @@ import ModalExampleModal from '../components/ModalExampleModal';
 
 export class BoxCalculator extends Component {
   render() {
-    const modalImage = `${process.env.PUBLIC_URL}/assets/unified-box-calculator.svg`;
+    const modalImage = `${process.env.PUBLIC_URL}/assets/unified-box-calculator.png`;
     const modalHeader = `Would you like help calculating
         how many boxes you need?`;
     const modalContent = `By selecting your items in the following step,
@@ -15,6 +15,7 @@ export class BoxCalculator extends Component {
     return (
       <ModalExampleModal
         image={modalImage}
+        imageSize='small'
         header={modalHeader}
         content={modalContent}
         nextPage={`/${this.props.userToken}/box-calculator-loader`}

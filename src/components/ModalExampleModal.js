@@ -15,7 +15,7 @@ const ModalExampleModal = (props) => {
       <Modal.Content image className='ui centered grid'>
         <Modal.Description>
           <Image
-            size='medium'
+            size={props.imageSize}
             src={props.image}
             wrapped
             className='ui centered grid'
@@ -24,13 +24,13 @@ const ModalExampleModal = (props) => {
           <p>{props.content}</p>
         </Modal.Description>
         {props.buttonText && (
-          <Link to={props.nextPage || '/'}>
-            <Button
-              content={props.buttonText}
-              onClick={() => setOpen(false)}
-              positive
-            />
-          </Link>
+          <Button
+            as={Link}
+            to={props.nextPage || '/'}
+            content={props.buttonText}
+            onClick={() => setOpen(false)}
+            positive
+          />
         )}
         {props.skipButton && (
           <Link to={props.skipPage}>No thanks, I'll add boxes manually</Link>

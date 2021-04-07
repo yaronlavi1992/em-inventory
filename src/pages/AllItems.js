@@ -25,6 +25,7 @@ class AllItems extends Component {
       <>
         <ModalExampleModal
           image={modalImage}
+          imageSize='medium'
           header={modalHeader}
           content={modalContent}
           nextPage={`/${this.props.userToken}/items`}

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ItemList from '../components/ItemList';
 
@@ -15,15 +16,12 @@ class SpecialCareItems extends Component {
             following items for you, at an additional cost?
           </p>
           <ItemList isSpecialItems />
-          <Link
-            className='skip'
-            to={`/${this.props.match.params.id}/confirmation`}
-          >
+          <Link className='skip' to={`/${this.props.userToken}/confirmation`}>
             Skip this, I'll box these myself ?
           </Link>
 
           <div className='inv-btn-outer'>
-            <Link to={`/${this.props.match.params.id}/confirmation`}>
+            <Link to={`/${this.props.userToken}/confirmation`}>
               <p
                 id='special-care-items-done-btn'
                 href='/confirmation'
@@ -67,4 +65,10 @@ class SpecialCareItems extends Component {
   }
 }
 
-export default SpecialCareItems;
+const mapStateToProps = (state) => {
+  return {
+    userToken: state.auth.token,
+  };
+};
+
+export default connect(mapStateToProps, {})(SpecialCareItems);

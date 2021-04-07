@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import GridContainer from './GridContainer';
 import ListContainer from './ListContainer';
 
 class ItemList extends React.Component {
@@ -14,12 +13,9 @@ class ItemList extends React.Component {
     return (
       <ListContainer
         isSpecialItems={this.props.isSpecialItems}
+        isMyItems={this.props.isMyItems}
         items={this.props.isMyItems ? this.renderMyItems() : this.props.items}
       />
-      // <GridContainer
-      //   isSpecialItems={this.props.isSpecialItems}
-      //   items={this.props.isMyItems ? this.renderMyItems() : this.props.items}
-      // />
     );
   }
 }

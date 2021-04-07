@@ -18,9 +18,8 @@ export const fetchItems = () => async (dispatch) => {
   const itemsResult = await axios.get('/getInventoryListing', options);
   console.log(itemsResult.data);
   itemsResult.data = itemsResult.data.map((item) => ({ ...item, quantity: 0 }));
-  dispatch({ type: FETCH_ITEMS, payload: itemsResult.data.slice(0, 11) });
-  // const uniqueCategories = [...new Set(itemsResult.data.map((item) => item.parent_name))]; // get unique categories
-  // console.log(unique);
+  dispatch({ type: FETCH_ITEMS, payload: itemsResult.data });
+  // dispatch({ type: FETCH_ITEMS, payload: itemsResult.data.slice(0, 11) });
   // return {
   //   type: FETCH_ITEMS,
   //   payload: items,
