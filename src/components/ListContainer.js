@@ -10,6 +10,8 @@ import {
   Accordion,
   Image,
   Header,
+  Dropdown,
+  Modal,
 } from 'semantic-ui-react';
 import {
   addItemQuantity,
@@ -67,6 +69,23 @@ class ListContainer extends Component {
   renderList(items, isCommonItemsCategory = false, isBoxesCategory = false) {
     const { activeIndex } = this.state;
     return items.map((item, index) => {
+      let optionsFromInnerItems = [];
+      let actions = [];
+      if (item.innerItems) {
+        optionsFromInnerItems = item.innerItems.map((item, index) => {
+          return {
+            key: index,
+            text: item.item,
+            value: item.item_id,
+          };
+        });
+        actions = optionsFromInnerItems.map((option) => {
+          return {
+            key: option.key,
+            content: option.text,
+          };
+        });
+      }
       return (
         <List.Item
           key={`${item.parent_name} ${isCommonItemsCategory && 'common-item'}`}
@@ -164,9 +183,20 @@ class ListContainer extends Component {
               </Grid>
             </Accordion.Title>
 
-            <Accordion.Content active={activeIndex === index}>
-              <p>I'm the content!</p>
-            </Accordion.Content>
+            {item.innerItems && (
+              <Accordion.Content active={activeIndex === index}>
+                <Modal
+                  header={item.parent_name}
+                  actions={actions}
+                  trigger={
+                    <Dropdown
+                      options={optionsFromInnerItems}
+                      defaultValue={optionsFromInnerItems[0].value}
+                    />
+                  }
+                />
+              </Accordion.Content>
+            )}
           </Accordion>
         </List.Item>
       );
