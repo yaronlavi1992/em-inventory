@@ -11,7 +11,13 @@ import {
   Image,
   Header,
 } from 'semantic-ui-react';
-import { addItemQuantity, reduceItemQuantity } from '../actions';
+import {
+  addItemQuantity,
+  reduceItemQuantity,
+  storeInventory,
+  triggerAllItemsModal,
+  triggerBoxCalculator,
+} from '../actions';
 
 class ListContainer extends Component {
   state = { activeIndex: null };
@@ -49,18 +55,22 @@ class ListContainer extends Component {
             // render each category header followed by its items
             this.props.items.filter((item) => {
               return item.type_name === category;
-            })
+            }),
+            false,
+            category === 'Boxes'
           )}
         </>
       );
     });
   }
 
-  renderList(items) {
+  renderList(items, isCommonItemsCategory = false, isBoxesCategory = false) {
     const { activeIndex } = this.state;
     return items.map((item, index) => {
       return (
-        <List.Item key={item.parent_name}>
+        <List.Item
+          key={`${item.parent_name} ${isCommonItemsCategory && 'common-item'}`}
+        >
           {/* <List.Item key={item.id}> */}
           <Accordion>
             <Accordion.Title
@@ -106,14 +116,26 @@ class ListContainer extends Component {
 
                   <Grid.Column textAlign='right'>
                     {item.quantity === 0 ? (
-                      <Button
-                        onClick={() =>
-                          this.addQuantityHandler(item.parent_name)
-                        }
-                      >
-                        {/* <Button onClick={() => this.addQuantityHandler(item.id)}> */}
-                        ADD
-                      </Button>
+                      isBoxesCategory &&
+                      !this.props.triggers.isBoxCalcTriggered ? (
+                        <Button
+                          as={Link}
+                          to={`/${this.props.userToken}/box-calculator`}
+                          onClick={this.props.triggerBoxCalculator}
+                        >
+                          {/* <Button onClick={() => this.addQuantityHandler(item.id)}> */}
+                          ADD
+                        </Button>
+                      ) : (
+                        <Button
+                          onClick={() =>
+                            this.addQuantityHandler(item.parent_name)
+                          }
+                        >
+                          {/* <Button onClick={() => this.addQuantityHandler(item.id)}> */}
+                          ADD
+                        </Button>
+                      )
                     ) : (
                       <ButtonGroup>
                         <Button
@@ -157,14 +179,16 @@ class ListContainer extends Component {
         <List celled divided verticalAlign='middle'>
           {/* render common items */}
           {!this.props.isMyItems && (
-              <List.Item key='common-item-item'>
-                <Header>COMMON ITEMS</Header>
-              </List.Item>
-            ) &&
+            <List.Item key='common-items'>
+              <Header>COMMON ITEMS</Header>
+            </List.Item>
+          )}
+          {!this.props.isMyItems &&
             this.renderList(
               this.props.items.filter((item) => {
                 return item.common_item === '1';
-              })
+              }),
+              true
             )}
           {this.renderCategories()}
           {!this.props.isMyItems && (
@@ -204,6 +228,12 @@ class ListContainer extends Component {
               style={{ margin: '12px' }}
               as={Link}
               to={`/${this.props.userToken}/items/special`}
+              onClick={() =>
+                this.props.storeInventory(
+                  this.props.items,
+                  this.props.userToken
+                )
+              }
               className='ui colorBrightGreen button'
               fluid
             >
@@ -219,10 +249,14 @@ class ListContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     userToken: state.auth.token,
+    triggers: state.triggers,
   };
 };
 
 export default connect(mapStateToProps, {
   addItemQuantity,
   reduceItemQuantity,
+  triggerBoxCalculator,
+  triggerAllItemsModal,
+  storeInventory,
 })(ListContainer);

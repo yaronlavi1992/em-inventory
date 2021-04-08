@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Grid, Header, Segment, Tab } from 'semantic-ui-react';
-import { fetchItems } from '../actions';
+import { fetchItems, storeInventory, triggerAllItemsModal } from '../actions';
 import ItemList from '../components/ItemList';
 import ModalExampleModal from '../components/ModalExampleModal';
 import SearchBar from '../components/SearchBar';
@@ -12,7 +12,11 @@ class AllItems extends Component {
     const result = this.props.items.reduce((sum, val) => sum + val.quantity, 0);
     return result || '';
   }
-
+  componentDidUpdate() {
+    if (!this.props.triggers.isAllItemsModalTriggered) {
+      this.props.triggerAllItemsModal();
+    }
+  }
   render() {
     const modalImage = `${process.env.PUBLIC_URL}/assets/confused.svg`;
     const modalHeader = `Don't Sweat the Small Stuff`;
@@ -23,14 +27,16 @@ class AllItems extends Component {
       the move.`;
     return (
       <>
-        <ModalExampleModal
-          image={modalImage}
-          imageSize='medium'
-          header={modalHeader}
-          content={modalContent}
-          nextPage={`/${this.props.userToken}/items`}
-          buttonText='OK, GOT IT!'
-        />
+        {!this.props.triggers.isAllItemsModalTriggered && (
+          <ModalExampleModal
+            image={modalImage}
+            imageSize='medium'
+            header={modalHeader}
+            content={modalContent}
+            nextPage={`/${this.props.userToken}/items`}
+            buttonText='OK, GOT IT!'
+          />
+        )}
 
         <Grid
           verticalAlign='middle'
@@ -57,6 +63,12 @@ class AllItems extends Component {
                   floated='right'
                   textAlign='center'
                   style={{ color: '#20b118', fontSize: '3vw' }}
+                  onClick={() =>
+                    this.props.storeInventory(
+                      this.props.items,
+                      this.props.userToken
+                    )
+                  }
                 >
                   CONFIRM INVENTORY
                 </Header>
@@ -80,7 +92,7 @@ class AllItems extends Component {
                           margin: '0px',
                         }}
                       >
-                        <ItemList isSpecialItems={false} />
+                        <ItemList isSpecialItems={false} isMyItems={false} />
                       </Segment>
                     </Tab.Pane>
                   ),
@@ -97,7 +109,7 @@ class AllItems extends Component {
                           margin: '0px',
                         }}
                       >
-                        <ItemList isMyItems />
+                        <ItemList isSpecialItems={false} isMyItems />
                       </Segment>
                     </Tab.Pane>
                   ),
@@ -115,7 +127,12 @@ const mapStateToProps = (state) => {
   return {
     userToken: state.auth.token,
     items: state.items,
+    triggers: state.triggers,
   };
 };
 
-export default connect(mapStateToProps, { fetchItems })(AllItems);
+export default connect(mapStateToProps, {
+  fetchItems,
+  storeInventory,
+  triggerAllItemsModal,
+})(AllItems);

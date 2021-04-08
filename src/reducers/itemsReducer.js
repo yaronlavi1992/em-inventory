@@ -53,6 +53,12 @@ const itemsReducer = (state = [], action) => {
       }).quantity--;
       return [...state];
 
+    case types.STORE_INVENTORY:
+      return state;
+
+    case types.SUBMIT_INVENTORY:
+      return state;
+
     default:
       return state;
   }

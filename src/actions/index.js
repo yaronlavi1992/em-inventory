@@ -58,8 +58,86 @@ export const signIn = (userId) => async (dispatch) => {
   dispatch({ type: types.SIGN_IN, payload: loginResult.data, token: userId });
 };
 
+export const storeInventory = (items, userId) => async (dispatch) => {
+  // console.log(items);
+  items = items.filter((item) => item.quantity > 0);
+  const inventoryFromItems = [
+    items.map((item) => {
+      return {
+        item_id: Number(
+          item.innerItems ? item.innerItems[0].item_id : item.item_ids
+        ),
+        item_quantity: item.quantity,
+      };
+    }),
+  ];
+  // console.log(inventoryFromItems);
+  const body = {
+    id: userId,
+    inventory: inventoryFromItems,
+  };
+  const options = {
+    headers: {
+      Accept: '*/*',
+      'Content-Type': 'application/json',
+    },
+  };
+  const storeResult = await axios.post('/storeInventory', body, options);
+  // console.log(storeResult);
+  dispatch({
+    type: types.STORE_INVENTORY,
+    payload: storeResult.data,
+    token: userId,
+  });
+};
+
+export const submitInventory = (items, userId) => async (dispatch) => {
+  // console.log(items);
+  items = items.filter((item) => item.quantity > 0);
+  const inventoryFromItems = [
+    items.map((item) => {
+      return {
+        item_id: Number(
+          item.innerItems ? item.innerItems[0].item_id : item.item_ids
+        ),
+        item_quantity: item.quantity,
+      };
+    }),
+  ];
+  // console.log(inventoryFromItems);
+  const body = {
+    id: userId,
+    inventory: inventoryFromItems,
+  };
+  const options = {
+    headers: {
+      Accept: '*/*',
+      'Content-Type': 'application/json',
+    },
+  };
+  const submitResult = await axios.post('/submitInventory', body, options);
+  // console.log(submitResult);
+  dispatch({
+    type: types.SUBMIT_INVENTORY,
+    payload: submitResult.data,
+    token: userId,
+  });
+};
+
 export const signOut = () => {
   return {
     type: types.SIGN_OUT,
+  };
+};
+
+export const triggerBoxCalculator = () => {
+  return {
+    type: types.TRIGGER_BOX_CALCULATOR,
+  };
+};
+
+export const triggerAllItemsModal = () => {
+  return {
+    type: types.TRIGGER_ALLITEMS_MODAL,
   };
 };
