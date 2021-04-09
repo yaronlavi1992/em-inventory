@@ -36,17 +36,13 @@ body {
   src: url(./assets/left_arrow.svg);
 }
 
-.ui.button,
-.ui.buttons .button,
-.ui.buttons .or,
-.ui.disabled.button {
-  color: white;
-  background-color: #3a4b60;
-}
-
 .ui.tabular.menu .item {
   justify-content: center;
   min-width: 50%;
+}
+
+.ui.tabular.menu .active.item {
+  background-color: #f0f1f3 !important;
 }
 
 .ui.tabular.menu .item:not(.active) {

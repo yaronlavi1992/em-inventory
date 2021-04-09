@@ -11,7 +11,7 @@ import {
   Image,
   Header,
   Dropdown,
-  Modal,
+  Menu,
 } from 'semantic-ui-react';
 import {
   addItemQuantity,
@@ -20,6 +20,7 @@ import {
   triggerAllItemsModal,
   triggerBoxCalculator,
 } from '../actions';
+import ItemOptionsModal from './ItemOptionsModal';
 
 class ListContainer extends Component {
   state = { activeIndex: null };
@@ -49,7 +50,7 @@ class ListContainer extends Component {
       return (
         <>
           {!this.props.isMyItems && (
-            <List.Item key={category}>
+            <List.Item key={category} style={{ backgroundColor: '#E7E8EC' }}>
               <Header>{category}</Header>
             </List.Item>
           )}
@@ -58,7 +59,6 @@ class ListContainer extends Component {
             this.props.items.filter((item) => {
               return item.type_name === category;
             }),
-            false,
             category === 'Boxes'
           )}
         </>
@@ -66,7 +66,7 @@ class ListContainer extends Component {
     });
   }
 
-  renderList(items, isCommonItemsCategory = false, isBoxesCategory = false) {
+  renderList(items, isBoxesCategory = false) {
     const { activeIndex } = this.state;
     return items.map((item, index) => {
       let optionsFromInnerItems = [];
@@ -87,9 +87,7 @@ class ListContainer extends Component {
         });
       }
       return (
-        <List.Item
-          key={`${item.parent_name} ${isCommonItemsCategory && 'common-item'}`}
-        >
+        <List.Item key={item.parent_name}>
           {/* <List.Item key={item.id}> */}
           <Accordion>
             <Accordion.Title
@@ -138,6 +136,11 @@ class ListContainer extends Component {
                       isBoxesCategory &&
                       !this.props.triggers.isBoxCalcTriggered ? (
                         <Button
+                          style={{
+                            borderRadius: '500px',
+                            backgroundColor: 'inherit',
+                            border: '1px solid',
+                          }}
                           as={Link}
                           to={`/${this.props.userToken}/box-calculator`}
                           onClick={this.props.triggerBoxCalculator}
@@ -147,6 +150,11 @@ class ListContainer extends Component {
                         </Button>
                       ) : (
                         <Button
+                          style={{
+                            borderRadius: '500px',
+                            backgroundColor: 'inherit',
+                            border: '1px solid',
+                          }}
                           onClick={() =>
                             this.addQuantityHandler(item.parent_name)
                           }
@@ -156,27 +164,48 @@ class ListContainer extends Component {
                         </Button>
                       )
                     ) : (
-                      <ButtonGroup>
-                        <Button
-                          icon
+                      <Menu
+                        size='mini'
+                        style={{
+                          display: 'inline-flex',
+                          borderRadius: '500px',
+                          backgroundColor: '#3A4B60',
+                        }}
+                      >
+                        <Menu.Item
+                          style={{
+                            color: 'white',
+                            paddingRight: '8px',
+                            paddingLeft: '8px',
+                          }}
                           onClick={() =>
                             this.reduceQuantityHandler(item.parent_name)
                           }
-                          // onClick={() => this.reduceQuantityHandler(item.id)}
                         >
                           <Icon name='minus' />
-                        </Button>
-                        <Button disabled>{item.quantity}</Button>
-                        <Button
-                          icon
+                        </Menu.Item>
+                        <Menu.Item
+                          style={{
+                            color: 'white',
+                            paddingRight: '8px',
+                            paddingLeft: '8px',
+                          }}
+                        >
+                          {item.quantity}
+                        </Menu.Item>
+                        <Menu.Item
+                          style={{
+                            color: 'white',
+                            paddingRight: '8px',
+                            paddingLeft: '8px',
+                          }}
                           onClick={() =>
                             this.addQuantityHandler(item.parent_name)
                           }
-                          // onClick={() => this.addQuantityHandler(item.id)}
                         >
                           <Icon name='plus' />
-                        </Button>
-                      </ButtonGroup>
+                        </Menu.Item>
+                      </Menu>
                     )}
                   </Grid.Column>
                 </Grid.Row>
@@ -185,15 +214,16 @@ class ListContainer extends Component {
 
             {item.innerItems && (
               <Accordion.Content active={activeIndex === index}>
-                <Modal
-                  header={item.parent_name}
-                  actions={actions}
+                <ItemOptionsModal
                   trigger={
                     <Dropdown
+                      style={{ color: '#57C3F3' }}
                       options={optionsFromInnerItems}
                       defaultValue={optionsFromInnerItems[0].value}
                     />
                   }
+                  header={item.parent_name}
+                  actions={actions}
                 />
               </Accordion.Content>
             )}
@@ -217,8 +247,7 @@ class ListContainer extends Component {
             this.renderList(
               this.props.items.filter((item) => {
                 return item.common_item === '1';
-              }),
-              true
+              })
             )}
           {this.renderCategories()}
           {!this.props.isMyItems && (

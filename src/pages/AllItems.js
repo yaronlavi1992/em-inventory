@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Grid, Header, Segment, Tab } from 'semantic-ui-react';
+import { Grid, Header, Label, Menu, Segment, Tab } from 'semantic-ui-react';
 import { fetchItems, storeInventory, triggerAllItemsModal } from '../actions';
 import ItemList from '../components/ItemList';
 import ModalExampleModal from '../components/ModalExampleModal';
@@ -10,7 +10,19 @@ import SearchBar from '../components/SearchBar';
 class AllItems extends Component {
   renderItemsTotalQuantity() {
     const result = this.props.items.reduce((sum, val) => sum + val.quantity, 0);
-    return result || '';
+    return (
+      (
+        <Label
+          style={{
+            color: 'black',
+            backgroundColor: 'white',
+            borderRadius: '15px',
+          }}
+        >
+          {result}
+        </Label>
+      ) || ''
+    );
   }
   componentDidUpdate() {
     if (!this.props.triggers.isAllItemsModalTriggered) {
@@ -42,7 +54,7 @@ class AllItems extends Component {
           verticalAlign='middle'
           centered
           padded='vertically'
-          style={{ backgroundColor: 'white' }}
+          style={{ backgroundColor: '#F0F1F3' }}
         >
           <Grid.Row columns={2}>
             <Grid.Column>
@@ -78,18 +90,23 @@ class AllItems extends Component {
 
           <Grid.Row style={{ padding: '0px' }}>
             <Tab
-              style={{ width: 'inherit' }}
+              style={{ width: 'inherit', backgroundColor: '#F0F1F3' }}
               panes={[
                 {
-                  menuItem: 'All Items',
+                  menuItem: 'ALL ITEMS',
                   render: () => (
-                    <Tab.Pane style={{ padding: '0px' }}>
+                    <Tab.Pane
+                      style={{ padding: '0px', backgroundColor: '#F0F1F3' }}
+                    >
                       <SearchBar />
                       <Segment
                         style={{
                           overflow: 'auto',
                           maxHeight: 550,
                           margin: '0px',
+                          paddingLeft: '0px',
+                          paddingRight: '0px',
+                          backgroundColor: '#f0f1f3',
                         }}
                       >
                         <ItemList isSpecialItems={false} isMyItems={false} />
@@ -98,15 +115,33 @@ class AllItems extends Component {
                   ),
                 },
                 {
-                  menuItem: `My Items ${this.renderItemsTotalQuantity()}`,
+                  menuItem: (
+                    <Menu.Item key='my-items'>
+                      <Grid verticalAlign='middle'>
+                        <Grid.Row>
+                          <Grid.Column width={10} style={{ padding: '0px' }}>
+                            MY ITEMS
+                          </Grid.Column>
+                          <Grid.Column width={6}>
+                            {this.renderItemsTotalQuantity()}
+                          </Grid.Column>
+                        </Grid.Row>
+                      </Grid>
+                    </Menu.Item>
+                  ),
                   render: () => (
-                    <Tab.Pane style={{ padding: '0px' }}>
+                    <Tab.Pane
+                      style={{ padding: '0px', backgroundColor: '#F0F1F3' }}
+                    >
                       <SearchBar isMyItems />
                       <Segment
                         style={{
                           overflow: 'auto',
                           maxHeight: 550,
                           margin: '0px',
+                          paddingLeft: '0px',
+                          paddingRight: '0px',
+                          backgroundColor: '#f0f1f3',
                         }}
                       >
                         <ItemList isSpecialItems={false} isMyItems />

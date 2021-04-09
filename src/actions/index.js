@@ -9,7 +9,6 @@ export const fetchItems = () => async (dispatch) => {
   };
   const itemsResult = await axios.get('/getInventoryListing', options);
   console.log(itemsResult.data);
-  itemsResult.data = itemsResult.data.map((item) => ({ ...item, quantity: 0 }));
   dispatch({ type: types.FETCH_ITEMS, payload: itemsResult.data });
   // dispatch({ type: types.FETCH_ITEMS, payload: itemsResult.data.slice(0, 11) });
 };
