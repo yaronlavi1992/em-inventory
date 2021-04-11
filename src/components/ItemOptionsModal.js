@@ -1,8 +1,11 @@
 import React from 'react';
-import { Button, Modal } from 'semantic-ui-react';
+import { Button, Dropdown, Modal } from 'semantic-ui-react';
 
-function ItemOptionsModal(props) {
+const ItemOptionsModal = (props) => {
   const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState(
+    props.optionsFromInnerItems[0].value
+  );
 
   return (
     <Modal
@@ -10,13 +13,25 @@ function ItemOptionsModal(props) {
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
-      trigger={props.trigger}
+      trigger={
+        <Dropdown
+          style={{ color: '#57C3F3' }}
+          options={props.optionsFromInnerItems}
+          value={value}
+        />
+      }
     >
       <Modal.Header>{props.header}</Modal.Header>
       <Modal.Actions style={{ display: 'grid' }}>
         {props.actions.map((button) => {
           return (
-            <Button key={button.key} onClick={() => setOpen(false)}>
+            <Button
+              key={button.key}
+              onClick={() => {
+                setOpen(false);
+                setValue(button.id);
+              }}
+            >
               {button.content}
             </Button>
           );
@@ -24,6 +39,6 @@ function ItemOptionsModal(props) {
       </Modal.Actions>
     </Modal>
   );
-}
+};
 
 export default ItemOptionsModal;

@@ -9,13 +9,23 @@ class ItemList extends React.Component {
     });
   }
 
+  renderSpecialItems() {
+    return this.props.items.filter((item) => {
+      return item.quantity > 0 && item.sh_price !== '0';
+    });
+  }
+
   render() {
     return (
       <ListContainer
         isSpecialItems={this.props.isSpecialItems}
         isMyItems={this.props.isMyItems}
         items={
-          this.props.isMyItems ? this.renderMyItems() : this.props.filteredItems
+          this.props.isMyItems
+            ? this.renderMyItems()
+            : this.props.isSpecialItems
+            ? this.renderSpecialItems()
+            : this.props.filteredItems
         }
       />
     );

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Icon } from 'semantic-ui-react';
 import { submitInventory } from '../actions';
 import ItemList from '../components/ItemList';
 
@@ -8,6 +9,12 @@ class SpecialCareItems extends Component {
   render() {
     return (
       <div className='specialCare-pop' style={{ display: 'block' }}>
+        <Link to={`/${this.props.userToken}/items`}>
+          <p style={{ color: 'white', float: 'left', marginLeft: '12.5px' }}>
+            <Icon style={{ margin: '0px' }} name='angle left' />
+            Go Back
+          </p>
+        </Link>
         <div className='specialCare-pop-inner'>
           <div className='specialCare-title'>Some Items Require Boxing</div>
 
@@ -17,21 +24,29 @@ class SpecialCareItems extends Component {
             following items for you, at an additional cost?
           </p>
           <ItemList isSpecialItems />
-          <Link className='skip' to={`/${this.props.userToken}/confirmation`}>
+          <Link
+            className='skip'
+            to={`/${this.props.userToken}/confirmation`}
+            onClick={() => {
+              this.props.submitInventory(
+                this.props.items,
+                this.props.userToken
+              );
+            }}
+          >
             Skip this, I'll box these myself ?
           </Link>
 
           <div className='inv-btn-outer'>
-            <Link
-              to={`/${this.props.userToken}/confirmation`}
-              onClick={this.props.submitInventory(
-                this.props.items,
-                this.props.userToken
-              )}
-            >
+            <Link to={`/${this.props.userToken}/confirmation`}>
               <p
+                onClick={() =>
+                  this.props.submitInventory(
+                    this.props.items,
+                    this.props.userToken
+                  )
+                }
                 id='special-care-items-done-btn'
-                href='/confirmation'
                 className='btn inv-btn doneInv'
               >
                 Done

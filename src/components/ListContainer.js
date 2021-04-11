@@ -4,13 +4,11 @@ import { Link } from 'react-router-dom';
 import {
   Button,
   Icon,
-  ButtonGroup,
   Grid,
   List,
   Accordion,
   Image,
   Header,
-  Dropdown,
   Menu,
 } from 'semantic-ui-react';
 import {
@@ -49,7 +47,7 @@ class ListContainer extends Component {
     return uniqueCategories.map((category) => {
       return (
         <>
-          {!this.props.isMyItems && (
+          {!this.props.isMyItems && !this.props.isSpecialItems && (
             <List.Item key={category} style={{ backgroundColor: '#E7E8EC' }}>
               <Header>{category}</Header>
             </List.Item>
@@ -83,6 +81,7 @@ class ListContainer extends Component {
           return {
             key: option.key,
             content: option.text,
+            id: option.value,
           };
         });
       }
@@ -215,13 +214,7 @@ class ListContainer extends Component {
             {item.innerItems && (
               <Accordion.Content active={activeIndex === index}>
                 <ItemOptionsModal
-                  trigger={
-                    <Dropdown
-                      style={{ color: '#57C3F3' }}
-                      options={optionsFromInnerItems}
-                      defaultValue={optionsFromInnerItems[0].value}
-                    />
-                  }
+                  optionsFromInnerItems={optionsFromInnerItems}
                   header={item.parent_name}
                   actions={actions}
                 />
@@ -238,7 +231,7 @@ class ListContainer extends Component {
       <>
         <List celled divided verticalAlign='middle'>
           {/* render common items */}
-          {!this.props.isMyItems && (
+          {!this.props.isMyItems && !this.props.isSpecialItems && (
             <List.Item key='common-items'>
               <Header>COMMON ITEMS</Header>
             </List.Item>
@@ -250,7 +243,7 @@ class ListContainer extends Component {
               })
             )}
           {this.renderCategories()}
-          {!this.props.isMyItems && (
+          {!this.props.isMyItems && !this.props.isSpecialItems && (
             <List.Item key='boxes-item'>
               <Grid
                 container
@@ -281,25 +274,27 @@ class ListContainer extends Component {
             </List.Item>
           )}
         </List>
-        <Grid>
-          <Grid.Row stretched centered>
-            <Button
-              style={{ margin: '12px' }}
-              as={Link}
-              to={`/${this.props.userToken}/items/special`}
-              onClick={() =>
-                this.props.storeInventory(
-                  this.props.items,
-                  this.props.userToken
-                )
-              }
-              className='ui colorBrightGreen button'
-              fluid
-            >
-              Confirm Inventory
-            </Button>
-          </Grid.Row>
-        </Grid>
+        {!this.props.isSpecialItems && (
+          <Grid>
+            <Grid.Row stretched centered>
+              <Button
+                style={{ margin: '12px' }}
+                as={Link}
+                to={`/${this.props.userToken}/items/special`}
+                onClick={() =>
+                  this.props.storeInventory(
+                    this.props.items,
+                    this.props.userToken
+                  )
+                }
+                className='ui colorBrightGreen button'
+                fluid
+              >
+                Confirm Inventory
+              </Button>
+            </Grid.Row>
+          </Grid>
+        )}
       </>
     );
   }

@@ -1,5 +1,5 @@
 body {
-  background-color: #cccfd5;
+  background-color: #cccfd5 !important;
 }
 
 .ui.stackable.grid {

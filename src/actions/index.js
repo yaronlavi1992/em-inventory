@@ -115,7 +115,7 @@ export const submitInventory = (items, userId) => async (dispatch) => {
     },
   };
   const submitResult = await axios.post('/submitInventory', body, options);
-  // console.log(submitResult);
+  console.log(submitResult);
   dispatch({
     type: types.SUBMIT_INVENTORY,
     payload: submitResult.data,
