@@ -3,13 +3,11 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
   Button,
-  Icon,
   Grid,
   List,
   Accordion,
   Image,
   Header,
-  Menu,
 } from 'semantic-ui-react';
 import {
   addItemQuantity,
@@ -19,6 +17,24 @@ import {
   triggerBoxCalculator,
 } from '../actions';
 import ItemOptionsModal from './ItemOptionsModal';
+import FirstItemOptionsModal from './FirstItemOptionsModal';
+import ItemQuantityMenu from './ItemQuantityMenu';
+
+const styles = {
+  listItem: {
+    backgroundColor: '#E7E8EC',
+  },
+  addBtn: {
+    borderRadius: '500px',
+    backgroundColor: 'inherit',
+    border: '1px solid',
+  },
+  listItemIcon: {
+    width: '20px',
+    height: '20px',
+    marginRight: '10px',
+  },
+};
 
 class ListContainer extends Component {
   state = { activeIndex: null };
@@ -35,10 +51,6 @@ class ListContainer extends Component {
     this.props.addItemQuantity(itemId);
   }
 
-  reduceQuantityHandler(itemId) {
-    this.props.reduceItemQuantity(itemId);
-  }
-
   renderCategories() {
     const uniqueCategories = [
       ...new Set(this.props.items.map((item) => item.type_name)),
@@ -46,12 +58,49 @@ class ListContainer extends Component {
 
     return uniqueCategories.map((category) => {
       return (
-        <>
-          {!this.props.isMyItems && !this.props.isSpecialItems && (
-            <List.Item key={category} style={{ backgroundColor: '#E7E8EC' }}>
-              <Header>{category}</Header>
-            </List.Item>
-          )}
+        <React.Fragment key={category}>
+          {category !== 'Boxes' &&
+            !this.props.itemsSearchInput &&
+            !this.props.isMyItems &&
+            !this.props.isSpecialItems && (
+              <List.Item key={category} style={styles.listItem}>
+                <Header>{category}</Header>
+              </List.Item>
+            )}
+
+          {category === 'Boxes' &&
+            !this.props.isMyItems &&
+            !this.props.isSpecialItems && (
+              <List.Item key='boxes-item' style={styles.listItem}>
+                <Grid
+                  container
+                  doubling
+                  divided='vertically'
+                  verticalAlign='middle'
+                  centered
+                  style={{ padding: '0px', margin: '0px' }}
+                >
+                  <Grid.Row columns={2}>
+                    <Grid.Column>BOXES</Grid.Column>
+
+                    <Grid.Column textAlign='right'>
+                      <Link
+                        to={`/${this.props.userToken}/box-calculator`}
+                        style={{ fontSize: '3vw' }}
+                      >
+                        BOX CALCULATOR
+                      </Link>
+                    </Grid.Column>
+                    <p style={{ fontSize: '2.6vw' }}>
+                      Don't worry about getting the number of boxes just right.
+                      Your final shipment weight will be calculated on the day
+                      of your move.
+                    </p>
+                  </Grid.Row>
+                </Grid>
+              </List.Item>
+            )}
+
           {this.renderList(
             // render each category header followed by its items
             this.props.items.filter((item) => {
@@ -59,7 +108,7 @@ class ListContainer extends Component {
             }),
             category === 'Boxes'
           )}
-        </>
+        </React.Fragment>
       );
     });
   }
@@ -70,11 +119,12 @@ class ListContainer extends Component {
       let optionsFromInnerItems = [];
       let actions = [];
       if (item.innerItems) {
-        optionsFromInnerItems = item.innerItems.map((item, index) => {
+        optionsFromInnerItems = item.innerItems.map((innerItem, index) => {
           return {
             key: index,
-            text: item.item,
-            value: item.item_id,
+            text: innerItem.item,
+            value: innerItem.item_id,
+            quantity: innerItem.quantity,
           };
         });
         actions = optionsFromInnerItems.map((option) => {
@@ -82,12 +132,12 @@ class ListContainer extends Component {
             key: option.key,
             content: option.text,
             id: option.value,
+            quantity: option.quantity,
           };
         });
       }
       return (
         <List.Item key={item.parent_name}>
-          {/* <List.Item key={item.id}> */}
           <Accordion>
             <Accordion.Title
               active={activeIndex === index}
@@ -107,26 +157,18 @@ class ListContainer extends Component {
                     <div
                       style={{ display: 'inline-flex', alignItems: 'center' }}
                     >
-                      {/* <Icon name={item.icon} /> */}
                       <Image
-                        style={{
-                          width: '20px',
-                          height: '20px',
-                          marginRight: '10px',
-                        }}
+                        style={styles.listItemIcon}
                         src={`${process.env.PUBLIC_URL}/assets/${item.icon}`}
                       />
                       {item.parent_name}
-                      {/* {item.name} */}
                     </div>
                   </Grid.Column>
 
                   {this.props.isSpecialItems && (
                     <>
                       <Grid.Column></Grid.Column>
-                      <Grid.Column textAlign='right'>
-                        {/* ${item.packageFee} */}
-                      </Grid.Column>
+                      <Grid.Column textAlign='right'></Grid.Column>
                     </>
                   )}
 
@@ -135,76 +177,36 @@ class ListContainer extends Component {
                       isBoxesCategory &&
                       !this.props.triggers.isBoxCalcTriggered ? (
                         <Button
-                          style={{
-                            borderRadius: '500px',
-                            backgroundColor: 'inherit',
-                            border: '1px solid',
-                          }}
+                          style={styles.addBtn}
                           as={Link}
                           to={`/${this.props.userToken}/box-calculator`}
                           onClick={this.props.triggerBoxCalculator}
                         >
-                          {/* <Button onClick={() => this.addQuantityHandler(item.id)}> */}
                           ADD
                         </Button>
                       ) : (
                         <Button
-                          style={{
-                            borderRadius: '500px',
-                            backgroundColor: 'inherit',
-                            border: '1px solid',
-                          }}
-                          onClick={() =>
-                            this.addQuantityHandler(item.parent_name)
-                          }
+                          style={styles.addBtn}
+                          onClick={() => this.addQuantityHandler(item.item_ids)}
                         >
-                          {/* <Button onClick={() => this.addQuantityHandler(item.id)}> */}
                           ADD
                         </Button>
                       )
                     ) : (
-                      <Menu
-                        size='mini'
-                        style={{
-                          display: 'inline-flex',
-                          borderRadius: '500px',
-                          backgroundColor: '#3A4B60',
-                        }}
-                      >
-                        <Menu.Item
-                          style={{
-                            color: 'white',
-                            paddingRight: '8px',
-                            paddingLeft: '8px',
-                          }}
-                          onClick={() =>
-                            this.reduceQuantityHandler(item.parent_name)
-                          }
-                        >
-                          <Icon name='minus' />
-                        </Menu.Item>
-                        <Menu.Item
-                          style={{
-                            color: 'white',
-                            paddingRight: '8px',
-                            paddingLeft: '8px',
-                          }}
-                        >
-                          {item.quantity}
-                        </Menu.Item>
-                        <Menu.Item
-                          style={{
-                            color: 'white',
-                            paddingRight: '8px',
-                            paddingLeft: '8px',
-                          }}
-                          onClick={() =>
-                            this.addQuantityHandler(item.parent_name)
-                          }
-                        >
-                          <Icon name='plus' />
-                        </Menu.Item>
-                      </Menu>
+                      <>
+                        {item.innerItems && (
+                          <FirstItemOptionsModal
+                            item={item}
+                            optionsFromInnerItems={optionsFromInnerItems}
+                            header={item.parent_name}
+                            innerItems={actions}
+                          />
+                        )}
+                        <ItemQuantityMenu
+                          itemQuantity={item.quantity}
+                          itemId={item.item_ids}
+                        />
+                      </>
                     )}
                   </Grid.Column>
                 </Grid.Row>
@@ -230,53 +232,24 @@ class ListContainer extends Component {
     return (
       <>
         <List celled divided verticalAlign='middle'>
-          {/* render common items */}
-          {!this.props.isMyItems && !this.props.isSpecialItems && (
-            <List.Item key='common-items'>
-              <Header>COMMON ITEMS</Header>
-            </List.Item>
-          )}
+          {!this.props.itemsSearchInput &&
+            !this.props.isMyItems &&
+            !this.props.isSpecialItems && (
+              <List.Item key='common-items' style={styles.listItem}>
+                <Header>COMMON ITEMS</Header>
+              </List.Item>
+            )}
           {!this.props.isMyItems &&
             this.renderList(
               this.props.items.filter((item) => {
-                return item.common_item === '1';
+                return item.common_item === 1;
               })
             )}
           {this.renderCategories()}
-          {!this.props.isMyItems && !this.props.isSpecialItems && (
-            <List.Item key='boxes-item'>
-              <Grid
-                container
-                doubling
-                divided='vertically'
-                verticalAlign='middle'
-                centered
-                style={{ padding: '0px', margin: '0px' }}
-              >
-                <Grid.Row columns={2}>
-                  <Grid.Column>BOXES</Grid.Column>
-
-                  <Grid.Column textAlign='right'>
-                    <Link
-                      to={`/${this.props.userToken}/box-calculator`}
-                      style={{ fontSize: '3vw' }}
-                    >
-                      BOX CALCULATOR
-                    </Link>
-                  </Grid.Column>
-                  <p style={{ fontSize: '2.6vw' }}>
-                    Don't worry about getting the number of boxes just right.
-                    Your final shipment weight will be calculated on the day of
-                    your move.
-                  </p>
-                </Grid.Row>
-              </Grid>
-            </List.Item>
-          )}
         </List>
         {!this.props.isSpecialItems && (
           <Grid>
-            <Grid.Row stretched centered>
+            <Grid.Row stretched centered style={{ padding: '12px' }}>
               <Button
                 style={{ margin: '12px' }}
                 as={Link}
@@ -304,6 +277,7 @@ const mapStateToProps = (state) => {
   return {
     userToken: state.auth.token,
     triggers: state.triggers,
+    itemsSearchInput: state.itemsSearchInput,
   };
 };
 

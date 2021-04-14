@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
-import history from '../history';
 import Intro from '../pages/Intro';
 import MainHeader from './MainHeader';
 import AllItems from '../pages/AllItems';
@@ -15,7 +14,7 @@ class App extends Component {
   render() {
     return (
       <Container style={{ margin: '0px' }}>
-        <BrowserRouter basename={process.env.PUBLIC_URL} history={history}>
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
           <MainHeader />
           <Switch>
             <Route path='/:id' exact component={Intro} />

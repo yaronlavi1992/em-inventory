@@ -11,6 +11,8 @@ body {
   color: #3a4b60;
   border-radius: 15px;
   height: 780px;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
 }
 
 #search-bar {

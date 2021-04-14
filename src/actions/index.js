@@ -10,14 +10,13 @@ export const fetchItems = () => async (dispatch) => {
   const itemsResult = await axios.get('/getInventoryListing', options);
   console.log(itemsResult.data);
   dispatch({ type: types.FETCH_ITEMS, payload: itemsResult.data });
-  // dispatch({ type: types.FETCH_ITEMS, payload: itemsResult.data.slice(0, 11) });
 };
 
 export const filterItems = (items, input) => {
   return {
     type: types.FILTER_ITEMS,
     payload: items,
-    input: input,
+    input,
   };
 };
 

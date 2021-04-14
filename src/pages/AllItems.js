@@ -104,8 +104,7 @@ class AllItems extends Component {
                           overflow: 'auto',
                           maxHeight: 550,
                           margin: '0px',
-                          paddingLeft: '0px',
-                          paddingRight: '0px',
+                          padding: '0px',
                           backgroundColor: '#f0f1f3',
                         }}
                       >
