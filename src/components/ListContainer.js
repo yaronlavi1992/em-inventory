@@ -160,6 +160,10 @@ class ListContainer extends Component {
                       <Image
                         style={styles.listItemIcon}
                         src={`${process.env.PUBLIC_URL}/assets/${item.icon}`}
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = `${process.env.PUBLIC_URL}/assets/default.svg`;
+                        }}
                       />
                       {item.parent_name}
                     </div>
