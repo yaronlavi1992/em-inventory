@@ -23,6 +23,11 @@ class SpecialCareItems extends Component {
             require additional protection. Would you like your movers to box the
             following items for you, at an additional cost?
           </p>
+          {
+            //R: I suggest using a separate component here for the special items selection
+            //R: to avoid delegating too much responsibilities to ListContainer.
+            //R: Most of the logic from the stadard ItemList does not apply to special items selection.
+          }
           <ItemList isSpecialItems />
           <Link
             className='skip'
