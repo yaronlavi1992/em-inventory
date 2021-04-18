@@ -45,7 +45,7 @@ class AllItems extends Component {
             imageSize='medium'
             header={modalHeader}
             content={modalContent}
-            nextPage={`/${this.props.userToken}/items`}
+            nextPage={`/p=${this.props.userToken}/items`}
             buttonText='OK, GOT IT!'
           />
         )}
@@ -69,7 +69,7 @@ class AllItems extends Component {
             </Grid.Column>
 
             <Grid.Column>
-              <Link to={`/${this.props.userToken}/items/special`}>
+              <Link to={`/p=${this.props.userToken}/items/special`}>
                 <Header
                   size='tiny'
                   floated='right'
@@ -78,7 +78,7 @@ class AllItems extends Component {
                   onClick={() =>
                     this.props.storeInventory(
                       this.props.items,
-                      this.props.userToken
+                      this.props.currentUser.lead_id
                     )
                   }
                 >
@@ -160,6 +160,7 @@ class AllItems extends Component {
 const mapStateToProps = (state) => {
   return {
     userToken: state.auth.token,
+    currentUser: state.auth.currentUser,
     items: state.items,
     triggers: state.triggers,
   };

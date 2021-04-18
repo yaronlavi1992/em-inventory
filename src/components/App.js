@@ -17,34 +17,34 @@ class App extends Component {
         <BrowserRouter basename={process.env.PUBLIC_URL}>
           <MainHeader />
           <Switch>
-            <Route path='/:id' exact component={Intro} />
+            <Route path='/p=:id' exact component={Intro} />
             <Route
-              path={`/${
+              path={`/p=${
                 this.props.userToken ? this.props.userToken : ''
               }/items`}
               exact
               component={AllItems}
             />
             <Route
-              path={`/${
+              path={`/p=${
                 this.props.userToken ? this.props.userToken : ''
               }/box-calculator`}
               exact
               component={BoxCalculator}
             />
             <Route
-              path={`/${
+              path={`/p=${
                 this.props.userToken ? this.props.userToken : ''
               }/box-calculator-loader`}
               exact
               component={BoxCalculatorLoader}
             />
             <Route
-              path='/:id/items/special'
+              path='/p=:id/items/special'
               exact
               component={SpecialCareItems}
             />
-            <Route path='/:id/confirmation' exact component={Confirmation} />
+            <Route path='/p=:id/confirmation' exact component={Confirmation} />
             <Redirect to='/' />
           </Switch>
         </BrowserRouter>

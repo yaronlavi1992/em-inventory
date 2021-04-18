@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 export class Confirmation extends Component {
+  componentDidMount() {
+    window.location.href = `https://bvl-sabf.web.app/welcome/${this.props.userLeadId}`;
+  }
   render() {
     const referenceId = '5-43-8742';
     const dummyUser = 'Troy';
@@ -23,4 +27,10 @@ export class Confirmation extends Component {
   }
 }
 
-export default Confirmation;
+const mapStateToProps = (state) => {
+  return {
+    userLeadId: state.auth.currentUser.lead_id,
+  };
+};
+
+export default connect(mapStateToProps, {})(Confirmation);

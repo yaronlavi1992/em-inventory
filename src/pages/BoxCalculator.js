@@ -18,10 +18,10 @@ export class BoxCalculator extends Component {
         imageSize='small'
         header={modalHeader}
         content={modalContent}
-        nextPage={`/${this.props.userToken}/box-calculator-loader`}
+        nextPage={`/p=${this.props.userToken}/box-calculator-loader`}
         buttonText='Calculate'
         skipButton
-        skipPage={`/${this.props.userToken}/items`}
+        skipPage={`/p=${this.props.userToken}/items`}
       />
     );
   }

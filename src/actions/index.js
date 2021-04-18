@@ -71,7 +71,7 @@ export const storeInventory = (items, userId) => async (dispatch) => {
   ];
   // console.log(inventoryFromItems);
   const body = {
-    id: userId,
+    id: String(userId),
     inventory: inventoryFromItems,
   };
   const options = {

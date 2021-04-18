@@ -29,7 +29,7 @@ export class Intro extends Component {
         </p>
         <Button
           as={Link}
-          to={`/${this.props.match.params.id}/items`}
+          to={`/p=${this.props.match.params.id}/items`}
           className='ui colorBrightGreen button'
         >
           Get Started

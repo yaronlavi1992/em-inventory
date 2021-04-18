@@ -59,45 +59,11 @@ class ListContainer extends Component {
     return uniqueCategories.map((category) => {
       return (
         <React.Fragment key={category}>
-          {category !== 'Boxes' &&
-            !this.props.itemsSearchInput &&
+          {!this.props.itemsSearchInput &&
             !this.props.isMyItems &&
             !this.props.isSpecialItems && (
               <List.Item key={category} style={styles.listItem}>
                 <Header>{category}</Header>
-              </List.Item>
-            )}
-
-          {category === 'Boxes' &&
-            !this.props.isMyItems &&
-            !this.props.isSpecialItems && (
-              <List.Item key='boxes-item' style={styles.listItem}>
-                <Grid
-                  container
-                  doubling
-                  divided='vertically'
-                  verticalAlign='middle'
-                  centered
-                  style={{ padding: '0px', margin: '0px' }}
-                >
-                  <Grid.Row columns={2}>
-                    <Grid.Column>BOXES</Grid.Column>
-
-                    <Grid.Column textAlign='right'>
-                      <Link
-                        to={`/${this.props.userToken}/box-calculator`}
-                        style={{ fontSize: '3vw' }}
-                      >
-                        BOX CALCULATOR
-                      </Link>
-                    </Grid.Column>
-                    <p style={{ fontSize: '2.6vw' }}>
-                      Don't worry about getting the number of boxes just right.
-                      Your final shipment weight will be calculated on the day
-                      of your move.
-                    </p>
-                  </Grid.Row>
-                </Grid>
               </List.Item>
             )}
 
@@ -183,7 +149,7 @@ class ListContainer extends Component {
                         <Button
                           style={styles.addBtn}
                           as={Link}
-                          to={`/${this.props.userToken}/box-calculator`}
+                          to={`/p=${this.props.userToken}/box-calculator`}
                           onClick={this.props.triggerBoxCalculator}
                         >
                           ADD
@@ -257,11 +223,11 @@ class ListContainer extends Component {
               <Button
                 style={{ margin: '12px' }}
                 as={Link}
-                to={`/${this.props.userToken}/items/special`}
+                to={`/p=${this.props.userToken}/items/special`}
                 onClick={() =>
                   this.props.storeInventory(
                     this.props.items,
-                    this.props.userToken
+                    this.props.currentUser.lead_id
                   )
                 }
                 className='ui colorBrightGreen button'
@@ -280,6 +246,7 @@ class ListContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     userToken: state.auth.token,
+    currentUser: state.auth.currentUser,
     triggers: state.triggers,
     itemsSearchInput: state.itemsSearchInput,
   };
