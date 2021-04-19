@@ -16,7 +16,6 @@ import {
   triggerAllItemsModal,
   triggerBoxCalculator,
 } from '../actions';
-import ItemOptionsModal from './ItemOptionsModal';
 import FirstItemOptionsModal from './FirstItemOptionsModal';
 import ItemQuantityMenu from './ItemQuantityMenu';
 
@@ -54,8 +53,11 @@ class ListContainer extends Component {
   };
 
   onDialogClose = (subItemId) => {
+    if (subItemId) {
+      this.props.addItemQuantity(subItemId);
+    }
     this.setState({ modalItem: null });
-  }
+  };
 
   addQuantityHandler(item) {
     this.props.addItemQuantity(item.item_ids);
@@ -74,13 +76,11 @@ class ListContainer extends Component {
     return uniqueCategories.map((category) => {
       return (
         <React.Fragment key={category}>
-          {!this.props.itemsSearchInput &&
-            !this.props.isMyItems &&
-            !this.props.isSpecialItems && (
-              <List.Item key={category} style={styles.listItem}>
-                <Header>{category}</Header>
-              </List.Item>
-            )}
+          {!this.props.itemsSearchInput && !this.props.isMyItems && (
+            <List.Item key={category} style={styles.listItem}>
+              <Header>{category}</Header>
+            </List.Item>
+          )}
 
           {this.renderList(
             // render each category header followed by its items
@@ -97,28 +97,6 @@ class ListContainer extends Component {
   renderList(items, isBoxesCategory = false) {
     const { activeIndex } = this.state;
     return items.map((item, index) => {
-      let optionsFromInnerItems = [];
-      let actions = [];
-      if (item.innerItems) {
-        optionsFromInnerItems = item.innerItems.map((innerItem, index) => {
-          return {
-            key: index,
-            text: innerItem.item,
-            value: innerItem.item_id,
-            quantity: innerItem.quantity,
-          };
-        });
-
-        //R: probably there is no need for this array? It's almost identical to optionsFromInnerItems.
-        actions = optionsFromInnerItems.map((option) => {
-          return {
-            key: option.key,
-            content: option.text,
-            id: option.value,
-            quantity: option.quantity,
-          };
-        });
-      }
       return (
         <List.Item key={item.parent_name}>
           <Accordion>
@@ -135,7 +113,7 @@ class ListContainer extends Component {
                 centered
                 style={{ padding: '0px' }}
               >
-                <Grid.Row columns={this.props.isSpecialItems ? 4 : 2}>
+                <Grid.Row columns={2}>
                   <Grid.Column>
                     <div
                       style={{ display: 'inline-flex', alignItems: 'center' }}
@@ -151,13 +129,6 @@ class ListContainer extends Component {
                       {item.parent_name}
                     </div>
                   </Grid.Column>
-
-                  {this.props.isSpecialItems && (
-                    <>
-                      <Grid.Column></Grid.Column>
-                      <Grid.Column textAlign='right'></Grid.Column>
-                    </>
-                  )}
 
                   <Grid.Column textAlign='right'>
                     {item.quantity === 0 ? (
@@ -194,30 +165,34 @@ class ListContainer extends Component {
 
             {item.innerItems && (
               <Accordion.Content active={activeIndex === index}>
-                {
-                  //R: list of selected subitems should be a part of this component
-                  //R: here is a draft
-                }
-                <ul>
+                <ul
+                  style={{
+                    listStyleType: 'none',
+                    float: 'left',
+                    textAlign: 'left',
+                    margin: '0px',
+                  }}
+                >
                   {item.innerItems.map((innerItem, index) => {
-                    if (innerItem.quantity > 0)
+                    if (innerItem.quantity > 0) {
                       return (
                         <li key={innerItem.item_id}>
-                          {innerItem.quantity} {innerItem.item}
+                          <p
+                            style={{ color: '#57C3F3' }}
+                            onClick={() => this.addQuantityHandler(item)}
+                          >
+                            {innerItem.quantity}{' '}
+                            <span style={{ textDecoration: 'underline' }}>
+                              {innerItem.item}
+                            </span>
+                          </p>
                         </li>
                       );
+                    } else {
+                      return null;
+                    }
                   })}
                 </ul>
-
-                {
-                  //R: we should probably use the same dialog here, FirstItemOptionsModal?
-                  //R: if not, then anyway it's better to refactor this using FirstItemOptionsModal as example
-                }
-                <ItemOptionsModal
-                  optionsFromInnerItems={optionsFromInnerItems}
-                  header={item.parent_name}
-                  actions={actions}
-                />
               </Accordion.Content>
             )}
           </Accordion>
@@ -229,19 +204,14 @@ class ListContainer extends Component {
   render() {
     return (
       <>
-        {
-          //R: category separation should be disabled for filtered items (now it affects sort order)
-          //R: Or alternatively categories should be shown for filtered items.
-        }
         <List celled divided verticalAlign='middle'>
-          {!this.props.itemsSearchInput &&
-            !this.props.isMyItems &&
-            !this.props.isSpecialItems && (
-              <List.Item key='common-items' style={styles.listItem}>
-                <Header>COMMON ITEMS</Header>
-              </List.Item>
-            )}
+          {!this.props.itemsSearchInput && !this.props.isMyItems && (
+            <List.Item key='common-items' style={styles.listItem}>
+              <Header>COMMON ITEMS</Header>
+            </List.Item>
+          )}
           {!this.props.isMyItems &&
+            !this.props.itemsSearchInput &&
             this.renderList(
               this.props.items.filter((item) => {
                 return item.common_item === 1;
@@ -249,29 +219,29 @@ class ListContainer extends Component {
             )}
           {/* if no itemSearchInput render categories
           else render list */}
-          {this.renderCategories()}
+          {!this.props.itemsSearchInput
+            ? this.renderCategories()
+            : this.renderList(this.props.items)}
         </List>
-        {!this.props.isSpecialItems && (
-          <Grid>
-            <Grid.Row stretched centered style={{ padding: '12px' }}>
-              <Button
-                style={{ margin: '12px' }}
-                as={Link}
-                to={`/p=${this.props.userToken}/items/special`}
-                onClick={() =>
-                  this.props.storeInventory(
-                    this.props.items,
-                    this.props.currentUser.lead_id
-                  )
-                }
-                className='ui colorBrightGreen button'
-                fluid
-              >
-                Confirm Inventory
-              </Button>
-            </Grid.Row>
-          </Grid>
-        )}
+        <Grid>
+          <Grid.Row stretched centered style={{ padding: '12px' }}>
+            <Button
+              style={{ margin: '12px' }}
+              as={Link}
+              to={`/p=${this.props.userToken}/items/special`}
+              onClick={() =>
+                this.props.storeInventory(
+                  this.props.items,
+                  this.props.currentUser.lead_id
+                )
+              }
+              className='ui colorBrightGreen button'
+              fluid
+            >
+              Confirm Inventory
+            </Button>
+          </Grid.Row>
+        </Grid>
         {
           //R: it's better to have one reusable instance of the Modal window
           //R: and not create it for each item. It's how the component supposed to work.
@@ -279,11 +249,6 @@ class ListContainer extends Component {
         <FirstItemOptionsModal
           item={this.state.modalItem}
           closeCallback={this.onDialogClose}
-          //R: other properties can be internally deduced from "item", so we can remove them
-          /*
-          optionsFromInnerItems={optionsFromInnerItems}
-          header={item.parent_name}
-          innerItems={actions}*/
         />
       </>
     );

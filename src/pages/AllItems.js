@@ -108,7 +108,7 @@ class AllItems extends Component {
                           backgroundColor: '#f0f1f3',
                         }}
                       >
-                        <ItemList isSpecialItems={false} isMyItems={false} />
+                        <ItemList isMyItems={false} />
                       </Segment>
                     </Tab.Pane>
                   ),
@@ -143,7 +143,7 @@ class AllItems extends Component {
                           backgroundColor: '#f0f1f3',
                         }}
                       >
-                        <ItemList isSpecialItems={false} isMyItems />
+                        <ItemList isMyItems />
                       </Segment>
                     </Tab.Pane>
                   ),

@@ -66,6 +66,11 @@ export const storeInventory = (items, userId) => async (dispatch) => {
           item.innerItems ? item.innerItems[0].item_id : item.item_ids
         ),
         item_quantity: item.quantity,
+        // TODO: take in account the case when innerItems have different sh_prices
+        // special_handling:
+        //   item.sh_price === 0 || typeof item.sh_price === 'string'
+        //     ? 0
+        //     : item.sh_price,
       };
     }),
   ];
@@ -99,6 +104,10 @@ export const submitInventory = (items, userId) => async (dispatch) => {
           item.innerItems ? item.innerItems[0].item_id : item.item_ids
         ),
         item_quantity: item.quantity,
+        // special_handling:
+        //   item.sh_price === 0 || typeof item.sh_price === 'string'
+        //     ? 0
+        //     : item.sh_price,
       };
     }),
   ];

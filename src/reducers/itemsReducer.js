@@ -7,13 +7,13 @@ const itemsReducer = (state = [], action) => {
       return action.payload;
 
     case types.ADD_ITEM_QUANTITY:
-      console.log(`action.payload: ${action.payload}`);
+      // console.log(`action.payload: ${action.payload}`);
       parentFound = state.find((parent) => parent.item_ids === action.payload);
       if (parentFound) {
         //R: After we found the item, we should check if it has children or if it does not.
         //R:   - for items without children we increase quantity - as now
         //R:   - for items with children we only show selection pop-up and increase quantity if user selected something
-        if(!parentFound.innerItems || parentFound.innerItems.length === 0){
+        if (!parentFound.innerItems || parentFound.innerItems.length === 0) {
           parentFound.quantity++;
         }
       } else {

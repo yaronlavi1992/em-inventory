@@ -1,9 +1,29 @@
 import React, { Component } from 'react';
-import { Grid, Label, Modal } from 'semantic-ui-react';
-import ItemQuantityMenu from './ItemQuantityMenu';
+import { Button, Modal } from 'semantic-ui-react';
 
-//R: better develop everything in unified notation: either classes or functions
-//const FirstItemOptionsModal = (props) => {
+const styles = {
+  normalBtn: {
+    border: '1px solid #57C3F3',
+    borderRadius: '5px',
+    lineHeight: '20px',
+    letterSpacing: '0',
+    margin: '6px 2px 6px 2px',
+    fontWeight: '400',
+    color: '#57C3F3',
+    backgroundColor: 'white',
+  },
+  selectedBtn: {
+    border: '1px solid #57C3F3',
+    borderRadius: '5px',
+    lineHeight: '20px',
+    letterSpacing: '0',
+    margin: '6px 2px 6px 2px',
+    fontWeight: '400',
+    color: 'white',
+    backgroundColor: '#57C3F3',
+  },
+};
+
 class FirstItemOptionsModal extends Component {
   constructor(props) {
     super(props);
@@ -39,33 +59,26 @@ class FirstItemOptionsModal extends Component {
   }
 
   renderContent() {
+    console.log(this.props.item);
     return (
       <Modal.Content style={{ display: 'grid' }}>
-        {this.props.item.innerItems.map((innerItem) => {
-          return (
-            <Grid centered padded='vertically' key={innerItem.item_id}>
-              <Grid.Column width={8}>
-                <Label
-                  onClick={() => {
-                    this.setState({ value: innerItem.item_id });
-                  }}
-                >
-                  {innerItem.item}
-                </Label>
-              </Grid.Column>
-              {
-                //R: instead of ItemQuantityMenu component there should be buttons as in mockup
-                //R: clicking a button should invoke ADD_ITEM_QUANTITY action and close the dialog
-              }
-              <Grid.Column width={8}>
-                <ItemQuantityMenu
-                  itemQuantity={innerItem.quantity}
-                  itemId={innerItem.item_id}
-                />
-              </Grid.Column>
-            </Grid>
-          );
-        })}
+        <Button.Group vertical>
+          {this.props.item.innerItems.map((innerItem, index) => {
+            return (
+              <Button
+                //TODO: assign button styles according to selected value or default index 0
+                // style={}
+                key={innerItem.item_id}
+                onClick={() => {
+                  this.setState({ value: innerItem.item_id, open: false });
+                  this.props.closeCallback(innerItem.item_id);
+                }}
+              >
+                {innerItem.item}
+              </Button>
+            );
+          })}
+        </Button.Group>
       </Modal.Content>
     );
   }
@@ -76,20 +89,14 @@ class FirstItemOptionsModal extends Component {
         closeIcon
         onClose={() => {
           this.setState({ open: false });
-          //R: after buttons are implemented, send selected ItemID and null if nothing is selected
           this.props.closeCallback(null);
         }}
         open={this.state.open}
       >
         <Modal.Header>
-          {this.props.item ? this.props.item.parent_name : ''}
+          {this.props.item && this.props.item.parent_name}
         </Modal.Header>
         {this.props.item && this.renderContent()}
-        {/* {(() => {
-          if (this.props.item) {
-            return this.renderContent();
-          }
-        })()} */}
       </Modal>
     );
   }
