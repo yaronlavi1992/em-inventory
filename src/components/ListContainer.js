@@ -37,15 +37,13 @@ const styles = {
 };
 
 class ListContainer extends Component {
-  
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       activeIndex: null,
-      modalItem: null
+      modalItem: null,
     };
   }
-  
 
   handleClick = (e, titleProps) => {
     const { index } = titleProps;
@@ -57,9 +55,9 @@ class ListContainer extends Component {
 
   addQuantityHandler(item) {
     this.props.addItemQuantity(item.item_ids);
-    if(item.innerItems && item.innerItems.length > 0){
+    if (item.innerItems && item.innerItems.length > 0) {
       this.setState({ modalItem: item });
-    }else{
+    } else {
       this.setState({ modalItem: null });
     }
   }
@@ -179,7 +177,6 @@ class ListContainer extends Component {
                       )
                     ) : (
                       <>
-                        
                         <ItemQuantityMenu
                           itemQuantity={item.quantity}
                           itemId={item.item_ids}
@@ -194,18 +191,18 @@ class ListContainer extends Component {
             {item.innerItems && (
               <Accordion.Content active={activeIndex === index}>
                 {
-                //R: list of selected subitems should be a part of this component
-                //R: here is a draft
+                  //R: list of selected subitems should be a part of this component
+                  //R: here is a draft
                 }
                 <ul>
-                {
-                  item.innerItems.map((innerItem, index) => {
-                    if(innerItem.quantity > 0)
-                    return (
-                      <li key={innerItem.item_id}>{innerItem.quantity} {innerItem.item}</li>
-                    );
-                  })
-                }
+                  {item.innerItems.map((innerItem, index) => {
+                    if (innerItem.quantity > 0)
+                      return (
+                        <li key={innerItem.item_id}>
+                          {innerItem.quantity} {innerItem.item}
+                        </li>
+                      );
+                  })}
                 </ul>
 
                 {
@@ -246,6 +243,8 @@ class ListContainer extends Component {
                 return item.common_item === 1;
               })
             )}
+          {/* if no itemSearchInput render categories
+          else render list */}
           {this.renderCategories()}
         </List>
         {!this.props.isSpecialItems && (
@@ -270,11 +269,10 @@ class ListContainer extends Component {
           </Grid>
         )}
         {
-        //R: it's better to have one reusable instance of the Modal window 
-        //R: and not create it for each item. It's how the component supposed to work.
+          //R: it's better to have one reusable instance of the Modal window
+          //R: and not create it for each item. It's how the component supposed to work.
         }
         <FirstItemOptionsModal
-        
           item={this.state.modalItem}
 
           //R: other properties can be internally deduced from "item", so we can remove them
@@ -293,7 +291,7 @@ const mapStateToProps = (state) => {
     userToken: state.auth.token,
     currentUser: state.auth.currentUser,
     triggers: state.triggers,
-    itemsSearchInput: state.itemsSearchInput
+    itemsSearchInput: state.itemsSearchInput,
   };
 };
 
