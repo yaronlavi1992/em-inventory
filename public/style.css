@@ -1,16 +1,26 @@
 body {
   background-color: #cccfd5 !important;
+  
+  /* //R: required for vertial stretch */
+  height:100%;
+  display: flex;
+  flex-direction: column;
+  
 }
 
 .ui.stackable.grid {
   padding: 0px 10px 0px 10px;
 }
 
+#root{
+  flex-grow: 1;
+}
+
 #mainWrapper {
   background-color: #3a4b60;
   color: #3a4b60;
   border-radius: 15px;
-  height: 780px;
+  /*height: 780px;*/
   padding-left: 0px !important;
   padding-right: 0px !important;
 }

@@ -15,21 +15,28 @@ const store = createStore(
 );
 
 ReactDOM.render(
-  <div className='ui one column stackable center aligned page grid'>
+  <>
+  <div className='ui one column stackable center aligned page grid' style={{height:"100%"}}>
     <div id='mainWrapper' className='column twelve wide'>
       <Provider store={store}>
         <App />
       </Provider>
     </div>
-    <p
-      className='white-text'
-      style={{
-        padding: '12px 0px 0px 0px',
-        fontWeight: 'bolder',
+    {
+      //R: you can remove this paragraph here and place only in pages where it's required
+      //R: also user <footer> tag instead of <p> - it's semantically better.
+    }
+    
+  </div>
+  <footer
+    className='white-text'
+    style={{
+      padding: '12px 0px 0px 0px',
+      fontWeight: 'bolder',
       }}
-    >
-      * Your inventory affects your quote
-    </p>
-  </div>,
+  >
+  * Your inventory affects your quote
+  </footer>
+  </>,
   document.querySelector('#root')
 );

@@ -37,7 +37,15 @@ const styles = {
 };
 
 class ListContainer extends Component {
-  state = { activeIndex: null };
+  
+  constructor(props) {
+    super(props);
+    this.state = { 
+      activeIndex: null,
+      modalItem: null
+    };
+  }
+  
 
   handleClick = (e, titleProps) => {
     const { index } = titleProps;
@@ -47,8 +55,17 @@ class ListContainer extends Component {
     this.setState({ activeIndex: newIndex });
   };
 
-  addQuantityHandler(itemId) {
-    this.props.addItemQuantity(itemId);
+  onDialogClose = (subItemId) => {
+    this.setState({ modalItem: null });
+  }
+
+  addQuantityHandler(item) {
+    this.props.addItemQuantity(item.item_ids);
+    if(item.innerItems && item.innerItems.length > 0){
+      this.setState({ modalItem: item });
+    }else{
+      this.setState({ modalItem: null });
+    }
   }
 
   renderCategories() {
@@ -93,6 +110,8 @@ class ListContainer extends Component {
             quantity: innerItem.quantity,
           };
         });
+
+        //R: probably there is no need for this array? It's almost identical to optionsFromInnerItems.
         actions = optionsFromInnerItems.map((option) => {
           return {
             key: option.key,
@@ -157,21 +176,14 @@ class ListContainer extends Component {
                       ) : (
                         <Button
                           style={styles.addBtn}
-                          onClick={() => this.addQuantityHandler(item.item_ids)}
+                          onClick={() => this.addQuantityHandler(item)}
                         >
                           ADD
                         </Button>
                       )
                     ) : (
                       <>
-                        {item.innerItems && (
-                          <FirstItemOptionsModal
-                            item={item}
-                            optionsFromInnerItems={optionsFromInnerItems}
-                            header={item.parent_name}
-                            innerItems={actions}
-                          />
-                        )}
+                        
                         <ItemQuantityMenu
                           itemQuantity={item.quantity}
                           itemId={item.item_ids}
@@ -185,6 +197,25 @@ class ListContainer extends Component {
 
             {item.innerItems && (
               <Accordion.Content active={activeIndex === index}>
+                {
+                //R: list of selected subitems should be a part of this component
+                //R: here is a draft
+                }
+                <ul>
+                {
+                  item.innerItems.map((innerItem, index) => {
+                    if(innerItem.quantity > 0)
+                    return (
+                      <li key={innerItem.item_id}>{innerItem.quantity} {innerItem.item}</li>
+                    );
+                  })
+                }
+                </ul>
+
+                {
+                  //R: we should probably use the same dialog here, FirstItemOptionsModal?
+                  //R: if not, then anyway it's better to refactor this using FirstItemOptionsModal as example
+                }
                 <ItemOptionsModal
                   optionsFromInnerItems={optionsFromInnerItems}
                   header={item.parent_name}
@@ -201,6 +232,10 @@ class ListContainer extends Component {
   render() {
     return (
       <>
+        {
+          //R: category separation should be disabled for filtered items (now it affects sort order)
+          //R: Or alternatively categories should be shown for filtered items.
+        }
         <List celled divided verticalAlign='middle'>
           {!this.props.itemsSearchInput &&
             !this.props.isMyItems &&
@@ -238,6 +273,20 @@ class ListContainer extends Component {
             </Grid.Row>
           </Grid>
         )}
+        {
+        //R: it's better to have one reusable instance of the Modal window 
+        //R: and not create it for each item. It's how the component supposed to work.
+        }
+        <FirstItemOptionsModal
+        
+          item={this.state.modalItem}
+          closeCallback={this.onDialogClose}
+          //R: other properties can be internally deduced from "item", so we can remove them
+          /*
+          optionsFromInnerItems={optionsFromInnerItems}
+          header={item.parent_name}
+          innerItems={actions}*/
+        />
       </>
     );
   }
@@ -248,7 +297,7 @@ const mapStateToProps = (state) => {
     userToken: state.auth.token,
     currentUser: state.auth.currentUser,
     triggers: state.triggers,
-    itemsSearchInput: state.itemsSearchInput,
+    itemsSearchInput: state.itemsSearchInput
   };
 };
 
