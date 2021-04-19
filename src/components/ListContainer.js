@@ -53,6 +53,10 @@ class ListContainer extends Component {
     this.setState({ activeIndex: newIndex });
   };
 
+  onDialogClose = (subItemId) => {
+    this.setState({ modalItem: null });
+  }
+
   addQuantityHandler(item) {
     this.props.addItemQuantity(item.item_ids);
     if (item.innerItems && item.innerItems.length > 0) {
@@ -274,7 +278,7 @@ class ListContainer extends Component {
         }
         <FirstItemOptionsModal
           item={this.state.modalItem}
-
+          closeCallback={this.onDialogClose}
           //R: other properties can be internally deduced from "item", so we can remove them
           /*
           optionsFromInnerItems={optionsFromInnerItems}

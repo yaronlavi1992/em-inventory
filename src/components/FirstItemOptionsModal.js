@@ -74,7 +74,11 @@ class FirstItemOptionsModal extends Component {
     return (
       <Modal
         closeIcon
-        onClose={() => this.setState({ open: false })}
+        onClose={() => {
+          this.setState({ open: false });
+          //R: after buttons are implemented, send selected ItemID and null if nothing is selected
+          this.props.closeCallback(null);
+        }}
         open={this.state.open}
       >
         <Modal.Header>
