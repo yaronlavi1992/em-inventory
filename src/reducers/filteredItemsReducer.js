@@ -3,6 +3,8 @@ import * as types from '../actions/types';
 const filteredItemsReducer = (state = [], action) => {
   switch (action.type) {
     case types.FILTER_ITEMS:
+      //TODO: add prioritization according to index of search term.
+      //TODO: for example: when searching "t", it shows "ATV" first but "Table" shuold be before that.
       let lookup = [];
       if (!action.input) return action.payload;
       return action.payload

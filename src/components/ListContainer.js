@@ -16,6 +16,7 @@ import {
   triggerAllItemsModal,
   triggerBoxCalculator,
 } from '../actions';
+import BoxCalculatorModal from './BoxCalculatorModal';
 import FirstItemOptionsModal from './FirstItemOptionsModal';
 import ItemQuantityMenu from './ItemQuantityMenu';
 
@@ -41,6 +42,7 @@ class ListContainer extends Component {
     this.state = {
       activeIndex: null,
       modalItem: null,
+      selectedValue: null,
     };
   }
 
@@ -56,7 +58,12 @@ class ListContainer extends Component {
     if (subItemId) {
       this.props.addItemQuantity(subItemId);
     }
-    this.setState({ modalItem: null });
+    this.setState({ modalItem: null, selectedValue: null });
+  };
+
+  onPlusSignClick = (item) => {
+    this.props.addItemQuantity(item.item_ids);
+    this.setState({ modalItem: item, selectedValue: null });
   };
 
   addQuantityHandler(item) {
@@ -64,7 +71,7 @@ class ListContainer extends Component {
     if (item.innerItems && item.innerItems.length > 0) {
       this.setState({ modalItem: item });
     } else {
-      this.setState({ modalItem: null });
+      this.setState({ modalItem: null, selectedValue: null });
     }
   }
 
@@ -138,7 +145,9 @@ class ListContainer extends Component {
                           style={styles.addBtn}
                           as={Link}
                           to={`/p=${this.props.userToken}/box-calculator`}
-                          onClick={this.props.triggerBoxCalculator}
+                          onClick={() => {
+                            this.props.triggerBoxCalculator();
+                          }}
                         >
                           ADD
                         </Button>
@@ -155,6 +164,8 @@ class ListContainer extends Component {
                         <ItemQuantityMenu
                           itemQuantity={item.quantity}
                           itemId={item.item_ids}
+                          item={item}
+                          addQuantityCallback={this.onPlusSignClick}
                         />
                       </>
                     )}
@@ -179,7 +190,10 @@ class ListContainer extends Component {
                         <li key={innerItem.item_id}>
                           <p
                             style={{ color: '#57C3F3' }}
-                            onClick={() => this.addQuantityHandler(item)}
+                            onClick={() => {
+                              this.setState({ selectedValue: innerItem.item });
+                              this.addQuantityHandler(item);
+                            }}
                           >
                             {innerItem.quantity}{' '}
                             <span style={{ textDecoration: 'underline' }}>
@@ -217,8 +231,6 @@ class ListContainer extends Component {
                 return item.common_item === 1;
               })
             )}
-          {/* if no itemSearchInput render categories
-          else render list */}
           {!this.props.itemsSearchInput
             ? this.renderCategories()
             : this.renderList(this.props.items)}
@@ -242,14 +254,12 @@ class ListContainer extends Component {
             </Button>
           </Grid.Row>
         </Grid>
-        {
-          //R: it's better to have one reusable instance of the Modal window
-          //R: and not create it for each item. It's how the component supposed to work.
-        }
         <FirstItemOptionsModal
           item={this.state.modalItem}
+          selectedValue={this.state.selectedValue}
           closeCallback={this.onDialogClose}
         />
+        {/* <BoxCalculatorModal isOpen={this.props.triggers.isBoxCalcTriggered} /> */}
       </>
     );
   }

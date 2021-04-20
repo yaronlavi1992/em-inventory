@@ -59,15 +59,19 @@ class FirstItemOptionsModal extends Component {
   }
 
   renderContent() {
-    console.log(this.props.item);
     return (
       <Modal.Content style={{ display: 'grid' }}>
         <Button.Group vertical>
           {this.props.item.innerItems.map((innerItem, index) => {
             return (
               <Button
-                //TODO: assign button styles according to selected value or default index 0
-                // style={}
+                style={
+                  !this.props.selectedValue && index === 0
+                    ? styles.selectedBtn
+                    : this.props.selectedValue === innerItem.item
+                    ? styles.selectedBtn
+                    : styles.normalBtn
+                }
                 key={innerItem.item_id}
                 onClick={() => {
                   this.setState({ value: innerItem.item_id, open: false });
