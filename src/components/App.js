@@ -13,7 +13,7 @@ import BoxCalculatorLoader from '../pages/BoxCalculatorLoader';
 class App extends Component {
   render() {
     return (
-      <Container style={{ margin: '0px'}}>
+      <Container className="flex_container">
         <BrowserRouter basename={process.env.PUBLIC_URL}>
           <MainHeader />
           <Switch>

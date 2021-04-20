@@ -13,6 +13,7 @@ export class Intro extends Component {
   render() {
     return (
       <>
+        <div className="flex_fill" >
         <Header style={{ color: 'white' }}>
           Welcome, {this.props.isSignedIn && this.props.currentUser.first_name}!
         </Header>
@@ -34,6 +35,15 @@ export class Intro extends Component {
         >
           Get Started
         </Button>
+        </div>
+        <footer
+          className='white-text'
+          style={{
+            padding: '12px 0px 0px 0px',
+            fontWeight: 'bolder',
+            }}
+        >* Your inventory affects your quote
+        </footer>
       </>
     );
   }

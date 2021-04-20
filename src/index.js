@@ -28,15 +28,7 @@ ReactDOM.render(
     }
     
   </div>
-  <footer
-    className='white-text'
-    style={{
-      padding: '12px 0px 0px 0px',
-      fontWeight: 'bolder',
-      }}
-  >
-  * Your inventory affects your quote
-  </footer>
+  
   </>,
   document.querySelector('#root')
 );
