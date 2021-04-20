@@ -7,13 +7,11 @@ import SpecialCareItems from '../pages/SpecialCareItems';
 import { Container } from 'semantic-ui-react';
 import Confirmation from '../pages/Confirmation';
 import { connect } from 'react-redux';
-import BoxCalculator from '../pages/BoxCalculator';
-import BoxCalculatorLoader from '../pages/BoxCalculatorLoader';
 
 class App extends Component {
   render() {
     return (
-      <Container style={{ margin: '0px'}}>
+      <Container className='flex_container'>
         <BrowserRouter basename={process.env.PUBLIC_URL}>
           <MainHeader />
           <Switch>
@@ -24,20 +22,6 @@ class App extends Component {
               }/items`}
               exact
               component={AllItems}
-            />
-            <Route
-              path={`/p=${
-                this.props.userToken ? this.props.userToken : ''
-              }/box-calculator`}
-              exact
-              component={BoxCalculator}
-            />
-            <Route
-              path={`/p=${
-                this.props.userToken ? this.props.userToken : ''
-              }/box-calculator-loader`}
-              exact
-              component={BoxCalculatorLoader}
             />
             <Route
               path='/p=:id/items/special'

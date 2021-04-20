@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { Button, Header, Image, Modal } from 'semantic-ui-react';
 
 class BoxCalculatorModal extends Component {
@@ -13,8 +12,8 @@ class BoxCalculatorModal extends Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     //only change state when dialog is opening
-    if (!prevState.open && !this.state.open) {
-      this.setState({ open: !this.props.isOpen });
+    if (!prevState.open && !this.state.open && this.props.isTriggered === 1) {
+      this.setState({ open: true });
     }
   }
 
@@ -37,22 +36,29 @@ class BoxCalculatorModal extends Component {
           the move.`}</p>
         </Modal.Description>
         <Button
-          as={Link}
-          to={`/p=${this.props.userToken}/box-calculator-loader`}
           content='Calculate'
-          onClick={() => this.setState({ open: false })}
+          onClick={() => {
+            this.setState({ open: false });
+            this.props.closeCallback();
+          }}
           positive
         />
-        <Link to={`/p=${this.props.userToken}/items`}>
+        <Button onClick={() => this.setState({ open: false })}>
           No thanks, I'll add boxes manually
-        </Link>
+        </Button>
       </>
     );
   }
 
   render() {
     return (
-      <Modal open={this.state.open}>
+      <Modal
+        open={this.state.open}
+        onClose={() => {
+          this.setState({ open: false });
+          this.props.closeCallback();
+        }}
+      >
         <Modal.Content image className='ui centered grid'>
           {this.renderContent()}
         </Modal.Content>

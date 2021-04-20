@@ -1,7 +1,7 @@
 import * as types from '../actions/types';
 
 const INTIAL_STATE = {
-  isBoxCalcTriggered: false,
+  isBoxCalcTriggered: 0,
   isAllItemsModalTriggered: false,
 };
 
@@ -10,7 +10,7 @@ const triggersReducer = (state = INTIAL_STATE, action) => {
     case types.TRIGGER_BOX_CALCULATOR:
       return {
         ...state,
-        isBoxCalcTriggered: true,
+        isBoxCalcTriggered: action.payload,
       };
     case types.TRIGGER_ALLITEMS_MODAL:
       return {

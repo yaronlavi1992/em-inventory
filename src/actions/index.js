@@ -137,9 +137,10 @@ export const signOut = () => {
   };
 };
 
-export const triggerBoxCalculator = () => {
+export const triggerBoxCalculator = (triggerState) => {
   return {
     type: types.TRIGGER_BOX_CALCULATOR,
+    payload: triggerState,
   };
 };
 

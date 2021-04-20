@@ -1,8 +1,16 @@
 body {
   background-color: #cccfd5 !important;
+}
+
+.flex_container,
+body {
   height: 100%;
-  display: flex;
+  display: flex !important;
   flex-direction: column;
+}
+
+.flex_fill {
+  flex-grow: 1;
 }
 
 .ui.stackable.grid {
@@ -16,7 +24,8 @@ body {
 #mainWrapper {
   background-color: #3a4b60;
   color: #3a4b60;
-  border-radius: 15px;
+  border-radius: 0px 0px 15px 15px;
+  height: 100%;
   padding-left: 0px !important;
   padding-right: 0px !important;
 }

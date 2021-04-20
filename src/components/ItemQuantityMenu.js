@@ -37,10 +37,7 @@ class ItemQuantityMenu extends Component {
         <Menu.Item style={styles.menuItem}>{this.props.itemQuantity}</Menu.Item>
         <Menu.Item
           style={styles.menuItem}
-          // onClick={() => this.addQuantityHandler(this.props.itemId)}
-          onClick={() => {
-            this.props.addQuantityCallback(this.props.item);
-          }}
+          onClick={this.props.addQuantityCallback}
         >
           <Icon name='plus' />
         </Menu.Item>

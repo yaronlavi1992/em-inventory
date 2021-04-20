@@ -16,6 +16,7 @@ import {
   triggerAllItemsModal,
   triggerBoxCalculator,
 } from '../actions';
+import BoxCalculatorLoaderModal from './BoxCalculatorLoaderModal';
 import BoxCalculatorModal from './BoxCalculatorModal';
 import FirstItemOptionsModal from './FirstItemOptionsModal';
 import ItemQuantityMenu from './ItemQuantityMenu';
@@ -59,11 +60,6 @@ class ListContainer extends Component {
       this.props.addItemQuantity(subItemId);
     }
     this.setState({ modalItem: null, selectedValue: null });
-  };
-
-  onPlusSignClick = (item) => {
-    this.props.addItemQuantity(item.item_ids);
-    this.setState({ modalItem: item, selectedValue: null });
   };
 
   addQuantityHandler(item) {
@@ -140,14 +136,10 @@ class ListContainer extends Component {
                   <Grid.Column textAlign='right'>
                     {item.quantity === 0 ? (
                       isBoxesCategory &&
-                      !this.props.triggers.isBoxCalcTriggered ? (
+                      this.props.triggers.isBoxCalcTriggered === 0 ? (
                         <Button
                           style={styles.addBtn}
-                          as={Link}
-                          to={`/p=${this.props.userToken}/box-calculator`}
-                          onClick={() => {
-                            this.props.triggerBoxCalculator();
-                          }}
+                          onClick={() => this.props.triggerBoxCalculator(1)}
                         >
                           ADD
                         </Button>
@@ -165,7 +157,9 @@ class ListContainer extends Component {
                           itemQuantity={item.quantity}
                           itemId={item.item_ids}
                           item={item}
-                          addQuantityCallback={this.onPlusSignClick}
+                          addQuantityCallback={() =>
+                            this.addQuantityHandler(item)
+                          }
                         />
                       </>
                     )}
@@ -259,7 +253,14 @@ class ListContainer extends Component {
           selectedValue={this.state.selectedValue}
           closeCallback={this.onDialogClose}
         />
-        {/* <BoxCalculatorModal isOpen={this.props.triggers.isBoxCalcTriggered} /> */}
+        <BoxCalculatorModal
+          isTriggered={this.props.triggers.isBoxCalcTriggered}
+          closeCallback={() => this.props.triggerBoxCalculator(2)}
+        />
+        <BoxCalculatorLoaderModal
+          isTriggered={this.props.triggers.isBoxCalcTriggered}
+          closeCallback={() => this.props.triggerBoxCalculator(3)}
+        />
       </>
     );
   }

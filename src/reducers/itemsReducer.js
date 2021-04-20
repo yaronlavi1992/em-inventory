@@ -37,6 +37,14 @@ const itemsReducer = (state = [], action) => {
       parentFound = state.find((parent) => parent.item_ids === action.payload);
       if (parentFound && parentFound.quantity > 0) {
         // its a parentItem
+        if (parentFound.innerItems) {
+          for (let i = 0; i < parentFound.innerItems.length; i++) {
+            if (parentFound.innerItems[i].quantity > 0) {
+              parentFound.innerItems[i].quantity--;
+              break;
+            }
+          }
+        }
         parentFound.quantity--;
       } else {
         // its an innerItem

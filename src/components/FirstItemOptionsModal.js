@@ -48,12 +48,7 @@ class FirstItemOptionsModal extends Component {
             };
           }
         );
-
-        if (optionsFromInnerItems.length > 0) {
-          this.setState({ value: optionsFromInnerItems[0].value });
-        } else {
-          this.setState({ value: null });
-        }
+        this.setState({ value: optionsFromInnerItems[0].value });
       }
     }
   }
