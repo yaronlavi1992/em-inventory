@@ -22,13 +22,33 @@ import FirstItemOptionsModal from './FirstItemOptionsModal';
 import ItemQuantityMenu from './ItemQuantityMenu';
 
 const styles = {
-  listItem: {
+  categoryHeader: {
     backgroundColor: '#E7E8EC',
   },
+  categoryHeaderText: {
+    float: 'left',
+    paddingLeft: '5.3%',
+    fontFamily: 'CircularStd-Black',
+    fontSize: '12px',
+    color: '#3A4B60',
+    letterSpacing: '0',
+    lineHeight: '20px',
+    fontWeight: '900',
+  },
   addBtn: {
-    borderRadius: '500px',
     backgroundColor: 'inherit',
-    border: '1px solid',
+    padding: '0px',
+    width: '70px',
+    height: '30px',
+    fontFamily: 'CircularStd-Black',
+    fontSize: '12px',
+    color: '#3a4b60',
+    letterSpacing: '0',
+    textAlign: 'center',
+    lineHeight: '20px',
+    fontWeight: '900',
+    border: '1px solid #3a4b60',
+    borderRadius: '15px',
   },
   listItemIcon: {
     width: '20px',
@@ -80,8 +100,8 @@ class ListContainer extends Component {
       return (
         <React.Fragment key={category}>
           {!this.props.itemsSearchInput && !this.props.isMyItems && (
-            <List.Item key={category} style={styles.listItem}>
-              <Header>{category}</Header>
+            <List.Item key={category} style={styles.categoryHeader}>
+              <Header style={styles.categoryHeaderText}>{category}</Header>
             </List.Item>
           )}
 
@@ -129,7 +149,7 @@ class ListContainer extends Component {
                           e.target.src = `${process.env.PUBLIC_URL}/assets/default.svg`;
                         }}
                       />
-                      {item.parent_name}
+                      <span className='listItemName'>{item.parent_name}</span>
                     </div>
                   </Grid.Column>
 
@@ -179,6 +199,7 @@ class ListContainer extends Component {
                   }}
                 >
                   {item.innerItems.map((innerItem, index) => {
+                    //TODO: add trash-can icon to delete innerItem(filled.svg)
                     if (innerItem.quantity > 0) {
                       return (
                         <li key={innerItem.item_id}>
@@ -214,8 +235,8 @@ class ListContainer extends Component {
       <>
         <List celled divided verticalAlign='middle'>
           {!this.props.itemsSearchInput && !this.props.isMyItems && (
-            <List.Item key='common-items' style={styles.listItem}>
-              <Header>COMMON ITEMS</Header>
+            <List.Item key='common-items' style={styles.categoryHeader}>
+              <Header style={styles.categoryHeaderText}>COMMON ITEMS</Header>
             </List.Item>
           )}
           {!this.props.isMyItems &&
@@ -236,10 +257,7 @@ class ListContainer extends Component {
               as={Link}
               to={`/p=${this.props.userToken}/items/special`}
               onClick={() =>
-                this.props.storeInventory(
-                  this.props.items,
-                  this.props.currentUser.lead_id
-                )
+                this.props.storeInventory(this.props.items, this.props.leadId)
               }
               className='ui colorBrightGreen button'
               fluid
@@ -269,7 +287,7 @@ class ListContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     userToken: state.auth.token,
-    currentUser: state.auth.currentUser,
+    leadId: state.auth.currentUser.lead_id,
     triggers: state.triggers,
     itemsSearchInput: state.itemsSearchInput,
   };

@@ -4,6 +4,18 @@ import { Link } from 'react-router-dom';
 import { Button, Header } from 'semantic-ui-react';
 import { signIn, fetchItems } from '../actions';
 
+const styles = {
+  welcomeText: {
+    fontFamily: 'CircularStd-Black',
+    fontSize: '18px',
+    color: '#ffffff',
+    letterSpacing: '0',
+    textAlign: 'center',
+    lineHeight: '24px',
+    fontWeight: '900',
+  },
+};
+
 export class Intro extends Component {
   componentDidMount = async () => {
     await this.props.signIn(this.props.match.params.id);
@@ -14,10 +26,10 @@ export class Intro extends Component {
     return (
       <>
         <div className='flex_fill'>
-          <Header style={{ color: 'white' }}>
+          <h1 style={styles.welcomeText}>
             Welcome,{' '}
             {this.props.isSignedIn && this.props.currentUser.first_name}!
-          </Header>
+          </h1>
           <p className='white-text'>YOUR MOVE</p>
           <Header style={{ color: 'white' }}>
             {this.props.isSignedIn && this.props.currentUser.size}
@@ -30,9 +42,10 @@ export class Intro extends Component {
             and get an accurate quote
           </p>
           <Button
+            id='get-started-btn'
             as={Link}
             to={`/p=${this.props.match.params.id}/items`}
-            className='ui colorBrightGreen button'
+            // className='ui colorBrightGreen button'
           >
             Get Started
           </Button>
@@ -56,7 +69,7 @@ export class Intro extends Component {
               padding: '0px',
             }}
           ></div>
-          * Your inventory affects your quote
+          <span id='fine-print'>* Your inventory affects your quote</span>
         </div>
       </>
     );

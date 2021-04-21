@@ -7,9 +7,19 @@ const styles = {
     backgroundColor: '#E7E8EC',
   },
   addBtn: {
-    borderRadius: '500px',
     backgroundColor: 'inherit',
-    border: '1px solid',
+    padding: '0px',
+    width: '70px',
+    height: '30px',
+    fontFamily: 'CircularStd-Black',
+    fontSize: '12px',
+    color: '#3a4b60',
+    letterSpacing: '0',
+    textAlign: 'center',
+    lineHeight: '20px',
+    fontWeight: '900',
+    border: '1px solid #3a4b60',
+    borderRadius: '15px',
   },
   checkedBtn: {
     borderRadius: '500px',
@@ -27,7 +37,14 @@ const styles = {
 class SpecialItemList extends React.Component {
   renderSpecialItems() {
     return this.props.items.filter((item) => {
-      return item.quantity > 0 && item.sh_price !== '0';
+      if (item.quantity > 0) {
+        if (item.innerItems && Number(item.innerItems[0].sh_price) > 0) {
+          return item;
+        } else if (Number(item.sh_price) > 0) {
+          return item;
+        }
+      }
+      return false;
     });
   }
 
@@ -43,29 +60,35 @@ class SpecialItemList extends React.Component {
             centered
             style={{ padding: '0px' }}
           >
-            <Grid.Row columns={3}>
-              <Grid.Column>
-                <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                  {item.parent_name}
-                </div>
-              </Grid.Column>
+            <Grid.Column width={10} floated='left'>
+              <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+                <span className='listItemName'>{item.parent_name}</span>
+              </div>
+            </Grid.Column>
 
-              <Grid.Column textAlign='right'>${item.sh_price}</Grid.Column>
+            <Grid.Column width={3} floated='right' textAlign='right'>
+              $
+              {item.innerItems
+                ? item.innerItems.reduce(
+                    (a, b) => a + Number(b.sh_price) * b.quantity,
+                    0
+                  )
+                : Number(item.sh_price) * item.quantity}
+            </Grid.Column>
 
-              <Grid.Column textAlign='right'>
-                {item.quantity === 0 ? (
-                  <Button
-                    style={styles.addBtn}
-                    //TODO: change addQuantityHandler to manage sh_price's quantity
-                    onClick={() => this.addQuantityHandler(item)}
-                  >
-                    ADD
-                  </Button>
-                ) : (
-                  <Button style={styles.checkedBtn}>✔</Button>
-                )}
-              </Grid.Column>
-            </Grid.Row>
+            <Grid.Column width={3} floated='right' textAlign='right'>
+              {item.quantity === 0 ? (
+                <Button
+                  style={styles.addBtn}
+                  //TODO: change addQuantityHandler to manage sh_price's quantity
+                  onClick={() => this.addQuantityHandler(item)}
+                >
+                  ADD
+                </Button>
+              ) : (
+                <Button style={styles.checkedBtn}>✔</Button>
+              )}
+            </Grid.Column>
           </Grid>
         </List.Item>
       );
@@ -74,7 +97,35 @@ class SpecialItemList extends React.Component {
 
   render() {
     return (
-      <List celled divided verticalAlign='middle'>
+      <List
+        celled
+        divided
+        verticalAlign='middle'
+        style={{ marginLeft: '-25px', marginRight: '-25px' }}
+      >
+        <List.Item key={'packing-fee'}>
+          <Grid
+            container
+            doubling
+            divided='vertically'
+            verticalAlign='middle'
+            centered
+            style={{ padding: '0px' }}
+          >
+            <Grid.Column width={10} floated='left'></Grid.Column>
+
+            <Grid.Column
+              width={3}
+              floated='right'
+              textAlign='right'
+              style={{ paddingLeft: '0px' }}
+            >
+              <span id='packing-fee'>PACKING FEE</span>
+            </Grid.Column>
+
+            <Grid.Column width={3} floated='right'></Grid.Column>
+          </Grid>
+        </List.Item>
         {this.renderList(this.renderSpecialItems())}
       </List>
     );

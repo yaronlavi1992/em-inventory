@@ -15,7 +15,7 @@ class MainHeader extends Component {
           </Grid.Column>
 
           <Grid.Column floated='right' textAlign='right'>
-            <a className='white-text' href='tel:(800) 611-6001'>
+            <a id='company-phone-number' href='tel:(800) 611-6001'>
               (800) 611-6001
             </a>
           </Grid.Column>

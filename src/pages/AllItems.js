@@ -15,11 +15,25 @@ class AllItems extends Component {
         <Label
           style={{
             color: 'black',
-            backgroundColor: 'white',
-            borderRadius: '15px',
+            backgroundColor: '#ffffff',
+            borderRadius: '10px',
+            paddingTop: '0px',
+            paddingBottom: '0px',
           }}
         >
-          {result}
+          <span
+            style={{
+              fontFamily: 'CircularStd-Black',
+              fontSize: '14px',
+              color: '#3A4B60',
+              letterSpacing: '0',
+              textAlign: 'center',
+              lineHeight: '20px',
+              fontWeight: '900',
+            }}
+          >
+            {result}
+          </span>
         </Label>
       ) || ''
     );
@@ -78,7 +92,7 @@ class AllItems extends Component {
                   onClick={() =>
                     this.props.storeInventory(
                       this.props.items,
-                      this.props.currentUser.lead_id
+                      this.props.leadId
                     )
                   }
                 >
@@ -90,13 +104,19 @@ class AllItems extends Component {
 
           <Grid.Row style={{ padding: '0px' }}>
             <Tab
-              style={{ width: 'inherit', backgroundColor: '#F0F1F3' }}
+              style={{
+                width: 'inherit',
+                backgroundColor: '#F0F1F3',
+              }}
               panes={[
                 {
                   menuItem: 'ALL ITEMS',
                   render: () => (
                     <Tab.Pane
-                      style={{ padding: '0px', backgroundColor: '#F0F1F3' }}
+                      style={{
+                        padding: '0px',
+                        backgroundColor: '#F0F1F3',
+                      }}
                     >
                       <SearchBar />
                       <Segment
@@ -130,7 +150,10 @@ class AllItems extends Component {
                   ),
                   render: () => (
                     <Tab.Pane
-                      style={{ padding: '0px', backgroundColor: '#F0F1F3' }}
+                      style={{
+                        padding: '0px',
+                        backgroundColor: '#F0F1F3',
+                      }}
                     >
                       <SearchBar isMyItems />
                       <Segment
@@ -160,7 +183,7 @@ class AllItems extends Component {
 const mapStateToProps = (state) => {
   return {
     userToken: state.auth.token,
-    currentUser: state.auth.currentUser,
+    leadId: state.auth.currentUser.lead_id,
     items: state.items,
     triggers: state.triggers,
   };

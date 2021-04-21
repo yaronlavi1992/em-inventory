@@ -6,6 +6,10 @@ import { submitInventory } from '../actions';
 import SpecialItemList from '../components/SpecialItemList';
 
 class SpecialCareItems extends Component {
+  linkOnClickHandler = () => {
+    this.props.submitInventory(this.props.items, this.props.leadId);
+  };
+
   render() {
     return (
       <div className='specialCare-pop' style={{ display: 'block' }}>
@@ -27,25 +31,17 @@ class SpecialCareItems extends Component {
           <Link
             className='skip'
             to={`/p=${this.props.userToken}/confirmation`}
-            onClick={() => {
-              this.props.submitInventory(
-                this.props.items,
-                this.props.userToken
-              );
-            }}
+            onClick={this.linkOnClickHandler}
           >
             Skip this, I'll box these myself ?
           </Link>
 
           <div className='inv-btn-outer'>
-            <Link to={`/p=${this.props.userToken}/confirmation`}>
+            <Link
+              to={`/p=${this.props.userToken}/confirmation`}
+              onClick={this.linkOnClickHandler}
+            >
               <p
-                onClick={() =>
-                  this.props.submitInventory(
-                    this.props.items,
-                    this.props.userToken
-                  )
-                }
                 id='special-care-items-done-btn'
                 className='btn inv-btn doneInv'
               >
@@ -63,6 +59,7 @@ const mapStateToProps = (state) => {
   return {
     items: state.items,
     userToken: state.auth.token,
+    leadId: state.auth.currentUser.lead_id,
   };
 };
 
