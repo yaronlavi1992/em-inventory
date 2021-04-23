@@ -1,28 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Modal } from 'semantic-ui-react';
-
-const styles = {
-  normalBtn: {
-    border: '1px solid #57C3F3',
-    borderRadius: '5px',
-    lineHeight: '20px',
-    letterSpacing: '0',
-    margin: '6px 2px 6px 2px',
-    fontWeight: '400',
-    color: '#57C3F3',
-    backgroundColor: 'white',
-  },
-  selectedBtn: {
-    border: '1px solid #57C3F3',
-    borderRadius: '5px',
-    lineHeight: '20px',
-    letterSpacing: '0',
-    margin: '6px 2px 6px 2px',
-    fontWeight: '400',
-    color: 'white',
-    backgroundColor: '#57C3F3',
-  },
-};
+import './FirstItemOptionsModal.css';
 
 class FirstItemOptionsModal extends Component {
   constructor(props) {
@@ -60,13 +38,11 @@ class FirstItemOptionsModal extends Component {
           {this.props.item.innerItems.map((innerItem, index) => {
             return (
               <Button
-                style={
-                  !this.props.selectedValue && index === 0
-                    ? styles.selectedBtn
-                    : this.props.selectedValue === innerItem.item
-                    ? styles.selectedBtn
-                    : styles.normalBtn
-                }
+                id={`${
+                  this.props.selectedValue === innerItem.item
+                    ? 'selected-btn'
+                    : 'normal-btn'
+                }`}
                 key={innerItem.item_id}
                 onClick={() => {
                   this.setState({ value: innerItem.item_id, open: false });

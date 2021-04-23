@@ -8,6 +8,7 @@ import {
   Accordion,
   Image,
   Header,
+  Label,
 } from 'semantic-ui-react';
 import './ListContainer.css';
 import {
@@ -18,7 +19,7 @@ import {
   triggerBoxCalculator,
 } from '../../actions';
 import BoxCalculatorLoaderModal from '../BoxCalculatorLoaderModal/BoxCalculatorLoaderModal';
-import FirstItemOptionsModal from '../FirstItemOptionsModal';
+import FirstItemOptionsModal from '../FirstItemOptionsModal/FirstItemOptionsModal';
 import ItemQuantityMenu from '../ItemQuantityMenu';
 import BoxCalculatorModal from '../BoxCalculatorModal/BoxCalculatorModal';
 
@@ -60,7 +61,6 @@ class ListContainer extends Component {
     const uniqueCategories = [
       ...new Set(this.props.items.map((item) => item.type_name)),
     ]; // get unique categories
-    console.log(uniqueCategories);
 
     return uniqueCategories.map((category) => {
       return (
@@ -222,6 +222,49 @@ class ListContainer extends Component {
             : this.renderList(this.props.items)}
         </List>
         <Grid style={{ margin: '0px' }}>
+          <Grid.Row>
+            <Grid.Column
+              width={8}
+              style={{ display: 'flex', justifyContent: 'space-evenly' }}
+            >
+              Aprx Vol:
+              <Label id='aprx-val-lbl'>
+                <span id='aprx-val-txt'>
+                  {`${this.props.items.reduce((sum, val) => {
+                    if (val.innerItems) {
+                      return (
+                        sum +
+                        val.innerItems.reduce(
+                          (a, b) =>
+                            Number(b.quantity) > 0
+                              ? a + Number(b.volume)
+                              : null,
+                          0
+                        )
+                      );
+                    } else {
+                      return Number(val.quantity) > 0
+                        ? sum + Number(val.volume)
+                        : null;
+                    }
+                  }, 0)}
+                cf`}
+                </span>
+              </Label>
+            </Grid.Column>
+
+            <Grid.Column
+              width={8}
+              style={{ display: 'flex', justifyContent: 'space-evenly' }}
+            >
+              Total Items:
+              <Label id='items-total-lbl'>
+                <span id='items-total-txt'>
+                  {this.props.items.reduce((sum, val) => sum + val.quantity, 0)}
+                </span>
+              </Label>
+            </Grid.Column>
+          </Grid.Row>
           <Grid.Row stretched centered style={{ padding: '0px' }}>
             <Button
               style={{ margin: '12px' }}

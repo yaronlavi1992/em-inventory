@@ -1,0 +1,21 @@
+#normal-btn {
+  border: 1px solid #57c3f3;
+  border-radius: 5px;
+  line-height: 20px;
+  letter-spacing: 0;
+  margin: 6px 2px 6px 2px;
+  font-weight: 400;
+  color: #57c3f3;
+  background-color: white;
+}
+
+#selected-btn {
+  border: 1px solid #57c3f3;
+  border-radius: 5px;
+  line-height: 20px;
+  letter-spacing: 0;
+  margin: 6px 2px 6px 2px;
+  font-weight: 400;
+  color: white;
+  background-color: #57c3f3;
+}

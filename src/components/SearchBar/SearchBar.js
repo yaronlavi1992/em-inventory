@@ -25,9 +25,10 @@ class SearchBar extends Component {
       <div
         // className='ui right icon'
         style={{
-          display: 'inline-flex',
+          display: 'flex',
           width: 'inherit',
           justifyContent: 'center',
+          alignItems: 'center',
         }}
       >
         <Input
@@ -46,9 +47,9 @@ class SearchBar extends Component {
               name='close'
               onClick={this.onCancelClickHandler}
             />
-            <p id='cancel-btn' onClick={this.onCancelClickHandler}>
+            <button id='cancel-btn' onClick={this.onCancelClickHandler}>
               CANCEL
-            </p>
+            </button>
           </>
         )}
       </div>

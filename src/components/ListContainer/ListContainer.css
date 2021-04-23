@@ -48,3 +48,37 @@
   line-height: 20px;
   font-weight: 400;
 }
+
+#aprx-val-lbl {
+  background-color: #3a4b60;
+  border-radius: 10px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+#aprx-val-txt {
+  font-family: CircularStd-Black;
+  font-size: 14px;
+  color: #ffffff;
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 20px;
+  font-weight: 900;
+}
+
+#items-total-lbl {
+  background-color: #3a4b60;
+  border-radius: 10px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+#items-total-txt {
+  font-family: CircularStd-Black;
+  font-size: 14px;
+  color: #ffffff;
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 20px;
+  font-weight: 900;
+}
