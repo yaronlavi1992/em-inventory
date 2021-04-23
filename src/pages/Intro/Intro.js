@@ -1,20 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Button, Header } from 'semantic-ui-react';
-import { signIn, fetchItems } from '../actions';
-
-const styles = {
-  welcomeText: {
-    fontFamily: 'CircularStd-Black',
-    fontSize: '18px',
-    color: '#ffffff',
-    letterSpacing: '0',
-    textAlign: 'center',
-    lineHeight: '24px',
-    fontWeight: '900',
-  },
-};
+import { Button, Image } from 'semantic-ui-react';
+import { signIn, fetchItems } from '../../actions';
+import './Intro.css';
 
 export class Intro extends Component {
   componentDidMount = async () => {
@@ -25,19 +14,26 @@ export class Intro extends Component {
   render() {
     return (
       <>
-        <div className='flex_fill'>
-          <h1 style={styles.welcomeText}>
+        <div id='flex-fill'>
+          <h1 id='welcome-text'>
             Welcome,{' '}
             {this.props.isSignedIn && this.props.currentUser.first_name}!
           </h1>
-          <p className='white-text'>YOUR MOVE</p>
-          <Header style={{ color: 'white' }}>
+          <h1 id='your-move-text'>YOUR MOVE</h1>
+          <hr
+            style={{
+              borderTop: '1px solid #CCCFD5',
+              width: '8%',
+              marginTop: '0px',
+            }}
+          />
+          <h1 id='move-size'>
             {this.props.isSignedIn && this.props.currentUser.size}
             <br />
             From: {this.props.isSignedIn && this.props.currentUser.fromZip} |
             To: {this.props.isSignedIn && this.props.currentUser.toZip}
-          </Header>
-          <p className='white-text'>
+          </h1>
+          <p id='browse-our-data'>
             Browse our databse of common household items to build your Inventory
             and get an accurate quote
           </p>
@@ -45,15 +41,19 @@ export class Intro extends Component {
             id='get-started-btn'
             as={Link}
             to={`/p=${this.props.match.params.id}/items`}
-            // className='ui colorBrightGreen button'
           >
             Get Started
           </Button>
+          <Image
+            src={`${process.env.PUBLIC_URL}/assets/illustration_lr.svg`}
+            wrapped
+            id='illustrated-lr-img'
+          />
         </div>
         <div
           className='white-text'
           style={{
-            height: '100px',
+            height: '150px',
             backgroundColor: '#CCCFD5',
             fontWeight: 'bolder',
             margin: '-15px',
@@ -69,7 +69,7 @@ export class Intro extends Component {
               padding: '0px',
             }}
           ></div>
-          <span id='fine-print'>* Your inventory affects your quote</span>
+          <div id='fine-print'>* Your inventory affects your quote</div>
         </div>
       </>
     );

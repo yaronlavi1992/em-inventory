@@ -1,0 +1,69 @@
+#flex-fill {
+  flex-grow: 1;
+}
+
+#welcome-text {
+  font-family: CircularStd-Black;
+  font-size: 18px;
+  color: #ffffff;
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 24px;
+  font-weight: 900;
+  padding-top: 14%;
+}
+
+#your-move-text {
+  font-family: CircularStd-Black;
+  font-size: 10px;
+  color: #cccfd5;
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 16px;
+  font-weight: 900;
+  padding-top: 2%;
+  margin-bottom: 0px;
+}
+
+#move-size {
+  font-family: CircularStd-Black;
+  font-size: 16px;
+  color: #ffffff;
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 20px;
+  font-weight: 900;
+  margin: 0px;
+}
+
+#browse-our-data {
+  font-family: CircularStd-Book;
+  font-size: 14px;
+  color: #ffffff;
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 20px;
+  font-weight: 400;
+  padding-top: 15%;
+  margin-bottom: 10%;
+}
+
+#get-started-btn {
+  background: #1fb118;
+  border-radius: 5px;
+  width: 61.3%;
+  height: 50px;
+  font-family: CircularStd-Book;
+  font-size: 16px;
+  color: #ffffff;
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 20px;
+  font-weight: 400;
+}
+
+#illustrated-lr-img {
+  width: 350px;
+  height: 170px;
+  padding: 42% 6% 5% 6%;
+}

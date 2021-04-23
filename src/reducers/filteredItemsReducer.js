@@ -4,24 +4,25 @@ const filteredItemsReducer = (state = [], action) => {
   switch (action.type) {
     case types.FILTER_ITEMS:
       let lookup = [];
-      if (!action.input) return action.payload;
+      if (!action.input) {
+        return action.payload;
+      }
+      let searchTerm = action.input.toLowerCase();
       return action.payload
-        .filter((item, index, self) => {
+        .filter((item) => {
           let normalizedValue = item.parent_name.toLowerCase();
-
-          if (normalizedValue.indexOf(action.input.toLowerCase()) !== -1) {
-            if (lookup.indexOf(normalizedValue) === -1) {
+          if (normalizedValue.includes(searchTerm)) {
+            if (!lookup.includes(normalizedValue)) {
               lookup.push(normalizedValue);
               return true;
             }
           }
-
           return false;
         })
         .sort((a, b) => {
           let indexDifference =
-            a.parent_name.toLowerCase().indexOf(action.input.toLowerCase()) -
-            b.parent_name.toLowerCase().indexOf(action.input.toLowerCase());
+            a.parent_name.toLowerCase().indexOf(searchTerm) -
+            b.parent_name.toLowerCase().indexOf(searchTerm);
           if (indexDifference !== 0) {
             return indexDifference;
           }

@@ -1,0 +1,49 @@
+#box-calc-img {
+  width: 37.3%;
+  height: 17.3%;
+  padding-bottom: 3.7%;
+}
+
+#would-you-like-help-txt {
+  font-family: CircularStd-Black;
+  font-size: 18px;
+  color: #3a4b60;
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 24px;
+  font-weight: 900;
+}
+
+#by-selecting-your-items-txt {
+  font-family: CircularStd-Book;
+  font-size: 14px;
+  color: #3a4b60;
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 20px;
+  font-weight: 400;
+}
+
+#calculate-btn {
+  font-family: CircularStd-Book;
+  font-size: 18px;
+  color: #ffffff;
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 24px;
+  font-weight: 400;
+  background: #1fb118;
+  border-radius: 5px;
+}
+
+#add-boxes-manually-btn {
+  font-family: CircularStd-Book;
+  font-size: 14px;
+  color: #57c3f3;
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 20px;
+  font-weight: 400;
+  text-decoration: underline;
+  padding-top: 5%;
+}

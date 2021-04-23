@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Header, Image, Modal } from 'semantic-ui-react';
+import { Button, Image, Modal } from 'semantic-ui-react';
+import './BoxCalculatorModal.css';
 
 class BoxCalculatorModal extends Component {
   constructor(props) {
@@ -22,30 +23,34 @@ class BoxCalculatorModal extends Component {
       <>
         <Modal.Description>
           <Image
-            size='small'
+            id='box-calc-img'
             src={`${process.env.PUBLIC_URL}/assets/unified-box-calculator.png`}
             wrapped
-            className='ui centered grid'
           />
-          <Header>{`Would you like help calculating
-        how many boxes you need?`}</Header>
-          <p>{`By selecting your items in the following step,
+          <p id='would-you-like-help-txt'>{`Would you like help calculating
+        how many boxes you need?`}</p>
+          <p id='by-selecting-your-items-txt'>{`By selecting your items in the following step,
           we will be able to give an accurate estimate.
           However, your final cost will be based on the
           actual items being transported on the day of
           the move.`}</p>
         </Modal.Description>
         <Button
-          content='Calculate'
+          id='calculate-btn'
           onClick={() => {
             this.setState({ open: false });
             this.props.closeCallback();
           }}
           positive
-        />
-        <Button onClick={() => this.setState({ open: false })}>
-          No thanks, I'll add boxes manually
+        >
+          Calculate
         </Button>
+        <p
+          id='add-boxes-manually-btn'
+          onClick={() => this.setState({ open: false })}
+        >
+          No thanks, I'll add boxes manually
+        </p>
       </>
     );
   }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Header, Image, Modal } from 'semantic-ui-react';
+import './ModalExampleModal.css';
 
 const ModalExampleModal = (props) => {
   const [open, setOpen] = React.useState(true);
@@ -25,11 +26,11 @@ const ModalExampleModal = (props) => {
         </Modal.Description>
         {props.buttonText && (
           <Button
+            id='ok-got-it-btn'
             as={Link}
             to={props.nextPage || '/'}
             content={props.buttonText}
             onClick={() => setOpen(false)}
-            positive
           />
         )}
         {props.skipButton && (

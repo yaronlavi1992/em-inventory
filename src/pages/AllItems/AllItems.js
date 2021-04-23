@@ -2,38 +2,23 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Grid, Header, Label, Menu, Segment, Tab } from 'semantic-ui-react';
-import { fetchItems, storeInventory, triggerAllItemsModal } from '../actions';
-import ItemList from '../components/ItemList';
-import ModalExampleModal from '../components/ModalExampleModal';
-import SearchBar from '../components/SearchBar';
+import {
+  fetchItems,
+  storeInventory,
+  triggerAllItemsModal,
+} from '../../actions';
+import ItemList from '../../components/ItemList';
+import ModalExampleModal from '../../components/ModalExampleModal/ModalExampleModal';
+import SearchBar from '../../components/SearchBar/SearchBar';
+import './AllItems.css';
 
 class AllItems extends Component {
   renderItemsTotalQuantity() {
     const result = this.props.items.reduce((sum, val) => sum + val.quantity, 0);
     return (
       (
-        <Label
-          style={{
-            color: 'black',
-            backgroundColor: '#ffffff',
-            borderRadius: '10px',
-            paddingTop: '0px',
-            paddingBottom: '0px',
-          }}
-        >
-          <span
-            style={{
-              fontFamily: 'CircularStd-Black',
-              fontSize: '14px',
-              color: '#3A4B60',
-              letterSpacing: '0',
-              textAlign: 'center',
-              lineHeight: '20px',
-              fontWeight: '900',
-            }}
-          >
-            {result}
-          </span>
+        <Label id='items-total-quantity-lbl'>
+          <span id='items-total-quantity-txt'>{result}</span>
         </Label>
       ) || ''
     );
@@ -119,15 +104,7 @@ class AllItems extends Component {
                       }}
                     >
                       <SearchBar />
-                      <Segment
-                        style={{
-                          overflow: 'auto',
-                          maxHeight: 550,
-                          margin: '0px',
-                          padding: '0px',
-                          backgroundColor: '#f0f1f3',
-                        }}
-                      >
+                      <Segment id='all-item-list-segment'>
                         <ItemList isMyItems={false} />
                       </Segment>
                     </Tab.Pane>
@@ -156,16 +133,7 @@ class AllItems extends Component {
                       }}
                     >
                       <SearchBar isMyItems />
-                      <Segment
-                        style={{
-                          overflow: 'auto',
-                          maxHeight: 550,
-                          margin: '0px',
-                          paddingLeft: '0px',
-                          paddingRight: '0px',
-                          backgroundColor: '#f0f1f3',
-                        }}
-                      >
+                      <Segment id='my-item-list-segment'>
                         <ItemList isMyItems />
                       </Segment>
                     </Tab.Pane>

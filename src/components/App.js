@@ -1,38 +1,49 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
-import Intro from '../pages/Intro';
+import Intro from '../pages/Intro/Intro';
 import MainHeader from './MainHeader';
-import AllItems from '../pages/AllItems';
 import SpecialCareItems from '../pages/SpecialCareItems';
 import { Container } from 'semantic-ui-react';
 import Confirmation from '../pages/Confirmation';
 import { connect } from 'react-redux';
+import AllItems from '../pages/AllItems/AllItems';
 
 class App extends Component {
   render() {
     return (
-      <Container className='flex_container'>
-        <BrowserRouter basename={process.env.PUBLIC_URL}>
-          <MainHeader />
-          <Switch>
-            <Route path='/p=:id' exact component={Intro} />
-            <Route
-              path={`/p=${
-                this.props.userToken ? this.props.userToken : ''
-              }/items`}
-              exact
-              component={AllItems}
-            />
-            <Route
-              path='/p=:id/items/special'
-              exact
-              component={SpecialCareItems}
-            />
-            <Route path='/p=:id/confirmation' exact component={Confirmation} />
-            <Redirect to='/' />
-          </Switch>
-        </BrowserRouter>
-      </Container>
+      <div
+        className='ui one column stackable center aligned page grid'
+        style={{ height: '100%', margin: '0px' }}
+      >
+        <div id='mainWrapper' className='column twelve wide'>
+          <Container className='flex_container'>
+            <BrowserRouter basename={process.env.PUBLIC_URL}>
+              <MainHeader />
+              <Switch>
+                <Route path='/p=:id' exact component={Intro} />
+                <Route
+                  path={`/p=${
+                    this.props.userToken ? this.props.userToken : ''
+                  }/items`}
+                  exact
+                  component={AllItems}
+                />
+                <Route
+                  path='/p=:id/items/special'
+                  exact
+                  component={SpecialCareItems}
+                />
+                <Route
+                  path='/p=:id/confirmation'
+                  exact
+                  component={Confirmation}
+                />
+                <Redirect to='/' />
+              </Switch>
+            </BrowserRouter>
+          </Container>
+        </div>
+      </div>
     );
   }
 }

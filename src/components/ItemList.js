@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import ListContainer from './ListContainer';
+import ListContainer from './ListContainer/ListContainer';
 
 class ItemList extends React.Component {
   renderMyItems() {

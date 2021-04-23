@@ -9,53 +9,18 @@ import {
   Image,
   Header,
 } from 'semantic-ui-react';
+import './ListContainer.css';
 import {
   addItemQuantity,
   reduceItemQuantity,
   storeInventory,
   triggerAllItemsModal,
   triggerBoxCalculator,
-} from '../actions';
-import BoxCalculatorLoaderModal from './BoxCalculatorLoaderModal';
-import BoxCalculatorModal from './BoxCalculatorModal';
-import FirstItemOptionsModal from './FirstItemOptionsModal';
-import ItemQuantityMenu from './ItemQuantityMenu';
-
-const styles = {
-  categoryHeader: {
-    backgroundColor: '#E7E8EC',
-  },
-  categoryHeaderText: {
-    float: 'left',
-    paddingLeft: '5.3%',
-    fontFamily: 'CircularStd-Black',
-    fontSize: '12px',
-    color: '#3A4B60',
-    letterSpacing: '0',
-    lineHeight: '20px',
-    fontWeight: '900',
-  },
-  addBtn: {
-    backgroundColor: 'inherit',
-    padding: '0px',
-    width: '70px',
-    height: '30px',
-    fontFamily: 'CircularStd-Black',
-    fontSize: '12px',
-    color: '#3a4b60',
-    letterSpacing: '0',
-    textAlign: 'center',
-    lineHeight: '20px',
-    fontWeight: '900',
-    border: '1px solid #3a4b60',
-    borderRadius: '15px',
-  },
-  listItemIcon: {
-    width: '20px',
-    height: '20px',
-    marginRight: '10px',
-  },
-};
+} from '../../actions';
+import BoxCalculatorLoaderModal from '../BoxCalculatorLoaderModal/BoxCalculatorLoaderModal';
+import FirstItemOptionsModal from '../FirstItemOptionsModal';
+import ItemQuantityMenu from '../ItemQuantityMenu';
+import BoxCalculatorModal from '../BoxCalculatorModal/BoxCalculatorModal';
 
 class ListContainer extends Component {
   constructor(props) {
@@ -95,15 +60,18 @@ class ListContainer extends Component {
     const uniqueCategories = [
       ...new Set(this.props.items.map((item) => item.type_name)),
     ]; // get unique categories
+    console.log(uniqueCategories);
 
     return uniqueCategories.map((category) => {
       return (
         <React.Fragment key={category}>
-          {!this.props.itemsSearchInput && !this.props.isMyItems && (
-            <List.Item key={category} style={styles.categoryHeader}>
-              <Header style={styles.categoryHeaderText}>{category}</Header>
-            </List.Item>
-          )}
+          {category !== null &&
+            !this.props.itemsSearchInput &&
+            !this.props.isMyItems && (
+              <List.Item key={category} id='category-header'>
+                <Header id='category-header-text'>{category}</Header>
+              </List.Item>
+            )}
 
           {this.renderList(
             // render each category header followed by its items
@@ -137,12 +105,12 @@ class ListContainer extends Component {
                 style={{ padding: '0px' }}
               >
                 <Grid.Row columns={2}>
-                  <Grid.Column>
+                  <Grid.Column style={{ paddingLeft: '0px' }}>
                     <div
                       style={{ display: 'inline-flex', alignItems: 'center' }}
                     >
                       <Image
-                        style={styles.listItemIcon}
+                        id='list-item-icon'
                         src={`${process.env.PUBLIC_URL}/assets/${item.icon}`}
                         onError={(e) => {
                           e.target.onerror = null;
@@ -153,19 +121,22 @@ class ListContainer extends Component {
                     </div>
                   </Grid.Column>
 
-                  <Grid.Column textAlign='right'>
+                  <Grid.Column
+                    textAlign='right'
+                    style={{ paddingRight: '0px' }}
+                  >
                     {item.quantity === 0 ? (
                       isBoxesCategory &&
                       this.props.triggers.isBoxCalcTriggered === 0 ? (
                         <Button
-                          style={styles.addBtn}
+                          id='add-btn'
                           onClick={() => this.props.triggerBoxCalculator(1)}
                         >
                           ADD
                         </Button>
                       ) : (
                         <Button
-                          style={styles.addBtn}
+                          id='add-btn'
                           onClick={() => this.addQuantityHandler(item)}
                         >
                           ADD
@@ -235,8 +206,8 @@ class ListContainer extends Component {
       <>
         <List celled divided verticalAlign='middle'>
           {!this.props.itemsSearchInput && !this.props.isMyItems && (
-            <List.Item key='common-items' style={styles.categoryHeader}>
-              <Header style={styles.categoryHeaderText}>COMMON ITEMS</Header>
+            <List.Item key='common-items' id='category-header'>
+              <Header id='category-header-text'>COMMON ITEMS</Header>
             </List.Item>
           )}
           {!this.props.isMyItems &&
@@ -250,8 +221,8 @@ class ListContainer extends Component {
             ? this.renderCategories()
             : this.renderList(this.props.items)}
         </List>
-        <Grid>
-          <Grid.Row stretched centered style={{ padding: '12px' }}>
+        <Grid style={{ margin: '0px' }}>
+          <Grid.Row stretched centered style={{ padding: '0px' }}>
             <Button
               style={{ margin: '12px' }}
               as={Link}
@@ -259,7 +230,7 @@ class ListContainer extends Component {
               onClick={() =>
                 this.props.storeInventory(this.props.items, this.props.leadId)
               }
-              className='ui colorBrightGreen button'
+              id='confirm-inventory-btn'
               fluid
             >
               Confirm Inventory
