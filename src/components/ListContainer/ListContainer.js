@@ -111,8 +111,8 @@ class ListContainer extends Component {
                     >
                       <Image
                         id='list-item-icon'
-                        src={`${process.env.PUBLIC_URL}/assets/${item.icon}`}
-                        // src={`${process.env.PUBLIC_URL}/assets/${item.icon}` || `${process.env.PUBLIC_URL}/assets/default.svg`}
+                        // src={`${process.env.PUBLIC_URL}/assets/${item.icon}`}
+                        src={`./assets/${item.icon}` || `./assets/default.svg`}
                         // onError={(e) => {
                         //   e.target.onerror = null;
                         //   e.target.src = `${process.env.PUBLIC_URL}/assets/default.svg`;
