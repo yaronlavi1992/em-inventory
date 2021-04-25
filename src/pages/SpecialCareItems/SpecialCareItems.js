@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
-import { submitInventory } from '../actions';
-import SpecialItemList from '../components/SpecialItemList';
+import { submitInventory } from '../../actions';
+import SpecialItemList from '../../components/SpecialItemList/SpecialItemList';
+import './SpecialCareItems.css';
 
 class SpecialCareItems extends Component {
   linkOnClickHandler = () => {
@@ -20,7 +21,16 @@ class SpecialCareItems extends Component {
           </p>
         </Link>
         <div className='specialCare-pop-inner'>
-          <div className='specialCare-title'>Some Items Require Boxing</div>
+          <div
+            className='specialCare-title'
+            style={{
+              background: 'url(/assets/box.svg)',
+              backgroundSize: '10%',
+              backgroundRepeat: 'no-repeat',
+            }}
+          >
+            Some Items Require Boxing
+          </div>
 
           <p>
             In addition to the standard blankets provided, the following items

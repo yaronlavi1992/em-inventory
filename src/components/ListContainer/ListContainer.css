@@ -92,3 +92,10 @@
   font-weight: 900;
   padding: 10px;
 }
+
+#inner-items-list {
+  list-style-type: none;
+  float: left;
+  text-align: left;
+  margin: 0px;
+}

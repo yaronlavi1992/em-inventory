@@ -1,38 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Button, Grid, List } from 'semantic-ui-react';
-
-const styles = {
-  listItem: {
-    backgroundColor: '#E7E8EC',
-  },
-  addBtn: {
-    backgroundColor: 'inherit',
-    padding: '0px',
-    width: '70px',
-    height: '30px',
-    fontFamily: 'CircularStd-Black',
-    fontSize: '12px',
-    color: '#3a4b60',
-    letterSpacing: '0',
-    textAlign: 'center',
-    lineHeight: '20px',
-    fontWeight: '900',
-    border: '1px solid #3a4b60',
-    borderRadius: '15px',
-  },
-  checkedBtn: {
-    borderRadius: '500px',
-    color: 'white',
-    backgroundColor: '#3A4B60',
-    border: '1px solid',
-  },
-  listItemIcon: {
-    width: '20px',
-    height: '20px',
-    marginRight: '10px',
-  },
-};
+import './SpecialItemList.css';
 
 class SpecialItemList extends React.Component {
   renderSpecialItems() {
@@ -49,7 +18,7 @@ class SpecialItemList extends React.Component {
   }
 
   renderList(items) {
-    return items.map((item, index) => {
+    return items.map((item) => {
       return (
         <List.Item key={item.parent_name}>
           <Grid
@@ -79,14 +48,14 @@ class SpecialItemList extends React.Component {
             <Grid.Column width={3} floated='right' textAlign='right'>
               {item.quantity === 0 ? (
                 <Button
-                  style={styles.addBtn}
+                  id='add-btn'
                   //TODO: change addQuantityHandler to manage sh_price's quantity
                   onClick={() => this.addQuantityHandler(item)}
                 >
                   ADD
                 </Button>
               ) : (
-                <Button style={styles.checkedBtn}>✔</Button>
+                <Button id='checked-btn'>✔</Button>
               )}
             </Grid.Column>
           </Grid>

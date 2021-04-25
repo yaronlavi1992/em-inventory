@@ -1,0 +1,11 @@
+#menu {
+  display: inline-flex;
+  border-radius: 500px;
+  background-color: #3a4b60;
+}
+
+#menu-item {
+  color: white;
+  padding-right: 8px;
+  padding-left: 8px;
+}

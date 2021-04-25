@@ -20,7 +20,7 @@ import {
 } from '../../actions';
 import BoxCalculatorLoaderModal from '../BoxCalculatorLoaderModal/BoxCalculatorLoaderModal';
 import FirstItemOptionsModal from '../FirstItemOptionsModal/FirstItemOptionsModal';
-import ItemQuantityMenu from '../ItemQuantityMenu';
+import ItemQuantityMenu from '../ItemQuantityMenu/ItemQuantityMenu';
 import BoxCalculatorModal from '../BoxCalculatorModal/BoxCalculatorModal';
 
 class ListContainer extends Component {
@@ -199,14 +199,7 @@ class ListContainer extends Component {
 
             {item.innerItems && (
               <Accordion.Content active={activeIndex === index}>
-                <ul
-                  style={{
-                    listStyleType: 'none',
-                    float: 'left',
-                    textAlign: 'left',
-                    margin: '0px',
-                  }}
-                >
+                <ul id='inner-items-list'>
                   {item.innerItems.map((innerItem) => {
                     if (innerItem.quantity > 0) {
                       return (

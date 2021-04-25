@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import Intro from '../pages/Intro/Intro';
 import MainHeader from './MainHeader';
-import SpecialCareItems from '../pages/SpecialCareItems';
+import SpecialCareItems from '../pages/SpecialCareItems/SpecialCareItems';
 import { Container } from 'semantic-ui-react';
-import Confirmation from '../pages/Confirmation';
+import Confirmation from '../pages/Confirmation/Confirmation';
 import { connect } from 'react-redux';
 import AllItems from '../pages/AllItems/AllItems';
 

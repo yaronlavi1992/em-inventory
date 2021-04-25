@@ -1,20 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Icon, Menu } from 'semantic-ui-react';
-import { addItemQuantity, reduceItemQuantity } from '../actions';
-
-const styles = {
-  menu: {
-    display: 'inline-flex',
-    borderRadius: '500px',
-    backgroundColor: '#3A4B60',
-  },
-  menuItem: {
-    color: 'white',
-    paddingRight: '8px',
-    paddingLeft: '8px',
-  },
-};
+import { addItemQuantity, reduceItemQuantity } from '../../actions';
+import './ItemQuantityMenu.css';
 
 class ItemQuantityMenu extends Component {
   addQuantityHandler(itemId) {
@@ -27,18 +15,15 @@ class ItemQuantityMenu extends Component {
 
   render() {
     return (
-      <Menu size='mini' style={styles.menu}>
+      <Menu size='mini' id='menu'>
         <Menu.Item
-          style={styles.menuItem}
+          id='menu-item'
           onClick={() => this.reduceQuantityHandler(this.props.itemId)}
         >
           <Icon name='minus' />
         </Menu.Item>
-        <Menu.Item style={styles.menuItem}>{this.props.itemQuantity}</Menu.Item>
-        <Menu.Item
-          style={styles.menuItem}
-          onClick={this.props.addQuantityCallback}
-        >
+        <Menu.Item id='menu-item'>{this.props.itemQuantity}</Menu.Item>
+        <Menu.Item id='menu-item' onClick={this.props.addQuantityCallback}>
           <Icon name='plus' />
         </Menu.Item>
       </Menu>
