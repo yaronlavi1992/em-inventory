@@ -82,3 +82,13 @@
   line-height: 20px;
   font-weight: 900;
 }
+
+#clear-inventory-txt {
+  font-family: CircularStd-Black;
+  font-size: 12px;
+  color: #f6511d;
+  letter-spacing: 0;
+  line-height: 20px;
+  font-weight: 900;
+  padding: 10px;
+}

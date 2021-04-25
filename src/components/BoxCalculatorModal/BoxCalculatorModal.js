@@ -39,7 +39,7 @@ class BoxCalculatorModal extends Component {
           id='calculate-btn'
           onClick={() => {
             this.setState({ open: false });
-            this.props.closeCallback();
+            this.props.closeCallback(2);
           }}
           positive
         >
@@ -47,7 +47,10 @@ class BoxCalculatorModal extends Component {
         </Button>
         <p
           id='add-boxes-manually-btn'
-          onClick={() => this.setState({ open: false })}
+          onClick={() => {
+            this.setState({ open: false });
+            this.props.closeCallback(3);
+          }}
         >
           No thanks, I'll add boxes manually
         </p>
@@ -61,7 +64,7 @@ class BoxCalculatorModal extends Component {
         open={this.state.open}
         onClose={() => {
           this.setState({ open: false });
-          this.props.closeCallback();
+          this.props.closeCallback(3);
         }}
       >
         <Modal.Content image className='ui centered grid'>

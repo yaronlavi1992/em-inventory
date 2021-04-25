@@ -37,7 +37,6 @@ class ListContainer extends Component {
     const { index } = titleProps;
     const { activeIndex } = this.state;
     const newIndex = activeIndex === index ? -1 : index;
-
     this.setState({ activeIndex: newIndex });
   };
 
@@ -55,6 +54,44 @@ class ListContainer extends Component {
     } else {
       this.setState({ modalItem: null, selectedValue: null });
     }
+  }
+
+  reduceQuantityHandler(itemId) {
+    this.props.reduceItemQuantity(itemId);
+    this.forceUpdate();
+  }
+
+  clearInventoryHandler() {
+    this.props.items.forEach((item) => {
+      if (item.quantity > 0) {
+        if (item.innerItems) {
+          item.innerItems.forEach((innerItem) => (innerItem.quantity = 0));
+        }
+        item.quantity = 0;
+      }
+    });
+    this.forceUpdate();
+  }
+
+  renderAprxVal() {
+    return `
+    ${this.props.items
+      .map((item) => {
+        if (!item.innerItems && Number(item.quantity) > 0) {
+          return Number(item.quantity) * Number(item.volume);
+        } else if (item.innerItems) {
+          return item.innerItems.reduce(
+            (a, b) =>
+              Number(b.quantity) > 0 && Number(b.volume) > 0
+                ? a + Number(b.quantity) * Number(b.volume)
+                : a + 0,
+            0
+          );
+        }
+        return null;
+      })
+      .reduce((a, b) => (b >= 0 ? a + b : a), 0)}
+  cf`;
   }
 
   renderCategories() {
@@ -111,11 +148,7 @@ class ListContainer extends Component {
                     >
                       <Image
                         id='list-item-icon'
-                        src={
-                          `${process.env.PUBLIC_URL}/assets/${item.icon}`
-                          // `${process.env.PUBLIC_URL}/assets/${item.icon}` ||
-                          // `${process.env.PUBLIC_URL}/assets/default.svg`
-                        }
+                        src={`${process.env.PUBLIC_URL}/assets/${item.icon}`}
                         onError={(e) => {
                           e.target.onerror = null;
                           e.target.src = `${process.env.PUBLIC_URL}/assets/default.svg`;
@@ -177,9 +210,12 @@ class ListContainer extends Component {
                     //TODO: add trash-can icon to delete innerItem(filled.svg)
                     if (innerItem.quantity > 0) {
                       return (
-                        <li key={innerItem.item_id}>
+                        <li
+                          key={innerItem.item_id}
+                          style={{ display: 'flex', alignItems: 'center' }}
+                        >
                           <p
-                            style={{ color: '#57C3F3' }}
+                            style={{ color: '#57C3F3', marginBottom: '10px' }}
                             onClick={() => {
                               this.setState({ selectedValue: innerItem.item });
                               this.addQuantityHandler(item);
@@ -190,6 +226,20 @@ class ListContainer extends Component {
                               {innerItem.item}
                             </span>
                           </p>
+                          <span
+                            style={{
+                              paddingLeft: '0.5rem',
+                              marginBottom: '10px',
+                            }}
+                            onClick={() =>
+                              this.reduceQuantityHandler(innerItem.item_id)
+                            }
+                          >
+                            <Image
+                              src={`${process.env.PUBLIC_URL}/assets/filled.svg`}
+                              style={{ width: '12px', height: '12px' }}
+                            />
+                          </span>
                         </li>
                       );
                     } else {
@@ -233,33 +283,17 @@ class ListContainer extends Component {
             >
               Aprx Vol:
               <Label id='aprx-val-lbl'>
-                <span id='aprx-val-txt'>
-                  {`${this.props.items.reduce((sum, val) => {
-                    if (val.innerItems) {
-                      return (
-                        sum +
-                        val.innerItems.reduce(
-                          (a, b) =>
-                            Number(b.quantity) > 0
-                              ? a + Number(b.volume)
-                              : null,
-                          0
-                        )
-                      );
-                    } else {
-                      return Number(val.quantity) > 0
-                        ? sum + Number(val.volume)
-                        : null;
-                    }
-                  }, 0)}
-                cf`}
-                </span>
+                <span id='aprx-val-txt'>{this.renderAprxVal()}</span>
               </Label>
             </Grid.Column>
 
             <Grid.Column
               width={8}
-              style={{ display: 'flex', justifyContent: 'space-evenly' }}
+              style={{
+                display: 'flex',
+                justifyContent: 'space-evenly',
+                borderLeft: '1px solid #3A4B60',
+              }}
             >
               Total Items:
               <Label id='items-total-lbl'>
@@ -283,6 +317,18 @@ class ListContainer extends Component {
               Confirm Inventory
             </Button>
           </Grid.Row>
+          <Grid.Row stretched centered style={{ padding: '0px' }}>
+            <div
+              style={{ display: 'flex', alignItems: 'center' }}
+              onClick={() => this.clearInventoryHandler()}
+            >
+              <Image
+                src={`${process.env.PUBLIC_URL}/assets/filled.svg`}
+                style={{ width: '12px', height: '12px' }}
+              />
+              <p id='clear-inventory-txt'>CLEAR ALL INVENTORY ITEMS</p>
+            </div>
+          </Grid.Row>
         </Grid>
         <FirstItemOptionsModal
           item={this.state.modalItem}
@@ -291,7 +337,9 @@ class ListContainer extends Component {
         />
         <BoxCalculatorModal
           isTriggered={this.props.triggers.isBoxCalcTriggered}
-          closeCallback={() => this.props.triggerBoxCalculator(2)}
+          closeCallback={(triggerState) =>
+            this.props.triggerBoxCalculator(triggerState)
+          }
         />
         <BoxCalculatorLoaderModal
           isTriggered={this.props.triggers.isBoxCalcTriggered}
