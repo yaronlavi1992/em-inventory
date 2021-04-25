@@ -58,7 +58,7 @@ class ListContainer extends Component {
 
   reduceQuantityHandler(itemId) {
     this.props.reduceItemQuantity(itemId);
-    this.forceUpdate();
+    this.setState(this.state);
   }
 
   clearInventoryHandler() {
@@ -70,7 +70,8 @@ class ListContainer extends Component {
         item.quantity = 0;
       }
     });
-    this.forceUpdate();
+    this.props.reduceItemQuantity(null);
+    this.setState(this.state);
   }
 
   renderAprxVal() {
@@ -206,8 +207,7 @@ class ListContainer extends Component {
                     margin: '0px',
                   }}
                 >
-                  {item.innerItems.map((innerItem, index) => {
-                    //TODO: add trash-can icon to delete innerItem(filled.svg)
+                  {item.innerItems.map((innerItem) => {
                     if (innerItem.quantity > 0) {
                       return (
                         <li
