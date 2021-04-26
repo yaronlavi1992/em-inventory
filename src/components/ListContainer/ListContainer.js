@@ -58,7 +58,7 @@ class ListContainer extends Component {
 
   reduceQuantityHandler(itemId) {
     this.props.reduceItemQuantity(itemId);
-    this.setState(this.state);
+    this.props.forceRerenderCallback();
   }
 
   clearInventoryHandler() {
@@ -70,8 +70,7 @@ class ListContainer extends Component {
         item.quantity = 0;
       }
     });
-    this.props.reduceItemQuantity(null);
-    this.setState(this.state);
+    this.props.forceRerenderCallback();
   }
 
   renderAprxVal() {
@@ -99,7 +98,6 @@ class ListContainer extends Component {
     const uniqueCategories = [
       ...new Set(this.props.items.map((item) => item.type_name)),
     ]; // get unique categories
-
     return uniqueCategories.map((category) => {
       return (
         <React.Fragment key={category}>
@@ -110,7 +108,6 @@ class ListContainer extends Component {
                 <Header id='category-header-text'>{category}</Header>
               </List.Item>
             )}
-
           {this.renderList(
             // render each category header followed by its items
             this.props.items.filter((item) => {
@@ -158,7 +155,6 @@ class ListContainer extends Component {
                       <span className='listItemName'>{item.parent_name}</span>
                     </div>
                   </Grid.Column>
-
                   <Grid.Column
                     textAlign='right'
                     style={{ paddingRight: '0px' }}
@@ -196,7 +192,6 @@ class ListContainer extends Component {
                 </Grid.Row>
               </Grid>
             </Accordion.Title>
-
             {item.innerItems && (
               <Accordion.Content active={activeIndex === index}>
                 <ul id='inner-items-list'>
@@ -279,7 +274,6 @@ class ListContainer extends Component {
                 <span id='aprx-val-txt'>{this.renderAprxVal()}</span>
               </Label>
             </Grid.Column>
-
             <Grid.Column
               width={8}
               style={{

@@ -2,12 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Grid, Header, Label, Menu, Segment, Tab } from 'semantic-ui-react';
-import {
-  fetchItems,
-  storeInventory,
-  triggerAllItemsModal,
-} from '../../actions';
-import ItemList from '../../components/ItemList';
+import { storeInventory, triggerAllItemsModal } from '../../actions';
+import ListContainer from '../../components/ListContainer/ListContainer';
 import ModalExampleModal from '../../components/ModalExampleModal/ModalExampleModal';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import './AllItems.css';
@@ -23,11 +19,13 @@ class AllItems extends Component {
       ) || ''
     );
   }
+
   componentDidUpdate() {
     if (!this.props.triggers.isAllItemsModalTriggered) {
       this.props.triggerAllItemsModal();
     }
   }
+
   render() {
     const modalImage = `${process.env.PUBLIC_URL}/assets/confused.svg`;
     const modalHeader = `Don't Sweat the Small Stuff`;
@@ -48,7 +46,6 @@ class AllItems extends Component {
             buttonText='OK, GOT IT!'
           />
         )}
-
         <Grid
           verticalAlign='middle'
           centered
@@ -66,7 +63,6 @@ class AllItems extends Component {
                 Moving Inventory List
               </Header>
             </Grid.Column>
-
             <Grid.Column>
               <Link to={`/p=${this.props.userToken}/items/special`}>
                 <Header
@@ -86,7 +82,6 @@ class AllItems extends Component {
               </Link>
             </Grid.Column>
           </Grid.Row>
-
           <Grid.Row style={{ padding: '0px' }}>
             <Tab
               style={{
@@ -105,7 +100,11 @@ class AllItems extends Component {
                     >
                       <SearchBar />
                       <Segment id='all-item-list-segment'>
-                        <ItemList isMyItems={false} />
+                        <ListContainer
+                          isMyItems={false}
+                          items={this.props.filteredItems}
+                          forceRerenderCallback={() => this.forceUpdate()}
+                        />
                       </Segment>
                     </Tab.Pane>
                   ),
@@ -134,7 +133,13 @@ class AllItems extends Component {
                     >
                       <SearchBar isMyItems />
                       <Segment id='my-item-list-segment'>
-                        <ItemList isMyItems />
+                        <ListContainer
+                          isMyItems
+                          items={this.props.filteredItems.filter((item) => {
+                            return item.quantity > 0;
+                          })}
+                          forceRerenderCallback={() => this.forceUpdate()}
+                        />
                       </Segment>
                     </Tab.Pane>
                   ),
@@ -154,11 +159,11 @@ const mapStateToProps = (state) => {
     leadId: state.auth.currentUser.lead_id,
     items: state.items,
     triggers: state.triggers,
+    filteredItems: state.filteredItems,
   };
 };
 
 export default connect(mapStateToProps, {
-  fetchItems,
   storeInventory,
   triggerAllItemsModal,
 })(AllItems);
