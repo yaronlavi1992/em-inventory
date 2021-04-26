@@ -60,25 +60,9 @@ export const storeInventory = (items, userId) => async (dispatch) => {
   // console.log(items);
   // console.log(userId);
   items = items.filter((item) => item.quantity > 0);
-  const inventoryFromItems = [
-    items.map((item) => {
-      return {
-        item_id: Number(
-          item.innerItems ? item.innerItems[0].item_id : item.item_ids
-        ),
-        item_quantity: item.quantity,
-        // TODO: take in account the case when innerItems have different sh_prices
-        // special_handling:
-        //   item.sh_price === 0 || typeof item.sh_price === 'string'
-        //     ? 0
-        //     : item.sh_price,
-      };
-    }),
-  ];
-  // console.log(inventoryFromItems);
   const body = {
     id: String(userId),
-    inventory: inventoryFromItems,
+    inventory: inventoryFromItems(items),
   };
   const options = {
     headers: {
@@ -99,24 +83,9 @@ export const submitInventory = (items, userId) => async (dispatch) => {
   // console.log(items);
   // console.log(userId);
   items = items.filter((item) => item.quantity > 0);
-  const inventoryFromItems = [
-    items.map((item) => {
-      return {
-        item_id: Number(
-          item.innerItems ? item.innerItems[0].item_id : item.item_ids
-        ),
-        item_quantity: item.quantity,
-        // special_handling:
-        //   item.sh_price === 0 || typeof item.sh_price === 'string'
-        //     ? 0
-        //     : item.sh_price,
-      };
-    }),
-  ];
-  // console.log(inventoryFromItems);
   const body = {
     id: String(userId),
-    inventory: inventoryFromItems,
+    inventory: inventoryFromItems(items),
   };
   const options = {
     headers: {
@@ -150,4 +119,27 @@ export const triggerAllItemsModal = () => {
   return {
     type: types.TRIGGER_ALLITEMS_MODAL,
   };
+};
+
+export const inventoryFromItems = (items) => {
+  return [
+    items.flatMap((item) => {
+      if (item.innerItems) {
+        return item.innerItems
+          .filter((innerItem) => innerItem.quantity > 0)
+          .map((innerItem) => {
+            return {
+              item_id: Number(innerItem.item_id),
+              item_quantity: innerItem.quantity,
+              item_sh: Number(innerItem.sh_price) > 0 ? 1 : 0,
+            };
+          });
+      }
+      return {
+        item_id: Number(item.item_ids),
+        item_quantity: item.quantity,
+        item_sh: Number(item.sh_price) > 0 ? 1 : 0,
+      };
+    }),
+  ];
 };
