@@ -50,7 +50,7 @@ class AllItems extends Component {
           verticalAlign='middle'
           centered
           padded='vertically'
-          style={{ backgroundColor: '#F0F1F3' }}
+          style={{ backgroundColor: '#F0F1F3', margin: '0px' }}
         >
           <Grid.Row columns={2}>
             <Grid.Column>
@@ -58,7 +58,7 @@ class AllItems extends Component {
                 floated='left'
                 size='tiny'
                 textAlign='center'
-                style={{ fontSize: '3.5vw' }}
+                style={{ fontSize: '3.2vw' }}
               >
                 Moving Inventory List
               </Header>
@@ -66,10 +66,10 @@ class AllItems extends Component {
             <Grid.Column>
               <Link to={`/p=${this.props.userToken}/items/special`}>
                 <Header
+                  id='confirm-inventory-txt'
                   size='tiny'
                   floated='right'
                   textAlign='center'
-                  style={{ color: '#20b118', fontSize: '3vw' }}
                   onClick={() =>
                     this.props.storeInventory(
                       this.props.items,

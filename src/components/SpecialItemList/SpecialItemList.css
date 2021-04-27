@@ -30,3 +30,14 @@
   height: 20px;
   margin-right: 10px;
 }
+
+#packing-fee {
+  font-family: CircularStd-Black;
+  font-size: 10px;
+  color: #3a4b60;
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 16px;
+  font-weight: 900;
+  white-space: nowrap;
+}

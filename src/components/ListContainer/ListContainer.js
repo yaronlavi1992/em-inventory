@@ -22,6 +22,7 @@ import BoxCalculatorLoaderModal from '../BoxCalculatorLoaderModal/BoxCalculatorL
 import FirstItemOptionsModal from '../FirstItemOptionsModal/FirstItemOptionsModal';
 import ItemQuantityMenu from '../ItemQuantityMenu/ItemQuantityMenu';
 import BoxCalculatorModal from '../BoxCalculatorModal/BoxCalculatorModal';
+import ClearAllItemsModal from '../DialogModal/ClearAllItemsModal';
 
 class ListContainer extends Component {
   constructor(props) {
@@ -30,6 +31,7 @@ class ListContainer extends Component {
       activeIndex: null,
       modalItem: null,
       selectedValue: null,
+      isDialogModalTriggered: false,
     };
   }
 
@@ -59,17 +61,20 @@ class ListContainer extends Component {
     this.props.forceRerenderCallback();
   }
 
-  clearInventoryHandler() {
-    this.props.items.forEach((item) => {
-      if (item.quantity > 0) {
-        if (item.innerItems) {
-          item.innerItems.forEach((innerItem) => (innerItem.quantity = 0));
+  clearInventoryHandler = (isConfirmed) => {
+    this.setState({ isDialogModalTriggered: false });
+    if (isConfirmed) {
+      this.props.items.forEach((item) => {
+        if (item.quantity > 0) {
+          if (item.innerItems) {
+            item.innerItems.forEach((innerItem) => (innerItem.quantity = 0));
+          }
+          item.quantity = 0;
         }
-        item.quantity = 0;
-      }
-    });
-    this.props.forceRerenderCallback();
-  }
+      });
+      this.props.forceRerenderCallback();
+    }
+  };
 
   renderAprxVal() {
     return `
@@ -129,66 +134,60 @@ class ListContainer extends Component {
               index={index}
               onClick={this.handleClick}
             >
-              <Grid
-                container
-                doubling
-                divided='vertically'
-                verticalAlign='middle'
-                centered
-                style={{ padding: '0px' }}
+              <div
+                style={{
+                  display: 'inline-flex',
+                  width: '100%',
+                  justifyContent: 'space-between',
+                }}
               >
-                <Grid.Row columns={2}>
-                  <Grid.Column style={{ paddingLeft: '0px' }}>
-                    <div
-                      style={{ display: 'inline-flex', alignItems: 'center' }}
-                    >
-                      <Image
-                        id='list-item-icon'
-                        src={`${process.env.PUBLIC_URL}/assets/${item.icon}`}
-                        onError={(e) => {
-                          e.target.onerror = null;
-                          e.target.src = `${process.env.PUBLIC_URL}/assets/default.svg`;
-                        }}
-                      />
-                      <span className='listItemName'>{item.parent_name}</span>
-                    </div>
-                  </Grid.Column>
-                  <Grid.Column
-                    textAlign='right'
-                    style={{ paddingRight: '0px' }}
-                  >
-                    {item.quantity === 0 ? (
-                      isBoxesCategory &&
-                      this.props.triggers.isBoxCalcTriggered === 0 ? (
-                        <Button
-                          id='add-btn'
-                          onClick={() => this.props.triggerBoxCalculator(1)}
-                        >
-                          ADD
-                        </Button>
-                      ) : (
-                        <Button
-                          id='add-btn'
-                          onClick={() => this.addQuantityHandler(item)}
-                        >
-                          ADD
-                        </Button>
-                      )
+                <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+                  <Image
+                    id='list-item-icon'
+                    src={`${process.env.PUBLIC_URL}/assets/${item.icon}`}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = `${process.env.PUBLIC_URL}/assets/default.svg`;
+                    }}
+                  />
+                  <span className='listItemName'>{item.parent_name}</span>
+                </div>
+                <div
+                  style={{
+                    textAlign: 'right',
+                  }}
+                >
+                  {item.quantity === 0 ? (
+                    isBoxesCategory &&
+                    this.props.triggers.isBoxCalcTriggered === 0 ? (
+                      <Button
+                        id='add-btn'
+                        onClick={() => this.props.triggerBoxCalculator(1)}
+                      >
+                        ADD
+                      </Button>
                     ) : (
-                      <>
-                        <ItemQuantityMenu
-                          itemQuantity={item.quantity}
-                          itemId={item.item_ids}
-                          item={item}
-                          addQuantityCallback={() =>
-                            this.addQuantityHandler(item)
-                          }
-                        />
-                      </>
-                    )}
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
+                      <Button
+                        id='add-btn'
+                        onClick={() => this.addQuantityHandler(item)}
+                      >
+                        ADD
+                      </Button>
+                    )
+                  ) : (
+                    <>
+                      <ItemQuantityMenu
+                        itemQuantity={item.quantity}
+                        itemId={item.item_ids}
+                        item={item}
+                        addQuantityCallback={() =>
+                          this.addQuantityHandler(item)
+                        }
+                      />
+                    </>
+                  )}
+                </div>
+              </div>
             </Accordion.Title>
             {item.innerItems && (
               <Accordion.Content active={activeIndex === index}>
@@ -305,7 +304,7 @@ class ListContainer extends Component {
           <Grid.Row stretched centered style={{ padding: '0px' }}>
             <div
               style={{ display: 'flex', alignItems: 'center' }}
-              onClick={() => this.clearInventoryHandler()}
+              onClick={() => this.setState({ isDialogModalTriggered: true })}
             >
               <Image
                 src={`${process.env.PUBLIC_URL}/assets/filled.svg`}
@@ -329,6 +328,12 @@ class ListContainer extends Component {
         <BoxCalculatorLoaderModal
           isTriggered={this.props.triggers.isBoxCalcTriggered}
           closeCallback={() => this.props.triggerBoxCalculator(3)}
+        />
+        <ClearAllItemsModal
+          isTriggered={this.state.isDialogModalTriggered}
+          closeCallback={(isConfirmed) =>
+            this.clearInventoryHandler(isConfirmed)
+          }
         />
       </>
     );

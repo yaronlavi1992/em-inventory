@@ -25,6 +25,12 @@
   margin-bottom: 0px;
 }
 
+#separator {
+  border-top: 1px solid #cccfd5;
+  width: 8%;
+  margin-top: 0px;
+}
+
 #move-size {
   font-family: CircularStd-Black;
   font-size: 16px;
@@ -65,5 +71,37 @@
 #illustrated-lr-img {
   width: 350px;
   height: 170px;
-  padding: 42% 6% 5% 6%;
+  /* padding: 42% 6% 5% 6%; */
+  text-align: center;
+  display: block;
+  padding: 0px 20px;
+  margin-top: 20px;
+  margin-bottom: -30px;
+}
+
+#fine-print-div {
+  height: 150px;
+  background-color: #cccfd5;
+  font-weight: bolder;
+  margin: -15px;
+  padding: 0px;
+}
+
+#blue-bottom-rounded-corners {
+  background-color: #3a4b60;
+  border-radius: 0px 0px 15px 15px;
+  height: 20px;
+  margin: 0px 15px 0px 15px;
+  padding: 0px;
+}
+
+#fine-print {
+  font-family: CircularStd-Book;
+  font-size: 10px;
+  color: #ffffff;
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 12px;
+  font-weight: 400;
+  margin-top: 18%;
 }

@@ -1,0 +1,25 @@
+#stackable-grid {
+  height: 100%;
+  margin: 0px;
+}
+
+#mainWrapper {
+  background-color: #3a4b60;
+  color: #3a4b60;
+  height: 100%;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+.ui.container {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
+
+.flex_container,
+body {
+  height: 100%;
+  display: flex !important;
+  flex-direction: column;
+}

@@ -20,13 +20,7 @@ export class Intro extends Component {
             {this.props.isSignedIn && this.props.currentUser.first_name}!
           </h1>
           <h1 id='your-move-text'>YOUR MOVE</h1>
-          <hr
-            style={{
-              borderTop: '1px solid #CCCFD5',
-              width: '8%',
-              marginTop: '0px',
-            }}
-          />
+          <hr id='separator' />
           <h1 id='move-size'>
             {this.props.isSignedIn && this.props.currentUser.size}
             <br />
@@ -50,25 +44,8 @@ export class Intro extends Component {
             id='illustrated-lr-img'
           />
         </div>
-        <div
-          className='white-text'
-          style={{
-            height: '150px',
-            backgroundColor: '#CCCFD5',
-            fontWeight: 'bolder',
-            margin: '-15px',
-            padding: '0px',
-          }}
-        >
-          <div
-            style={{
-              backgroundColor: '#3a4b60',
-              borderRadius: '0px 0px 15px 15px',
-              height: '20px',
-              margin: '0px',
-              padding: '0px',
-            }}
-          ></div>
+        <div id='fine-print-div'>
+          <div id='blue-bottom-rounded-corners'></div>
           <div id='fine-print'>* Your inventory affects your quote</div>
         </div>
       </>

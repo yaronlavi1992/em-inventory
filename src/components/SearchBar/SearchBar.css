@@ -25,3 +25,8 @@
   margin-left: -32px;
   z-index: 1;
 }
+
+.ui.icon.input > i.icon:not(.link) {
+  right: auto;
+  left: 10px;
+}
