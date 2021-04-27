@@ -35,9 +35,7 @@ class ListContainer extends Component {
 
   handleClick = (e, titleProps) => {
     const { index } = titleProps;
-    const { activeIndex } = this.state;
-    const newIndex = activeIndex === index ? -1 : index;
-    this.setState({ activeIndex: newIndex });
+    this.setState({ activeIndex: index });
   };
 
   onDialogClose = (subItemId) => {

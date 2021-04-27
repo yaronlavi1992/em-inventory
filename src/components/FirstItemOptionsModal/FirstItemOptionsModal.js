@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Modal } from 'semantic-ui-react';
+import { Button, Modal, Image } from 'semantic-ui-react';
 import './FirstItemOptionsModal.css';
 
 class FirstItemOptionsModal extends Component {
@@ -68,10 +68,35 @@ class FirstItemOptionsModal extends Component {
         }}
         open={this.state.open}
       >
-        <Modal.Header>
-          {this.props.item && this.props.item.parent_name}
+        <Modal.Header id='modal-header'>
+          <span id='modal-edit-txt'>EDIT</span>
+          {this.props.item && (
+            <Image
+              style={{ width: '40px', height: '40px', paddingTop: '2.5%' }}
+              src={`${process.env.PUBLIC_URL}/assets/${this.props.item.icon}`}
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = `${process.env.PUBLIC_URL}/assets/default.svg`;
+              }}
+            />
+          )}
+          <span id='modal-item-name'>
+            {this.props.item && this.props.item.parent_name}
+          </span>
+          <span id='modal-select-size-txt'>Select Size:</span>
         </Modal.Header>
         {this.props.item && this.renderContent()}
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <Button
+            onClick={() => {
+              this.setState({ open: false });
+              this.props.closeCallback(null);
+            }}
+            id='modal-cancel-btn'
+          >
+            Cancel
+          </Button>
+        </div>
       </Modal>
     );
   }

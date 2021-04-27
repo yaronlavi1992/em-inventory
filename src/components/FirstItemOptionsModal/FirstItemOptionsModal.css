@@ -19,3 +19,57 @@
   color: white;
   background-color: #57c3f3;
 }
+
+#modal-header {
+  display: grid;
+  place-items: center;
+  border-bottom-style: none;
+  padding: 10.5px 14px 10.5px 14px !important;
+}
+
+#modal-edit-txt {
+  font-family: CircularStd-Black;
+  font-size: 10px;
+  color: #3a4b60;
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 16px;
+  font-weight: 900;
+  padding-top: 3.7%;
+}
+
+#modal-item-name {
+  font-family: CircularStd-Black;
+  font-size: 18px;
+  color: #3a4b60;
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 24px;
+  font-weight: 900;
+  padding-top: 1.2%;
+}
+
+#modal-select-size-txt {
+  font-family: CircularStd-Book;
+  font-size: 14px;
+  color: #3a4b60;
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 20px;
+  font-weight: 400;
+  padding-top: 3.7%;
+}
+
+#modal-cancel-btn {
+  font-family: CircularStd-Book;
+  font-size: 12px;
+  color: #cccfd5;
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 20px;
+  font-weight: 400;
+  width: 29.3%;
+  height: 2.5%;
+  background-color: inherit;
+  text-decoration: underline;
+}
