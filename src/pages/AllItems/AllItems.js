@@ -58,7 +58,7 @@ class AllItems extends Component {
                 floated='left'
                 size='tiny'
                 textAlign='center'
-                style={{ fontSize: '3.2vw' }}
+                style={{ fontSize: '14px' }}
               >
                 Moving Inventory List
               </Header>

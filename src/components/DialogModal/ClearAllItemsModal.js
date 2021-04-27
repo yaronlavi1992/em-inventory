@@ -34,7 +34,7 @@ class ClearAllItemsModal extends Component {
           }}
           positive
         >
-          Confirm
+          Yes, delete all items
         </Button>
         <Button
           id='clear-all-items-button'

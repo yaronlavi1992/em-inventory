@@ -9,6 +9,7 @@ class MainHeader extends Component {
       <Menu id='header-menu'>
         <Menu.Item position='left'>
           <Image
+            id='bvl-logo'
             src={`${process.env.PUBLIC_URL}/assets/bvl_logo_with_slogan.svg`}
             alt='BudgetVanLines.com'
           />

@@ -7,9 +7,7 @@
   background-color: #3a4b60;
   color: #3a4b60;
   height: 100%;
-  padding-left: 0px !important;
-  padding-right: 0px !important;
-  padding-bottom: 0px !important;
+  padding: 0px !important;
 }
 
 .ui.container {
