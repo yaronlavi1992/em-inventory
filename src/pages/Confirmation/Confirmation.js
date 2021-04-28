@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import './Confirmation.css';
 
 export class Confirmation extends Component {
@@ -33,6 +34,9 @@ export class Confirmation extends Component {
             <div className='refText'>
               Your inventory has been sent to your BudgetVanLines rep.
             </div>
+            <Link to={`https://bvl-sabf.web.app/welcome/${this.props.leadId}`}>
+              <p>Jump to SBM</p>
+            </Link>
           </div>
         </div>
       </div>
