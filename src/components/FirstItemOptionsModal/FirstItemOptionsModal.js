@@ -37,20 +37,22 @@ class FirstItemOptionsModal extends Component {
         <Button.Group vertical>
           {this.props.item.innerItems.map((innerItem, index) => {
             return (
-              <Button
-                id={`${
-                  this.props.selectedValue === innerItem.item
-                    ? 'selected-btn'
-                    : 'normal-btn'
-                }`}
-                key={innerItem.item_id}
-                onClick={() => {
-                  this.setState({ value: innerItem.item_id, open: false });
-                  this.props.closeCallback(innerItem.item_id);
-                }}
-              >
-                {innerItem.item}
-              </Button>
+              innerItem.item !== '' && (
+                <Button
+                  id={`${
+                    this.props.selectedValue === innerItem.item
+                      ? 'selected-btn'
+                      : 'normal-btn'
+                  }`}
+                  key={innerItem.item_id}
+                  onClick={() => {
+                    this.setState({ value: innerItem.item_id, open: false });
+                    this.props.closeCallback(innerItem.item_id);
+                  }}
+                >
+                  {innerItem.item}
+                </Button>
+              )
             );
           })}
         </Button.Group>

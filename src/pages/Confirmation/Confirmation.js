@@ -32,8 +32,11 @@ export class Confirmation extends Component {
             </div>
             <button
               className='ui button primary'
-              onClick={() =>
-                (window.location.href = `http://myquote.budgetvanlines.com/${this.props.leadId}`)
+              onClick={
+                () =>
+                  (window.location.href = `http://myquote.budgetvanlines.com/${this.props.currentUser.token}`)
+                // (window.location.href = `http://myquote.budgetvanlines.com/${this.props.leadId}`)
+                // (window.location.href = ` https://bvl-sabf.web.app/welcome/${this.props.leadId}`)
               }
             >
               Jump to SBM
