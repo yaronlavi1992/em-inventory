@@ -3,9 +3,6 @@ import { connect } from 'react-redux';
 import './Confirmation.css';
 
 export class Confirmation extends Component {
-  // componentDidMount() {
-  //   window.location.href = `https://bvl-sabf.web.app/welcome/${this.props.leadId}`;
-  // }
   //TODO: change referenceId to real value
   render() {
     const referenceId = '5-43-8742';
@@ -36,7 +33,7 @@ export class Confirmation extends Component {
             <button
               className='ui button primary'
               onClick={() =>
-                (window.location.href = `https://bvl-sabf.web.app/welcome/${this.props.leadId}`)
+                (window.location.href = `http://myquote.budgetvanlines.com/${this.props.leadId}`)
               }
             >
               Jump to SBM
