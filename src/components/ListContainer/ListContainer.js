@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import {
   Button,
   Grid,
@@ -23,6 +22,7 @@ import FirstItemOptionsModal from '../FirstItemOptionsModal/FirstItemOptionsModa
 import ItemQuantityMenu from '../ItemQuantityMenu/ItemQuantityMenu';
 import BoxCalculatorModal from '../BoxCalculatorModal/BoxCalculatorModal';
 import ClearAllItemsModal from '../DialogModal/ClearAllItemsModal';
+import history from '../../history';
 
 class ListContainer extends Component {
   constructor(props) {
@@ -74,6 +74,28 @@ class ListContainer extends Component {
       });
       this.props.forceRerenderCallback();
     }
+  };
+
+  isSpecialItems = () => {
+    const selectedItems = this.props.items.filter((item) => item.quantity > 0);
+    let res = false;
+    selectedItems.forEach((item) => {
+      if (!item.innerItems && Number(item.sh_price) > 0) {
+        res = true;
+      }
+    });
+    selectedItems.forEach((item) => {
+      if (item.innerItems) {
+        item.innerItems.forEach((innerItem) => {
+          if (innerItem.quantity > 0 && Number(innerItem.sh_price) > 0) {
+            res = true;
+          }
+        });
+      }
+    });
+    console.log(selectedItems);
+    console.log(res);
+    return res;
   };
 
   renderAprxVal() {
@@ -290,11 +312,14 @@ class ListContainer extends Component {
           <Grid.Row stretched centered style={{ padding: '0px' }}>
             <Button
               style={{ margin: '12px' }}
-              as={Link}
-              to={`/p=${this.props.userToken}/items/special`}
-              onClick={() =>
-                this.props.storeInventory(this.props.items, this.props.leadId)
-              }
+              onClick={() => {
+                this.props.storeInventory(this.props.items, this.props.leadId);
+                if (this.isSpecialItems()) {
+                  history.push(`/p=${this.props.userToken}/items/special`);
+                } else {
+                  history.push(`/p=${this.props.userToken}/confirmation`);
+                }
+              }}
               id='confirm-inventory-btn'
               fluid
             >

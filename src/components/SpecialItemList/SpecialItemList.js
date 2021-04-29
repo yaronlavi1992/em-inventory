@@ -55,7 +55,7 @@ class SpecialItemList extends React.Component {
                   ADD
                 </Button>
               ) : (
-                <Button id='checked-btn'>✔</Button>
+                <Button className='checked-btn'>✔</Button>
               )}
             </Grid.Column>
           </Grid>

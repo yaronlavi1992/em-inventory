@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { Grid, Header, Label, Menu, Segment, Tab } from 'semantic-ui-react';
 import { storeInventory, triggerAllItemsModal } from '../../actions';
 import ListContainer from '../../components/ListContainer/ListContainer';
 import ModalExampleModal from '../../components/ModalExampleModal/ModalExampleModal';
 import SearchBar from '../../components/SearchBar/SearchBar';
+import history from '../../history';
 import './AllItems.css';
 
 class AllItems extends Component {
@@ -25,6 +25,28 @@ class AllItems extends Component {
       this.props.triggerAllItemsModal();
     }
   }
+
+  isSpecialItems = () => {
+    const selectedItems = this.props.items.filter((item) => item.quantity > 0);
+    let res = false;
+    selectedItems.forEach((item) => {
+      if (!item.innerItems && Number(item.sh_price) > 0) {
+        res = true;
+      }
+    });
+    selectedItems.forEach((item) => {
+      if (item.innerItems) {
+        item.innerItems.forEach((innerItem) => {
+          if (innerItem.quantity > 0 && Number(innerItem.sh_price) > 0) {
+            res = true;
+          }
+        });
+      }
+    });
+    console.log(selectedItems);
+    console.log(res);
+    return res;
+  };
 
   render() {
     const modalImage = `${process.env.PUBLIC_URL}/assets/confused.svg`;
@@ -64,22 +86,26 @@ class AllItems extends Component {
               </Header>
             </Grid.Column>
             <Grid.Column>
-              <Link to={`/p=${this.props.userToken}/items/special`}>
-                <Header
-                  id='confirm-inventory-txt'
-                  size='tiny'
-                  floated='right'
-                  textAlign='center'
-                  onClick={() =>
-                    this.props.storeInventory(
-                      this.props.items,
-                      this.props.leadId
-                    )
+              <Header
+                id='confirm-inventory-txt'
+                size='tiny'
+                floated='right'
+                textAlign='center'
+                onClick={() => {
+                  this.props.storeInventory(
+                    this.props.items,
+                    this.props.leadId
+                  );
+                  if (this.isSpecialItems()) {
+                    history.push(`/p=${this.props.userToken}/items/special`);
+                  } else {
+                    history.push(`/p=${this.props.userToken}/confirmation`);
                   }
-                >
-                  CONFIRM INVENTORY
-                </Header>
-              </Link>
+                }}
+              >
+                CONFIRM INVENTORY
+              </Header>
+              {/* </Link> */}
             </Grid.Column>
           </Grid.Row>
           <Grid.Row style={{ padding: '0px' }}>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Header, Image, Modal } from 'semantic-ui-react';
+import { Image, Modal } from 'semantic-ui-react';
 
 class BoxCalculatorLoaderModal extends Component {
   constructor(props) {
@@ -14,6 +14,10 @@ class BoxCalculatorLoaderModal extends Component {
     //only change state when dialog is opening
     if (!prevState.open && !this.state.open && this.props.isTriggered === 2) {
       this.setState({ open: true });
+      setTimeout(() => {
+        this.setState({ open: false });
+        this.props.closeCallback(3);
+      }, 7000);
     }
   }
 
@@ -22,14 +26,11 @@ class BoxCalculatorLoaderModal extends Component {
       <>
         <Modal.Description>
           <Image
-            size='small'
-            src={`${process.env.PUBLIC_URL}/assets/confused.svg`}
+            size='large'
+            src={`${process.env.PUBLIC_URL}/assets/boxloader-sm.gif`}
             wrapped
             className='ui centered grid'
           />
-          <Header>{`Calculating necessary box count`}</Header>
-          <p>{`replace me with animation!
-    add relevant boxes according to algorithm`}</p>
         </Modal.Description>
       </>
     );
@@ -37,13 +38,7 @@ class BoxCalculatorLoaderModal extends Component {
 
   render() {
     return (
-      <Modal
-        open={this.state.open}
-        onClose={() => {
-          this.setState({ open: false });
-          this.props.closeCallback();
-        }}
-      >
+      <Modal open={this.state.open}>
         <Modal.Content image className='ui centered grid'>
           {this.renderContent()}
         </Modal.Content>

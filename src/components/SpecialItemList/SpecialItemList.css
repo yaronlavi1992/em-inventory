@@ -18,7 +18,7 @@
   border-radius: 15px;
 }
 
-#checked-btn {
+.checked-btn {
   border-radius: 500px;
   color: white;
   background-color: #3a4b60;
