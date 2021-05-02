@@ -8,6 +8,9 @@ import './Intro.css';
 export class Intro extends Component {
   componentDidMount = async () => {
     await this.props.signIn(this.props.match.params.id);
+    if (this.props.currentUser.sbm) {
+      window.location = `https://bvl-sabf.web.app/welcome/${this.props.userToken}`;
+    }
     await this.props.fetchItems();
   };
 
