@@ -6,12 +6,22 @@ import { signIn, fetchItems } from '../../actions';
 import './Intro.css';
 
 export class Intro extends Component {
+  constructor() {
+    super();
+    this.state = {
+      isLoadingItems: true,
+    };
+  }
+
   componentDidMount = async () => {
     await this.props.signIn(this.props.match.params.id);
     if (this.props.currentUser.sbm) {
       window.location = `https://bvl-sabf.web.app/welcome/${this.props.userToken}`;
     }
     await this.props.fetchItems();
+    this.setState({
+      isLoadingItems: false,
+    });
   };
 
   render() {
@@ -38,6 +48,7 @@ export class Intro extends Component {
             id='get-started-btn'
             as={Link}
             to={`/p=${this.props.match.params.id}/items`}
+            disabled={this.state.isLoadingItems}
           >
             Get Started
           </Button>
