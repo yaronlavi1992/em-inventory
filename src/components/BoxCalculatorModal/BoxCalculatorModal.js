@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Button, Image, Modal } from 'semantic-ui-react';
 import './BoxCalculatorModal.css';
 
@@ -75,10 +74,4 @@ class BoxCalculatorModal extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    userToken: state.auth.token,
-  };
-};
-
-export default connect(mapStateToProps, {})(BoxCalculatorModal);
+export default BoxCalculatorModal;

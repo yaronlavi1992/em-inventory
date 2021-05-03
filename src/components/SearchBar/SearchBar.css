@@ -1,3 +1,10 @@
+#search-bar-wrapper {
+  display: flex;
+  width: inherit;
+  justify-content: center;
+  align-items: center;
+}
+
 .searchBox {
   padding: 2.7%;
   width: 100%;

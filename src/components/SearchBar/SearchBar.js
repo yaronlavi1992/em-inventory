@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Icon, Input } from 'semantic-ui-react';
-import { fetchItems, filterItems, itemsSearchInputChange } from '../../actions';
+import { filterItems, itemsSearchInputChange } from '../../actions';
 import './SearchBar.css';
 
 class SearchBar extends Component {
@@ -22,15 +22,7 @@ class SearchBar extends Component {
 
   render() {
     return (
-      <div
-        // className='ui right icon'
-        style={{
-          display: 'flex',
-          width: 'inherit',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
+      <div id='search-bar-wrapper'>
         <Input
           id='search-input'
           className='searchBox'
@@ -60,7 +52,6 @@ class SearchBar extends Component {
 const mapStateToProps = (state) => {
   return {
     items: state.items,
-    filteredItems: state.filteredItems,
     itemsSearchInput: state.itemsSearchInput,
   };
 };
@@ -68,5 +59,4 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   itemsSearchInputChange,
   filterItems,
-  fetchItems,
 })(SearchBar);

@@ -6,6 +6,7 @@ import './MainHeader.css';
 class MainHeader extends Component {
   render() {
     return (
+      // this.props.scroll !== 'down' && ( //TODO: add this when it works
       <Menu id='header-menu'>
         <Menu.Item position='left'>
           <Image
@@ -21,8 +22,15 @@ class MainHeader extends Component {
           </a>
         </Menu.Item>
       </Menu>
+      // )
     );
   }
 }
 
-export default connect(null, {})(MainHeader);
+const mapStateToProps = (state) => {
+  return {
+    scroll: state.scroll,
+  };
+};
+
+export default connect(mapStateToProps, {})(MainHeader);

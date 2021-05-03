@@ -121,6 +121,19 @@ export const triggerAllItemsModal = () => {
   };
 };
 
+export const scrollUpEvent = () => {
+  return {
+    type: types.SCROLL_UP_EVENT,
+  };
+};
+
+export const scrollDownEvent = () => {
+  return {
+    type: types.SCROLL_DOWN_EVENT,
+    payload: 'down',
+  };
+};
+
 export const inventoryFromItems = (items) => {
   return [
     items.flatMap((item) => {

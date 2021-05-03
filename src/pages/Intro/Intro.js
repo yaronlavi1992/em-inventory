@@ -71,7 +71,7 @@ const mapStateToProps = (state) => {
   return {
     isSignedIn: state.auth.isSignedIn,
     currentUser: state.auth.currentUser,
-    items: state.items,
+    userToken: state.auth.token,
   };
 };
 

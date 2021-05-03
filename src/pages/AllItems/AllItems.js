@@ -43,8 +43,6 @@ class AllItems extends Component {
         });
       }
     });
-    console.log(selectedItems);
-    console.log(res);
     return res;
   };
 

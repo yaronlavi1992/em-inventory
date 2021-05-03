@@ -99,7 +99,6 @@ class BoxCalculatorLoaderModal extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    userToken: state.auth.token,
     currentUser: state.auth.currentUser,
     items: state.items,
   };

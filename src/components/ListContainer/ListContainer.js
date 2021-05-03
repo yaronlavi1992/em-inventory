@@ -16,6 +16,8 @@ import {
   storeInventory,
   triggerAllItemsModal,
   triggerBoxCalculator,
+  scrollDownEvent,
+  scrollUpEvent,
 } from '../../actions';
 import BoxCalculatorLoaderModal from '../BoxCalculatorLoaderModal/BoxCalculatorLoaderModal';
 import FirstItemOptionsModal from '../FirstItemOptionsModal/FirstItemOptionsModal';
@@ -34,6 +36,13 @@ class ListContainer extends Component {
       isDialogModalTriggered: false,
     };
   }
+
+  scrollHandler = (event) => {
+    if (event.deltaY > 0) {
+      return this.props.scrollDownEvent();
+    }
+    this.props.scrollUpEvent();
+  };
 
   handleClick = (e, titleProps) => {
     const { index } = titleProps;
@@ -93,8 +102,6 @@ class ListContainer extends Component {
         });
       }
     });
-    console.log(selectedItems);
-    console.log(res);
     return res;
   };
 
@@ -149,7 +156,10 @@ class ListContainer extends Component {
     const { activeIndex } = this.state;
     return items.map((item, index) => {
       return (
-        <List.Item key={item.parent_name}>
+        <List.Item
+          key={item.parent_name}
+          onWheel={(e) => this.scrollHandler(e)}
+        >
           <Accordion>
             <Accordion.Title
               active={activeIndex === index}
@@ -380,4 +390,6 @@ export default connect(mapStateToProps, {
   triggerBoxCalculator,
   triggerAllItemsModal,
   storeInventory,
+  scrollDownEvent,
+  scrollUpEvent,
 })(ListContainer);

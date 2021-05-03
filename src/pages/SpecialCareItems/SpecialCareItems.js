@@ -38,13 +38,13 @@ class SpecialCareItems extends Component {
             following items for you, at an additional cost?
           </p>
           <SpecialItemList />
-          <Link
+          {/* <Link //TODO: add this back?
             className='skip'
             to={`/p=${this.props.userToken}/confirmation`}
             onClick={this.linkOnClickHandler}
           >
             Skip this, I'll box these myself ?
-          </Link>
+          </Link> */}
 
           <div className='inv-btn-outer'>
             <Link

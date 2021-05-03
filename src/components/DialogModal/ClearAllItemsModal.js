@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Button, Modal } from 'semantic-ui-react';
 import './ClearAllItemsModal.css';
 
@@ -67,4 +66,4 @@ class ClearAllItemsModal extends Component {
   }
 }
 
-export default connect(null, {})(ClearAllItemsModal);
+export default ClearAllItemsModal;

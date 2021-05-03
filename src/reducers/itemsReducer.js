@@ -7,7 +7,6 @@ const itemsReducer = (state = [], action) => {
       return action.payload;
 
     case types.ADD_ITEM_QUANTITY:
-      // console.log(`action.payload: ${action.payload}`);
       parentFound = state.find((parent) => parent.item_ids === action.payload);
       if (parentFound) {
         // After we found the item, we should check if it has children or if it does not.
