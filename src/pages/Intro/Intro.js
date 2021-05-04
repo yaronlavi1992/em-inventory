@@ -24,25 +24,37 @@ export class Intro extends Component {
     });
   };
 
+  capitalizeFirstWordLetters(words) {
+    return words
+      .split(' ')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  }
+
   render() {
     return (
       <>
         <div id='flex-fill'>
           <h1 id='welcome-text'>
             Welcome,{' '}
-            {this.props.isSignedIn && this.props.currentUser.first_name}!
+            {this.props.isSignedIn &&
+              this.capitalizeFirstWordLetters(
+                this.props.currentUser.first_name
+              )}
+            !
           </h1>
           <h1 id='your-move-text'>YOUR MOVE</h1>
           <hr id='separator' />
           <h1 id='move-size'>
-            {this.props.isSignedIn && this.props.currentUser.size}
+            {this.props.isSignedIn &&
+              this.capitalizeFirstWordLetters(this.props.currentUser.size)}
             <br />
             From: {this.props.isSignedIn && this.props.currentUser.fromZip} |
             To: {this.props.isSignedIn && this.props.currentUser.toZip}
           </h1>
           <p id='browse-our-data'>
-            Browse our databse of common household items to build your Inventory
-            and get an accurate quote
+            Browse our Database of common household items to build your
+            Inventory and get an accurate quote
           </p>
           <Button
             id='get-started-btn'

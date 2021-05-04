@@ -9,6 +9,7 @@ import './SpecialCareItems.css';
 class SpecialCareItems extends Component {
   linkOnClickHandler = () => {
     this.props.submitInventory(this.props.items, this.props.leadId);
+    window.location.href = `https://bvl-sabf.web.app/welcome/${this.props.userToken}`;
   };
 
   render() {
@@ -48,7 +49,7 @@ class SpecialCareItems extends Component {
 
           <div className='inv-btn-outer'>
             <Link
-              to={`/p=${this.props.userToken}/confirmation`}
+              // to={`/p=${this.props.userToken}/confirmation`}
               onClick={this.linkOnClickHandler}
             >
               <p

@@ -8,6 +8,7 @@ import {
   Image,
   Header,
   Label,
+  Icon,
 } from 'semantic-ui-react';
 import './ListContainer.css';
 import {
@@ -36,6 +37,10 @@ class ListContainer extends Component {
       isDialogModalTriggered: false,
     };
   }
+
+  isAnyItemSelected = () => {
+    return this.props.items.reduce((sum, val) => sum + val.quantity, 0) < 1;
+  };
 
   scrollHandler = (event) => {
     if (event.deltaY > 0) {
@@ -322,12 +327,14 @@ class ListContainer extends Component {
           <Grid.Row stretched centered style={{ padding: '0px' }}>
             <Button
               style={{ margin: '12px' }}
+              disabled={this.isAnyItemSelected()}
               onClick={() => {
                 this.props.storeInventory(this.props.items, this.props.leadId);
                 if (this.isSpecialItems()) {
                   history.push(`/p=${this.props.userToken}/items/special`);
                 } else {
-                  history.push(`/p=${this.props.userToken}/confirmation`);
+                  // history.push(`/p=${this.props.userToken}/confirmation`);
+                  window.location.href = `https://bvl-sabf.web.app/welcome/${this.props.userToken}`;
                 }
               }}
               id='confirm-inventory-btn'
@@ -337,16 +344,24 @@ class ListContainer extends Component {
             </Button>
           </Grid.Row>
           <Grid.Row stretched centered style={{ padding: '0px' }}>
-            <div
-              style={{ display: 'flex', alignItems: 'center' }}
+            <Button
+              id='clear-inventory-btn'
+              disabled={this.isAnyItemSelected()}
+              icon
+              labelPosition='left'
               onClick={() => this.setState({ isDialogModalTriggered: true })}
             >
-              <Image
-                src={`${process.env.PUBLIC_URL}/assets/filled.svg`}
-                style={{ width: '12px', height: '12px' }}
-              />
-              <p id='clear-inventory-txt'>CLEAR ALL INVENTORY ITEMS</p>
-            </div>
+              <div
+                style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
+              >
+                <Icon
+                  as={Image}
+                  src={`${process.env.PUBLIC_URL}/assets/filled.svg`}
+                  style={{ width: '12px', height: '12px' }}
+                />
+                CLEAR ALL INVENTORY ITEMS
+              </div>
+            </Button>
           </Grid.Row>
         </Grid>
         <FirstItemOptionsModal

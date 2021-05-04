@@ -27,10 +27,13 @@ export const itemsSearchInputChange = (input) => {
   };
 };
 
-export const addItemQuantity = (itemId) => {
+export const addItemQuantity = (itemId, itemCount = 1) => {
   return {
     type: types.ADD_ITEM_QUANTITY,
-    payload: itemId,
+    payload: {
+      itemId,
+      itemCount,
+    },
   };
 };
 

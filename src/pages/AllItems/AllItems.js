@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Grid, Header, Label, Menu, Segment, Tab } from 'semantic-ui-react';
+import {
+  Button,
+  Grid,
+  Header,
+  Label,
+  Menu,
+  Segment,
+  Tab,
+} from 'semantic-ui-react';
 import { storeInventory, triggerAllItemsModal } from '../../actions';
 import ListContainer from '../../components/ListContainer/ListContainer';
 import ModalExampleModal from '../../components/ModalExampleModal/ModalExampleModal';
@@ -9,6 +17,10 @@ import history from '../../history';
 import './AllItems.css';
 
 class AllItems extends Component {
+  isAnyItemSelected = () => {
+    return this.props.items.reduce((sum, val) => sum + val.quantity, 0) < 1;
+  };
+
   renderItemsTotalQuantity() {
     const result = this.props.items.reduce((sum, val) => sum + val.quantity, 0);
     return (
@@ -44,6 +56,16 @@ class AllItems extends Component {
       }
     });
     return res;
+  };
+
+  confirmInventoryOnClickHandler = () => {
+    this.props.storeInventory(this.props.items, this.props.leadId);
+    if (this.isSpecialItems()) {
+      history.push(`/p=${this.props.userToken}/items/special`);
+    } else {
+      // history.push(`/p=${this.props.userToken}/confirmation`);
+      window.location.href = `https://bvl-sabf.web.app/welcome/${this.props.userToken}`;
+    }
   };
 
   render() {
@@ -84,26 +106,15 @@ class AllItems extends Component {
               </Header>
             </Grid.Column>
             <Grid.Column>
-              <Header
-                id='confirm-inventory-txt'
+              <Button
+                disabled={this.isAnyItemSelected()}
+                id='confirm-inventory-lnk'
                 size='tiny'
                 floated='right'
-                textAlign='center'
-                onClick={() => {
-                  this.props.storeInventory(
-                    this.props.items,
-                    this.props.leadId
-                  );
-                  if (this.isSpecialItems()) {
-                    history.push(`/p=${this.props.userToken}/items/special`);
-                  } else {
-                    history.push(`/p=${this.props.userToken}/confirmation`);
-                  }
-                }}
+                onClick={this.confirmInventoryOnClickHandler}
               >
                 CONFIRM INVENTORY
-              </Header>
-              {/* </Link> */}
+              </Button>
             </Grid.Column>
           </Grid.Row>
           <Grid.Row style={{ padding: '0px' }}>

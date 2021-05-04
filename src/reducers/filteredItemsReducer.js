@@ -32,8 +32,12 @@ const filteredItemsReducer = (state = [], action) => {
           let indexDifference =
             a.parent_name.toLowerCase().indexOf(searchTerm) -
             b.parent_name.toLowerCase().indexOf(searchTerm);
+          let aAliasNotUsed =
+            !a.alias_list || !a.alias_list.toLowerCase().includes(searchTerm);
+          let bAliasNotUsed =
+            !b.alias_list || !b.alias_list.toLowerCase().includes(searchTerm);
           if (
-            (!a.alias_list && !b.alias_list) ||
+            (aAliasNotUsed && bAliasNotUsed) ||
             a.alias_list === b.alias_list
           ) {
             if (indexDifference !== 0) {
