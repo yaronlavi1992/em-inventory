@@ -1,5 +1,5 @@
 .thanks-pop {
-  font-family: 'Conv_Circular Std Book';
+  font-family: CircularStd-Medium, sans-serif;
   color: #3a4b60;
   font-size: 14px;
   line-height: 20px;
@@ -17,7 +17,7 @@
 }
 
 .thanks-pop-outer {
-  font-family: 'Conv_Circular Std Book';
+  font-family: CircularStd-Medium, sans-serif;
   color: #3a4b60;
   font-size: 14px;
   line-height: 20px;
@@ -29,7 +29,7 @@
 }
 
 .thanks-pop-inner {
-  font-family: 'Conv_Circular Std Book';
+  font-family: CircularStd-Medium, sans-serif;
   color: #3a4b60;
   font-size: 14px;
   line-height: 20px;
@@ -52,7 +52,7 @@
   box-sizing: border-box;
   padding-top: 90px;
   background-size: 80px auto;
-  font-family: Conv_CircularStd-Black;
+  font-family: CircularStd-Medium, sans-serif;
   font-size: 24px;
   line-height: 30px;
   margin-bottom: 30px;
@@ -69,7 +69,7 @@
 }
 
 .thanksTxt {
-  font-family: Conv_CircularStd-Black;
+  font-family: CircularStd-Medium, sans-serif;
   font-size: 24px;
   color: #3a4b60;
   line-height: 30px;

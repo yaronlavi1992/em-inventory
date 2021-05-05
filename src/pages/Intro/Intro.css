@@ -3,7 +3,7 @@
 }
 
 #welcome-text {
-  font-family: CircularStd-Black;
+  font-family: CircularStd-Medium, sans-serif;
   font-size: 18px;
   color: #ffffff;
   letter-spacing: 0;
@@ -14,7 +14,7 @@
 }
 
 #your-move-text {
-  font-family: CircularStd-Black;
+  font-family: CircularStd-Medium, sans-serif;
   font-size: 10px;
   color: #cccfd5;
   letter-spacing: 0;
@@ -32,7 +32,7 @@
 }
 
 #move-size {
-  font-family: CircularStd-Black;
+  font-family: CircularStd-Medium, sans-serif;
   font-size: 16px;
   color: #ffffff;
   letter-spacing: 0;
@@ -43,7 +43,7 @@
 }
 
 #browse-our-data {
-  font-family: CircularStd-Book;
+  font-family: CircularStd-Medium, sans-serif;
   font-size: 14px;
   color: #ffffff;
   letter-spacing: 0;
@@ -59,7 +59,7 @@
   border-radius: 5px;
   width: 61.3%;
   height: 50px;
-  font-family: CircularStd-Book;
+  font-family: CircularStd-Medium, sans-serif;
   font-size: 16px;
   color: #ffffff;
   letter-spacing: 0;
@@ -94,7 +94,7 @@
 }
 
 #fine-print {
-  font-family: CircularStd-Book;
+  font-family: CircularStd-Medium, sans-serif;
   font-size: 10px;
   color: #ffffff;
   letter-spacing: 0;

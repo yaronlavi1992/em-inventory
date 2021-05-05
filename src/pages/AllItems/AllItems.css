@@ -6,7 +6,7 @@
 }
 
 #items-total-quantity-txt {
-  font-family: CircularStd-Black;
+  font-family: CircularStd-Medium, sans-serif;
   font-size: 14px;
   color: #3a4b60;
   letter-spacing: 0;
@@ -51,7 +51,7 @@
 
 .ui.tabular.menu .active.item {
   background-color: #f0f1f3 !important;
-  font-family: CircularStd-Black;
+  font-family: CircularStd-Medium, sans-serif;
   font-size: 12px;
   color: #3a4b60;
   letter-spacing: 0;
@@ -62,7 +62,7 @@
 
 .ui.tabular.menu .item:not(.active) {
   background-color: #cccfd5;
-  font-family: CircularStd-Black;
+  font-family: CircularStd-Medium, sans-serif;
   font-size: 12px;
   color: #ffffff;
   letter-spacing: 0;

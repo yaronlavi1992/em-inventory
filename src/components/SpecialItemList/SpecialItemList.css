@@ -7,7 +7,7 @@
   padding: 0px;
   width: 70px;
   height: 30px;
-  font-family: CircularStdBlack;
+  font-family: CircularStd-Medium, sans-serif;
   font-size: 12px;
   color: #3a4b60;
   letter-spacing: 0;
@@ -32,7 +32,7 @@
 }
 
 #packing-fee {
-  font-family: CircularStd-Black;
+  font-family: CircularStd-Medium, sans-serif;
   font-size: 10px;
   color: #3a4b60;
   letter-spacing: 0;

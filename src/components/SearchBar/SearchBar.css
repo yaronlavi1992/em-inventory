@@ -17,7 +17,7 @@
 }
 
 #cancel-btn {
-  font-family: CircularStd-Black;
+  font-family: CircularStd-Medium, sans-serif;
   font-size: 12px;
   color: #57c3f3;
   letter-spacing: 0;

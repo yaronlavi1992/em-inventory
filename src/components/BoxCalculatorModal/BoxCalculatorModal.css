@@ -5,7 +5,7 @@
 }
 
 #would-you-like-help-txt {
-  font-family: CircularStd-Black;
+  font-family: CircularStd-Medium, sans-serif;
   font-size: 18px;
   color: #3a4b60;
   letter-spacing: 0;
@@ -15,7 +15,7 @@
 }
 
 #by-selecting-your-items-txt {
-  font-family: CircularStd-Book;
+  font-family: CircularStd-Medium, sans-serif;
   font-size: 14px;
   color: #3a4b60;
   letter-spacing: 0;
@@ -25,7 +25,7 @@
 }
 
 #calculate-btn {
-  font-family: CircularStd-Book;
+  font-family: CircularStd-Medium, sans-serif;
   font-size: 18px;
   color: #ffffff;
   letter-spacing: 0;
@@ -37,7 +37,7 @@
 }
 
 #add-boxes-manually-btn {
-  font-family: CircularStd-Book;
+  font-family: CircularStd-Medium, sans-serif;
   font-size: 14px;
   color: #57c3f3;
   letter-spacing: 0;

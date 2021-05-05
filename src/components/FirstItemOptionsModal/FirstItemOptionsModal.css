@@ -28,7 +28,7 @@
 }
 
 #modal-edit-txt {
-  font-family: CircularStd-Black;
+  font-family: CircularStd-Medium, sans-serif;
   font-size: 10px;
   color: #3a4b60;
   letter-spacing: 0;
@@ -39,7 +39,7 @@
 }
 
 #modal-item-name {
-  font-family: CircularStd-Black;
+  font-family: CircularStd-Medium, sans-serif;
   font-size: 18px;
   color: #3a4b60;
   letter-spacing: 0;
@@ -50,7 +50,7 @@
 }
 
 #modal-select-size-txt {
-  font-family: CircularStd-Book;
+  font-family: CircularStd-Medium, sans-serif;
   font-size: 14px;
   color: #3a4b60;
   letter-spacing: 0;
@@ -61,9 +61,9 @@
 }
 
 #modal-cancel-btn {
-  font-family: CircularStd-Book;
-  font-size: 12px;
-  color: #cccfd5;
+  font-family: CircularStd-Medium, sans-serif;
+  font-size: 14px;
+  color: #394b60;
   letter-spacing: 0;
   text-align: center;
   line-height: 20px;
@@ -72,4 +72,5 @@
   height: 2.5%;
   background-color: inherit;
   text-decoration: underline;
+  padding-bottom: 22px;
 }
