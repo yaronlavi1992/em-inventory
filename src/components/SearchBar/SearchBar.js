@@ -6,7 +6,7 @@ import './SearchBar.css';
 
 class SearchBar extends Component {
   componentDidMount() {
-    this.props.filterItems(this.props.items, '');
+    //this.props.filterItems(this.props.items, ''); R: goes to app.js
   }
 
   onInputChangeHandler = (event) => {

@@ -72,9 +72,9 @@ class AllItems extends Component {
   confirmInventoryOnClickHandler = () => {
     this.props.storeInventory(this.props.items, this.props.leadId);
     if (this.isSpecialItems()) {
-      history.push(`/p=${this.props.userToken}/items/special`);
+      history.push(`/p/${this.props.userToken}/items/special`);
     } else {
-      // history.push(`/p=${this.props.userToken}/confirmation`);
+      // history.push(`/p/${this.props.userToken}/confirmation`);
       window.location.href = `https://bvl-sabf.web.app/welcome/${this.props.userToken}`;
     }
   };
@@ -95,7 +95,7 @@ class AllItems extends Component {
             imageSize='medium'
             header={modalHeader}
             content={modalContent}
-            nextPage={`/p=${this.props.userToken}/items`}
+            nextPage={`/p/${this.props.userToken}/items`}
             buttonText='OK, GOT IT!'
           />
         )}
@@ -203,7 +203,9 @@ class AllItems extends Component {
 const mapStateToProps = (state) => {
   return {
     userToken: state.auth.token,
-    leadId: state.auth.currentUser.lead_id,
+    //R: use lead_id only when it's set. This function can be called multiple times
+    //R: sometimes the state does not yet have a loaded auth structure 
+    leadId: state.auth.currentUser && state.auth.currentUser.lead_id,
     items: state.items,
     triggers: state.triggers,
     filteredItems: state.filteredItems,

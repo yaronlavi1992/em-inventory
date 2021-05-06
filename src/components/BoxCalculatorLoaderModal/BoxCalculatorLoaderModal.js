@@ -18,27 +18,27 @@ class BoxCalculatorLoaderModal extends Component {
       setTimeout(() => {
         const normalizedMoveSize = this.props.currentUser.size.toLowerCase();
         if (normalizedMoveSize.includes('studio')) {
-          this.addBoxesHandler(5, 10, 3, 0, 2, 0);
+          this.addBoxesHandler(this.props.userToken, 5, 10, 3, 0, 2, 0);
         } else if (
           normalizedMoveSize.includes('1') ||
           normalizedMoveSize.includes('one')
         ) {
-          this.addBoxesHandler(9, 15, 6, 0, 5, 0);
+          this.addBoxesHandler(this.props.userToken, 9, 15, 6, 0, 5, 0);
         } else if (
           normalizedMoveSize.includes('2') ||
           normalizedMoveSize.includes('two')
         ) {
-          this.addBoxesHandler(15, 25, 10, 2, 7, 1);
+          this.addBoxesHandler(this.props.userToken, 15, 25, 10, 2, 7, 1);
         } else if (
           normalizedMoveSize.includes('3') ||
           normalizedMoveSize.includes('three')
         ) {
-          this.addBoxesHandler(20, 40, 12, 4, 7, 2);
+          this.addBoxesHandler(this.props.userToken, 20, 40, 12, 4, 7, 2);
         } else if (
           normalizedMoveSize.includes('4') ||
           normalizedMoveSize.includes('four')
         ) {
-          this.addBoxesHandler(25, 45, 14, 6, 7, 3);
+          this.addBoxesHandler(this.props.userToken, 25, 45, 14, 6, 7, 3);
         }
         this.setState({ open: false });
         this.props.closeCallback(3);
@@ -46,17 +46,17 @@ class BoxCalculatorLoaderModal extends Component {
     }
   }
 
-  addBoxesHandler = (small, medium, large, wardrobe, picture, dishpack) => {
-    this.addBoxesByCount('1151', small);
-    this.addBoxesByCount('1152', medium);
-    this.addBoxesByCount('1153', large);
-    this.addBoxesByCount('1160', wardrobe);
-    this.addBoxesByCount('1159', picture);
-    this.addBoxesByCount('1157', dishpack);
+  addBoxesHandler = (token, small, medium, large, wardrobe, picture, dishpack) => {
+    this.addBoxesByCount('1151', small, token);
+    this.addBoxesByCount('1152', medium, token);
+    this.addBoxesByCount('1153', large, token);
+    this.addBoxesByCount('1160', wardrobe, token);
+    this.addBoxesByCount('1159', picture, token);
+    this.addBoxesByCount('1157', dishpack, token);
   };
 
-  addBoxesByCount = (itemId, boxCount) => {
-    this.props.addItemQuantity(itemId, boxCount);
+  addBoxesByCount = (itemId, boxCount, token) => {
+    this.props.addItemQuantity(itemId, token, boxCount);
   };
 
   renderContent() {
@@ -87,6 +87,7 @@ class BoxCalculatorLoaderModal extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    userToken: state.auth.token,
     currentUser: state.auth.currentUser,
     items: state.items,
   };

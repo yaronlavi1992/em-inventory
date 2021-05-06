@@ -18,7 +18,7 @@ class ItemQuantityMenu extends Component {
       <Menu size='mini' id='menu'>
         <Menu.Item
           id='menu-item'
-          onClick={() => this.reduceQuantityHandler(this.props.itemId)}
+          onClick={() => this.reduceQuantityHandler(this.props.itemId, this.props.userToken)}
         >
           <Icon name='minus' />
         </Menu.Item>
@@ -31,7 +31,13 @@ class ItemQuantityMenu extends Component {
   }
 }
 
-export default connect(null, {
+  const mapStateToProps = (state) => {
+    return {
+      userToken: state.auth.token
+    };
+  };
+
+export default connect(mapStateToProps, {
   addItemQuantity,
   reduceItemQuantity,
 })(ItemQuantityMenu);

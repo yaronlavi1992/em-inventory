@@ -56,13 +56,13 @@ class ListContainer extends Component {
 
   onDialogClose = (subItemId) => {
     if (subItemId) {
-      this.props.addItemQuantity(subItemId);
+      this.props.addItemQuantity(subItemId, this.props.userToken);
     }
     this.setState({ modalItem: null, selectedValue: null });
   };
 
   addQuantityHandler(item) {
-    this.props.addItemQuantity(item.item_ids);
+    this.props.addItemQuantity(item.item_ids, this.props.userToken);
     if (item.innerItems && item.innerItems.length > 0) {
       this.setState({ modalItem: item });
     } else {
@@ -329,11 +329,11 @@ class ListContainer extends Component {
               style={{ margin: '12px' }}
               disabled={this.isAnyItemSelected()}
               onClick={() => {
-                this.props.storeInventory(this.props.items, this.props.leadId);
+                this.props.storeInventory(this.props.items, this.props.userToken);
                 if (this.isSpecialItems()) {
-                  history.push(`/p=${this.props.userToken}/items/special`);
+                  history.push(`/p/${this.props.userToken}/items/special`);
                 } else {
-                  // history.push(`/p=${this.props.userToken}/confirmation`);
+                  // history.push(`/p/${this.props.userToken}/confirmation`);
                   window.location.href = `https://bvl-sabf.web.app/welcome/${this.props.userToken}`;
                 }
               }}
@@ -393,7 +393,7 @@ class ListContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     userToken: state.auth.token,
-    leadId: state.auth.currentUser.lead_id,
+    leadId: state.auth.currentUser && state.auth.currentUser.lead_id,
     triggers: state.triggers,
     itemsSearchInput: state.itemsSearchInput,
   };
