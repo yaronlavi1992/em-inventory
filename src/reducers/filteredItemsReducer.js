@@ -51,6 +51,16 @@ const filteredItemsReducer = (state = [], action) => {
           if (!b.alias_list) {
             return -1;
           }
+          let aliasIndexDifference =
+            a.alias_list.toLowerCase().indexOf(searchTerm) -
+            b.alias_list.toLowerCase().indexOf(searchTerm);
+          if (
+            a.alias_list.toLowerCase().includes(searchTerm) &&
+            b.alias_list.toLowerCase().includes(searchTerm) &&
+            aliasIndexDifference !== 0
+          ) {
+            return aliasIndexDifference;
+          }
           return a.alias_list - b.alias_list;
         });
     default:

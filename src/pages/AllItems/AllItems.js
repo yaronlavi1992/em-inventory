@@ -9,7 +9,12 @@ import {
   Segment,
   Tab,
 } from 'semantic-ui-react';
-import { storeInventory, triggerAllItemsModal } from '../../actions';
+import {
+  filterItems,
+  itemsSearchInputChange,
+  storeInventory,
+  triggerAllItemsModal,
+} from '../../actions';
 import ListContainer from '../../components/ListContainer/ListContainer';
 import ModalExampleModal from '../../components/ModalExampleModal/ModalExampleModal';
 import SearchBar from '../../components/SearchBar/SearchBar';
@@ -31,6 +36,12 @@ class AllItems extends Component {
       ) || ''
     );
   }
+
+  clearSearchHandler = () => {
+    document.querySelector('#search-input').value = '';
+    this.props.itemsSearchInputChange('');
+    this.props.filterItems(this.props.items, '');
+  };
 
   componentDidUpdate() {
     if (!this.props.triggers.isAllItemsModalTriggered) {
@@ -119,6 +130,7 @@ class AllItems extends Component {
           </Grid.Row>
           <Grid.Row style={{ padding: '0px' }}>
             <Tab
+              onTabChange={this.clearSearchHandler}
               style={{
                 width: 'inherit',
                 backgroundColor: '#F0F1F3',
@@ -201,4 +213,6 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   storeInventory,
   triggerAllItemsModal,
+  filterItems,
+  itemsSearchInputChange,
 })(AllItems);

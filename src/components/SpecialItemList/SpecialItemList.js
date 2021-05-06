@@ -4,13 +4,14 @@ import { Button, Grid, List } from 'semantic-ui-react';
 import './SpecialItemList.css';
 
 class SpecialItemList extends React.Component {
-  renderSpecialItems() {
+  specialItems() {
     return this.props.items.filter((item) => {
       if (item.quantity > 0) {
         if (item.innerItems && Number(item.innerItems[0].sh_price) > 0) {
-          return item;
-        } else if (Number(item.sh_price) > 0) {
-          return item;
+          return true;
+        }
+        if (Number(item.sh_price) > 0) {
+          return true;
         }
       }
       return false;
@@ -95,7 +96,7 @@ class SpecialItemList extends React.Component {
             <Grid.Column width={3} floated='right'></Grid.Column>
           </Grid>
         </List.Item>
-        {this.renderList(this.renderSpecialItems())}
+        {this.renderList(this.specialItems())}
       </List>
     );
   }

@@ -10,7 +10,16 @@ import AllItems from '../../pages/AllItems/AllItems';
 import './App.css';
 import history from '../../history';
 
+// const token = window.location.pathname.split('=')[1];
+// console.log(token);
+
 class App extends Component {
+  // componentDidMount() {
+  //   window.addEventListener('beforeunload', (e) => {
+  //     e.preventDefault();
+  //     console.log('hello');
+  //   });
+  // }
   render() {
     return (
       <div
