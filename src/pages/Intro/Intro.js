@@ -18,7 +18,7 @@ export class Intro extends Component {
     if (this.props.currentUser.sbm) {
       window.location = `https://bvl-sabf.web.app/welcome/${this.props.userToken}`;
     }
-    //await this.props.fetchItems(); R: goes to App.js
+    await this.props.fetchItems();
     this.setState({
       isLoadingItems: false,
     });
@@ -59,7 +59,7 @@ export class Intro extends Component {
           <Button
             id='get-started-btn'
             as={Link}
-            to={`/p/${this.props.match.params.id}/items`}
+            to={`/p=${this.props.match.params.id}/items`}
             disabled={this.state.isLoadingItems}
           >
             Get Started

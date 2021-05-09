@@ -15,7 +15,7 @@ class SpecialCareItems extends Component {
   render() {
     return (
       <div className='specialCare-pop' style={{ display: 'block' }}>
-        <Link to={`/p/${this.props.userToken}/items`}>
+        <Link to={`/p=${this.props.userToken}/items`}>
           <p style={{ color: 'white', float: 'left', marginLeft: '12.5px' }}>
             <Icon style={{ margin: '0px' }} name='angle left' />
             Go Back
@@ -41,7 +41,7 @@ class SpecialCareItems extends Component {
           <SpecialItemList />
           {/* <Link //TODO: add this back?
             className='skip'
-            to={`/p/${this.props.userToken}/confirmation`}
+            to={`/p=${this.props.userToken}/confirmation`}
             onClick={this.linkOnClickHandler}
           >
             Skip this, I'll box these myself ?
@@ -49,7 +49,7 @@ class SpecialCareItems extends Component {
 
           <div className='inv-btn-outer'>
             <Link
-              // to={`/p/${this.props.userToken}/confirmation`}
+              // to={`/p=${this.props.userToken}/confirmation`}
               onClick={this.linkOnClickHandler}
             >
               <p

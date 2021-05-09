@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withRouter } from "react-router";
 import { Router, Redirect, Route, Switch } from 'react-router-dom';
 import Intro from '../../pages/Intro/Intro';
 import MainHeader from '../MainHeader/MainHeader';
@@ -10,20 +9,12 @@ import { connect } from 'react-redux';
 import AllItems from '../../pages/AllItems/AllItems';
 import './App.css';
 import history from '../../history';
-import { signIn, fetchItems, filterItems } from '../../actions';
 
 // const token = window.location.pathname.split('=')[1];
 // console.log(token);
 
 class App extends Component {
-  componentDidMount = async () => {
-    if(this.match){
-      await this.props.signIn(this.match.params.id);
-      await this.props.fetchItems(this.match.params.id);
-      this.props.filterItems(this.props.items, '');
-      console.log('root mount');
-    }
-  }
+  // componentDidMount() {
   //   window.addEventListener('beforeunload', (e) => {
   //     e.preventDefault();
   //     console.log('hello');
@@ -39,31 +30,22 @@ class App extends Component {
           <Container className='flex_container'>
             <Router basename={process.env.PUBLIC_URL} history={history}>
               <MainHeader />
-              <Route path='/p/:id' 
-		  component={({ match }) => {
-			//R: hack. We add an inclusive route to expose URL parameters for the App components.
-			console.log("app match");
-			this.match = match;
-                        return null; 
-                        }
-                  }
-		 />
               <Switch>
-		
-                <Route path='/p/:id' 
-		  exact component={Intro} />
+                <Route path='/p=:id' exact component={Intro} />
                 <Route
-                  path='/p/:id/items'
+                  path={`/p=${
+                    this.props.userToken ? this.props.userToken : ''
+                  }/items`}
                   exact
                   component={AllItems}
                 />
                 <Route
-                  path='/p/:id/items/special'
+                  path='/p=:id/items/special'
                   exact
                   component={SpecialCareItems}
                 />
                 <Route
-                  path='/p/:id/confirmation'
+                  path='/p=:id/confirmation'
                   exact
                   component={Confirmation}
                 />
@@ -79,8 +61,6 @@ class App extends Component {
 const mapStateToProps = (state) => {
   return {
     userToken: state.auth.token,
-    items: state.items,
-    filteredItems: state.filteredItems,
   };
 };
-export default connect(mapStateToProps, {signIn, fetchItems, filterItems})(App);
+export default connect(mapStateToProps, {})(App);

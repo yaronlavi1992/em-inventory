@@ -4,18 +4,7 @@ const itemsReducer = (state = [], action) => {
   let parentFound;
   switch (action.type) {
     case types.FETCH_ITEMS:
-      let storedData = localStorage.getItem(action.payload.userToken);
-      if(storedData){
-        storedData=JSON.parse(storedData);
-	for(let item of storedData){
-	  let existing = action.payload.data.filter(function(element){return element.item_ids === item.item_ids;});
-          if(existing.length > 0) {
-             existing[0].quantity = item.quantity;
-             //TODO: merge child items
-          }
-        }
-      }
-      return action.payload.data;
+      return action.payload;
 
     case types.ADD_ITEM_QUANTITY:
       parentFound = state.find(
@@ -43,15 +32,6 @@ const itemsReducer = (state = [], action) => {
           }
         });
       }
-      let stored_data = state.filter(function(element) {return element.quantity > 0;});
-      stored_data = stored_data.map(({item_ids, quantity, innerItems})=>{
-          let stored_item={item_ids,quantity};
-	  if(innerItems)
-	      stored_item.innerItems=innerItems.map(({item_id, quantity})=>({item_id, quantity}));
-          return stored_item;
-      });
-
-      localStorage.setItem(action.payload.userToken, JSON.stringify(stored_data));
       return [...state];
 
     case types.REDUCE_ITEM_QUANTITY:

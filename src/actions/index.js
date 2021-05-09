@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as types from './types';
 
-export const fetchItems = (userToken) => async (dispatch) => {
+export const fetchItems = () => async (dispatch) => {
   const options = {
     headers: {
       Accept: 'application/json',
@@ -9,7 +9,7 @@ export const fetchItems = (userToken) => async (dispatch) => {
   };
   const itemsResult = await axios.get('/getInventoryListing', options);
   console.log(itemsResult.data);
-  dispatch({ type: types.FETCH_ITEMS, payload: {data:itemsResult.data, userToken} });
+  dispatch({ type: types.FETCH_ITEMS, payload: itemsResult.data });
 };
 
 export const filterItems = (items, input) => {
@@ -27,12 +27,11 @@ export const itemsSearchInputChange = (input) => {
   };
 };
 
-export const addItemQuantity = (itemId, userToken, itemCount = 1) => {
+export const addItemQuantity = (itemId, itemCount = 1) => {
   return {
     type: types.ADD_ITEM_QUANTITY,
     payload: {
       itemId,
-      userToken,
       itemCount,
     },
   };
