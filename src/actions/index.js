@@ -118,9 +118,9 @@ export const triggerBoxCalculator = (triggerState) => {
   };
 };
 
-export const triggerAllItemsModal = () => {
+export const triggerSmallStuffModal = () => {
   return {
-    type: types.TRIGGER_ALLITEMS_MODAL,
+    type: types.TRIGGER_SMALL_STUFF_MODAL,
   };
 };
 

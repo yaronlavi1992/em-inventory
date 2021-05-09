@@ -2,7 +2,7 @@ import * as types from '../actions/types';
 
 const INTIAL_STATE = {
   isBoxCalcTriggered: 0,
-  isAllItemsModalTriggered: false,
+  isSmallStuffModalTriggered: false,
 };
 
 const triggersReducer = (state = INTIAL_STATE, action) => {
@@ -12,10 +12,10 @@ const triggersReducer = (state = INTIAL_STATE, action) => {
         ...state,
         isBoxCalcTriggered: action.payload,
       };
-    case types.TRIGGER_ALLITEMS_MODAL:
+    case types.TRIGGER_SMALL_STUFF_MODAL:
       return {
         ...state,
-        isAllItemsModalTriggered: true,
+        isSmallStuffModalTriggered: true,
       };
     default:
       return state;

@@ -13,11 +13,10 @@ import {
   filterItems,
   itemsSearchInputChange,
   storeInventory,
-  triggerAllItemsModal,
 } from '../../actions';
 import ListContainer from '../../components/ListContainer/ListContainer';
-import ModalExampleModal from '../../components/ModalExampleModal/ModalExampleModal';
 import SearchBar from '../../components/SearchBar/SearchBar';
+import SmallStuffModal from '../../components/SmallStuffModal/SmallStuffModal';
 import history from '../../history';
 import './AllItems.css';
 
@@ -42,12 +41,6 @@ class AllItems extends Component {
     this.props.itemsSearchInputChange('');
     this.props.filterItems(this.props.items, '');
   };
-
-  componentDidUpdate() {
-    if (!this.props.triggers.isAllItemsModalTriggered) {
-      this.props.triggerAllItemsModal();
-    }
-  }
 
   isSpecialItems = () => {
     const selectedItems = this.props.items.filter((item) => item.quantity > 0);
@@ -80,25 +73,9 @@ class AllItems extends Component {
   };
 
   render() {
-    const modalImage = `${process.env.PUBLIC_URL}/assets/confused.svg`;
-    const modalHeader = `Don't Sweat the Small Stuff`;
-    const modalContent = `By selecting your items in the following step,
-      we will be able to give an accurate estimate.
-      However, your final cost will be based on the
-      actual items being transported on the day of
-      the move.`;
     return (
       <>
-        {!this.props.triggers.isAllItemsModalTriggered && (
-          <ModalExampleModal
-            image={modalImage}
-            imageSize='medium'
-            header={modalHeader}
-            content={modalContent}
-            nextPage={`/p=${this.props.userToken}/items`}
-            buttonText='OK, GOT IT!'
-          />
-        )}
+        <SmallStuffModal />
         <Grid
           verticalAlign='middle'
           centered
@@ -205,14 +182,12 @@ const mapStateToProps = (state) => {
     userToken: state.auth.token,
     leadId: state.auth.currentUser.lead_id,
     items: state.items,
-    triggers: state.triggers,
     filteredItems: state.filteredItems,
   };
 };
 
 export default connect(mapStateToProps, {
   storeInventory,
-  triggerAllItemsModal,
   filterItems,
   itemsSearchInputChange,
 })(AllItems);

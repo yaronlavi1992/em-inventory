@@ -14,6 +14,7 @@ import 'semantic-ui-css/semantic.min.css';
 const persistConfig = {
   key: 'root',
   storage,
+  blacklist: ['triggers'],
 };
 const persistedReducer = persistReducer(persistConfig, reducers);
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
