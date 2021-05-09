@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button, Image } from 'semantic-ui-react';
 import { signIn, fetchItems } from '../../actions';
+import history from '../../history';
 import './Intro.css';
 
 export class Intro extends Component {
@@ -14,7 +15,14 @@ export class Intro extends Component {
   }
 
   componentDidMount = async () => {
-    await this.props.signIn(this.props.match.params.id);
+    try {
+      await this.props.signIn(this.props.match.params.id);
+    } catch (err) {
+      if (err.response.status === 404) {
+        return history.push('/error404');
+      }
+    }
+
     if (this.props.currentUser.sbm) {
       window.location = `https://bvl-sabf.web.app/welcome/${this.props.userToken}`;
     }
@@ -31,13 +39,13 @@ export class Intro extends Component {
       .join(' ');
   }
 
-  render() {
+  renderContent() {
     return (
       <>
         <div id='flex-fill'>
           <h1 id='welcome-text'>
             Welcome,{' '}
-            {this.props.isSignedIn &&
+            {!this.state.isLoadingItems &&
               this.capitalizeFirstWordLetters(
                 this.props.currentUser.first_name
               )}
@@ -46,7 +54,7 @@ export class Intro extends Component {
           <h1 id='your-move-text'>YOUR MOVE</h1>
           <hr id='separator' />
           <h1 id='move-size'>
-            {this.props.isSignedIn &&
+            {!this.state.isLoadingItems &&
               this.capitalizeFirstWordLetters(this.props.currentUser.size)}
             <br />
             From: {this.props.isSignedIn && this.props.currentUser.fromZip} |
@@ -76,6 +84,10 @@ export class Intro extends Component {
         </div>
       </>
     );
+  }
+
+  render() {
+    return this.renderContent();
   }
 }
 

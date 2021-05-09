@@ -10,7 +10,7 @@
   padding: 0px !important;
 }
 
-.ui.container {
+.ui.container.flex_container {
   margin-left: 0px !important;
   margin-right: 0px !important;
 }

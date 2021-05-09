@@ -7,19 +7,11 @@ import { Container } from 'semantic-ui-react';
 import Confirmation from '../../pages/Confirmation/Confirmation';
 import { connect } from 'react-redux';
 import AllItems from '../../pages/AllItems/AllItems';
-import './App.css';
 import history from '../../history';
-
-// const token = window.location.pathname.split('=')[1];
-// console.log(token);
+import Error404 from '../../pages/Error404/Error404';
+import './App.css';
 
 class App extends Component {
-  // componentDidMount() {
-  //   window.addEventListener('beforeunload', (e) => {
-  //     e.preventDefault();
-  //     console.log('hello');
-  //   });
-  // }
   render() {
     return (
       <div
@@ -32,13 +24,7 @@ class App extends Component {
               <MainHeader />
               <Switch>
                 <Route path='/p=:id' exact component={Intro} />
-                <Route
-                  path={`/p=${
-                    this.props.userToken ? this.props.userToken : ''
-                  }/items`}
-                  exact
-                  component={AllItems}
-                />
+                <Route path='/p=:id/items' exact component={AllItems} />
                 <Route
                   path='/p=:id/items/special'
                   exact
@@ -49,6 +35,7 @@ class App extends Component {
                   exact
                   component={Confirmation}
                 />
+                <Route path='/error404' exact component={Error404} />
                 <Redirect to='/' />
               </Switch>
             </Router>
