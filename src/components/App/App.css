@@ -3,19 +3,19 @@
   margin: 0px;
 }
 
-#mainWrapper {
+#main-wrapper {
   background-color: #3a4b60;
   color: #3a4b60;
   height: 100%;
   padding: 0px !important;
 }
 
-.ui.container.flex_container {
+.ui.container.flex-container {
   margin-left: 0px !important;
   margin-right: 0px !important;
 }
 
-.flex_container,
+.flex-container,
 body {
   height: 100%;
   display: flex !important;

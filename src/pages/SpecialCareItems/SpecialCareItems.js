@@ -30,13 +30,14 @@ class SpecialCareItems extends Component {
               backgroundRepeat: 'no-repeat',
             }}
           >
-            Some Items Require Boxing
+            Special Handling & Boxing
           </div>
 
           <p>
-            In addition to the standard blankets provided, the following items
-            require additional protection. Would you like your movers to box the
-            following items for you, at an additional cost?
+            Certain fragile/heavy items require additional protection. Depending
+            on the item, these fees may be optional or mandatory. By leaving an
+            optional item un-checked, you are agreeing to wrap and pack that
+            item yourself (i.e. packed by owner).
           </p>
           <SpecialItemList />
           {/* <Link //TODO: add this back?

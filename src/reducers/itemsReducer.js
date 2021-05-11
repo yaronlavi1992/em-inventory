@@ -64,6 +64,11 @@ const itemsReducer = (state = [], action) => {
       }
       return [...state];
 
+    case types.ADD_ITEM_SH:
+      parentFound = state.find((parent) => parent.item_ids === action.payload);
+      parentFound.isShSelected = true;
+      return [...state];
+
     case types.STORE_INVENTORY:
       return state;
 

@@ -46,7 +46,7 @@ class SearchBar extends Component {
       <div id='search-bar-wrapper'>
         <Input
           id='search-input'
-          className='searchBox'
+          className='search-box'
           type='search'
           icon='search'
           iconPosition='left'

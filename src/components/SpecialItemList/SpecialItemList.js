@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Button, Grid, List } from 'semantic-ui-react';
+import { addItemSH } from '../../actions';
 import './SpecialItemList.css';
 
 class SpecialItemList extends React.Component {
@@ -24,16 +25,15 @@ class SpecialItemList extends React.Component {
         <List.Item key={item.parent_name}>
           <Grid
             container
-            doubling
             divided='vertically'
             verticalAlign='middle'
             centered
             style={{ padding: '0px' }}
           >
-            <Grid.Column width={10} floated='left'>
-              <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-                <span className='listItemName'>{item.parent_name}</span>
-              </div>
+            <Grid.Column width={10} floated='left' style={{ padding: '0px' }}>
+              <span className='list-item-name'>
+                {item.quantity}× {item.parent_name}
+              </span>
             </Grid.Column>
 
             <Grid.Column width={3} floated='right' textAlign='right'>
@@ -46,17 +46,23 @@ class SpecialItemList extends React.Component {
                 : Number(item.sh_price) * item.quantity}
             </Grid.Column>
 
-            <Grid.Column width={3} floated='right' textAlign='right'>
-              {item.quantity === 0 ? (
+            <Grid.Column
+              width={3}
+              floated='right'
+              textAlign='right'
+              style={{ padding: '0px' }}
+            >
+              {!item.sh_mandatory.split(',').includes('1') &&
+              !item.isShSelected ? (
                 <Button
                   id='add-btn'
                   //TODO: change addQuantityHandler to manage sh_price's quantity
-                  onClick={() => this.addQuantityHandler(item)}
+                  onClick={() => this.props.addItemSH(item.item_ids)}
                 >
                   ADD
                 </Button>
               ) : (
-                <Button className='checked-btn'>✔</Button>
+                <Button id='checked-btn'>✔</Button>
               )}
             </Grid.Column>
           </Grid>
@@ -76,7 +82,6 @@ class SpecialItemList extends React.Component {
         <List.Item key={'packing-fee'}>
           <Grid
             container
-            doubling
             divided='vertically'
             verticalAlign='middle'
             centered
@@ -108,4 +113,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {})(SpecialItemList);
+export default connect(mapStateToProps, { addItemSH })(SpecialItemList);

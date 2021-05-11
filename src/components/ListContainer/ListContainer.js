@@ -186,7 +186,7 @@ class ListContainer extends Component {
                       e.target.src = `${process.env.PUBLIC_URL}/assets/default.svg`;
                     }}
                   />
-                  <span className='listItemName'>{item.parent_name}</span>
+                  <span className='list-item-name'>{item.parent_name}</span>
                 </div>
                 <div
                   style={{

@@ -37,6 +37,13 @@ export const addItemQuantity = (itemId, itemCount = 1) => {
   };
 };
 
+export const addItemSH = (itemId) => {
+  return {
+    type: types.ADD_ITEM_SH,
+    payload: itemId,
+  };
+};
+
 export const reduceItemQuantity = (itemId) => {
   return {
     type: types.REDUCE_ITEM_QUANTITY,
@@ -147,14 +154,22 @@ export const inventoryFromItems = (items) => {
             return {
               item_id: Number(innerItem.item_id),
               item_quantity: innerItem.quantity,
-              item_sh: Number(innerItem.sh_price) > 0 ? 1 : 0,
+              item_sh:
+                Number(item.sh_price) > 0 &&
+                (item.sh_mandatory || item.isShSelected)
+                  ? 1
+                  : 0,
             };
           });
       }
       return {
         item_id: Number(item.item_ids),
         item_quantity: item.quantity,
-        item_sh: Number(item.sh_price) > 0 ? 1 : 0,
+        item_sh:
+          Number(item.sh_price) > 0 && (item.sh_mandatory || item.isShSelected)
+            ? 1
+            : 0,
+        // item_sh: Number(item.sh_price) > 0 ? 1 : 0,
       };
     }),
   ];

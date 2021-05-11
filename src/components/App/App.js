@@ -18,8 +18,8 @@ class App extends Component {
         id='stackable-grid'
         className='ui one column stackable center aligned page grid'
       >
-        <div id='mainWrapper' className='column twelve wide'>
-          <Container className='flex_container'>
+        <div id='main-wrapper' className='column twelve wide'>
+          <Container className='flex-container'>
             <Router basename={process.env.PUBLIC_URL} history={history}>
               <MainHeader />
               <Switch>
