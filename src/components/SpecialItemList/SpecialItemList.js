@@ -8,8 +8,11 @@ class SpecialItemList extends React.Component {
   specialItems() {
     return this.props.items.filter((item) => {
       if (item.quantity > 0) {
-        if (item.innerItems && Number(item.innerItems[0].sh_price) > 0) {
-          return true;
+        if (item.innerItems) {
+          return item.innerItems.find(
+            (innerItem) =>
+              innerItem.quantity > 0 && Number(innerItem.sh_price) > 0
+          );
         }
         if (Number(item.sh_price) > 0) {
           return true;
