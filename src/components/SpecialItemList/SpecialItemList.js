@@ -23,6 +23,7 @@ class SpecialItemList extends React.Component {
   }
 
   renderList(items) {
+    console.log(items);
     return items.map((item) => {
       return (
         <List.Item key={item.parent_name}>
@@ -59,7 +60,6 @@ class SpecialItemList extends React.Component {
               !item.isShSelected ? (
                 <Button
                   id='add-btn'
-                  //TODO: change addQuantityHandler to manage sh_price's quantity
                   onClick={() => this.props.addItemSH(item.item_ids)}
                 >
                   ADD

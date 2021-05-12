@@ -97,6 +97,7 @@ export const submitInventory = (items, userId) => async (dispatch) => {
     id: String(userId),
     inventory: inventoryFromItems(items),
   };
+  console.log(inventoryFromItems(items));
   const options = {
     headers: {
       Accept: '*/*',
@@ -155,8 +156,8 @@ export const inventoryFromItems = (items) => {
               item_id: Number(innerItem.item_id),
               item_quantity: innerItem.quantity,
               item_sh:
-                Number(item.sh_price) > 0 &&
-                (item.sh_mandatory || item.isShSelected)
+                Number(innerItem.sh_price) > 0 &&
+                (Number(innerItem.sh_mandatory) || item.isShSelected)
                   ? 1
                   : 0,
             };
@@ -166,10 +167,10 @@ export const inventoryFromItems = (items) => {
         item_id: Number(item.item_ids),
         item_quantity: item.quantity,
         item_sh:
-          Number(item.sh_price) > 0 && (item.sh_mandatory || item.isShSelected)
+          Number(item.sh_price) > 0 &&
+          (Number(item.sh_mandatory) || item.isShSelected)
             ? 1
             : 0,
-        // item_sh: Number(item.sh_price) > 0 ? 1 : 0,
       };
     }),
   ];
