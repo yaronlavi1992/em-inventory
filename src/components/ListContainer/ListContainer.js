@@ -351,7 +351,12 @@ class ListContainer extends Component {
               onClick={() => this.setState({ isDialogModalTriggered: true })}
             >
               <div
-                style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  paddingBottom: '10px',
+                }}
               >
                 <Icon
                   as={Image}

@@ -123,7 +123,7 @@ class AllItems extends Component {
                       }}
                     >
                       <SearchBar />
-                      <Segment id='all-item-list-segment'>
+                      <Segment id='all-items-list-segment'>
                         <ListContainer
                           isMyItems={false}
                           items={this.props.filteredItems}
@@ -156,7 +156,7 @@ class AllItems extends Component {
                       }}
                     >
                       <SearchBar isMyItems />
-                      <Segment id='my-item-list-segment'>
+                      <Segment id='my-items-list-segment'>
                         <ListContainer
                           isMyItems
                           items={this.props.filteredItems.filter((item) => {
