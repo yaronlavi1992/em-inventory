@@ -24,7 +24,8 @@ export class Intro extends Component {
     }
 
     if (this.props.currentUser.sbm) {
-      window.location = `https://bvl-sabf.web.app/welcome/${this.props.userToken}`;
+      // window.location = `https://bvl-sabf.web.app/welcome/${this.props.userToken}`;
+      window.location.href = `https://myquote.budgetvanlines.com/welcome/${this.props.userToken}`;
     }
     await this.props.fetchItems();
     this.setState({
@@ -61,8 +62,8 @@ export class Intro extends Component {
             To: {this.props.isSignedIn && this.props.currentUser.toZip}
           </h1>
           <p id='browse-our-data'>
-            Browse our Database of common household items to build your
-            Inventory and get an accurate quote
+            Let's find out what items you're moving, so we can get you an
+            accurate quote!
           </p>
           <Button
             id='get-started-btn'

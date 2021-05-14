@@ -9,7 +9,8 @@ import './SpecialCareItems.css';
 class SpecialCareItems extends Component {
   linkOnClickHandler = () => {
     this.props.submitInventory(this.props.items, this.props.leadId);
-    window.location.href = `https://bvl-sabf.web.app/welcome/${this.props.userToken}`;
+    // window.location.href = `https://bvl-sabf.web.app/welcome/${this.props.userToken}`;
+    window.location.href = `https://myquote.budgetvanlines.com/welcome/${this.props.userToken}`;
   };
 
   render() {

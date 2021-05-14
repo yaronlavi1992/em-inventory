@@ -333,7 +333,8 @@ class ListContainer extends Component {
                   history.push(`/p=${this.props.userToken}/items/special`);
                 } else {
                   // history.push(`/p=${this.props.userToken}/confirmation`);
-                  window.location.href = `https://bvl-sabf.web.app/welcome/${this.props.userToken}`;
+                  // window.location.href = `https://bvl-sabf.web.app/welcome/${this.props.userToken}`;
+                  window.location.href = `https://myquote.budgetvanlines.com/welcome/${this.props.userToken}`;
                 }
               }}
               id='confirm-inventory-btn'
