@@ -23,7 +23,7 @@ export class Intro extends Component {
       }
     }
 
-    if (this.props.currentUser.sbm) {
+    if (this.props.currentUser.sbm > 0) {
       // window.location = `https://bvl-sabf.web.app/welcome/${this.props.userToken}`;
       window.location.href = `https://myquote.budgetvanlines.com/welcome/${this.props.userToken}`;
     }
